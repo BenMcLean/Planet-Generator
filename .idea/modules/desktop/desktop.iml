@@ -23,6 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../desktop/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../desktop/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../desktop/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../desktop/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -56,5 +57,6 @@
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-linux" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-windows" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-osx" level="project" />
+    <orderEntry type="library" exported="" name="desktop.desktop-1.0" level="project" />
   </component>
 </module>

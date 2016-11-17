@@ -23,6 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../core/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../core/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../core/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../core/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -35,5 +36,6 @@
     <orderEntry type="library" exported="" name="libgdx-utils-0.13.3" level="project" />
     <orderEntry type="library" exported="" name="gdx-controllers-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="gdx-box2d-1.9.2" level="project" />
+    <orderEntry type="library" exported="" name="core.core-1.0" level="project" />
   </component>
 </module>
