@@ -26,8 +26,8 @@ public class GameScreen implements Screen, Disposable {
     public long SEED;
     public static final int VIRTUAL_WIDTH = 64;
     public static final int VIRTUAL_HEIGHT = 64;
-    public static final int TILE_WIDTH = 8;
-    public static final int TILE_HEIGHT = 8;
+    public static final int TILE_WIDTH = 16;
+    public static final int TILE_HEIGHT = 16;
     public static final double visibilityThreshold = 0.2d;
     //public Assets assets = new Assets();
     private Color worldBackgroundColor = Color.BLACK;
