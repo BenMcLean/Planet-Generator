@@ -353,3 +353,5 @@ nb-configuration.xml
 
 .gradle
 build/
+core/build/libs/core-1.0.jar
+desktop/build/libs/desktop-1.0.jar
