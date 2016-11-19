@@ -29,7 +29,7 @@ public class GameScreen implements Screen, Disposable {
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
     public static final double visibilityThreshold = 0.2d;
-    //public Assets assets = new Assets();
+    public Assets assets = new Assets();
     private Color worldBackgroundColor = Color.BLACK;
     private Color screenBackgroundColor = Color.BLACK;
     private Viewport worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -84,16 +84,16 @@ public class GameScreen implements Screen, Disposable {
         batch.end();
     }
 
-//    public void drawRect(SpriteBatch batch, int x, int y, int width, int height) {
-//        batch.draw(assets.one, x + width - 1, y + 1, 1, height - 1);
-//        batch.draw(assets.one, x + 1, y, width - 1, 1);
-//        batch.draw(assets.one, x, y, 1, height - 1);
-//        batch.draw(assets.one, x, y + height - 1, width - 1, 1);
-//    }
-//
-//    public void drawSquareOverTile(SpriteBatch batch, int x, int y) {
-//        batch.draw(assets.one, x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-//    }
+    public void drawRect(SpriteBatch batch, int x, int y, int width, int height) {
+        batch.draw(assets.one, x + width - 1, y + 1, 1, height - 1);
+        batch.draw(assets.one, x + 1, y, width - 1, 1);
+        batch.draw(assets.one, x, y, 1, height - 1);
+        batch.draw(assets.one, x, y + height - 1, width - 1, 1);
+    }
+
+    public void drawSquareOverTile(SpriteBatch batch, int x, int y) {
+        batch.draw(assets.one, x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -104,7 +104,7 @@ public class GameScreen implements Screen, Disposable {
     public void dispose() {
         batch.dispose();
         frameBuffer.dispose();
-//        assets.dispose();
+        assets.dispose();
     }
 
     @Override

@@ -7,6 +7,6 @@ public class PlanetGeneratorGame extends Game {
 
     @Override
     public void create() {
-        //setScreen(new net.benmclean.badroguelike.view.GameScreen(SEED));
+        setScreen(new net.benmclean.planetgenerator.view.GameScreen(SEED));
     }
 }
