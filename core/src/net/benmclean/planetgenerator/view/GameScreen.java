@@ -27,7 +27,7 @@ public class GameScreen implements Screen, Disposable {
 
     public GameScreen(long SEED) {
         this.SEED = SEED;
-        //world = new GameWorld(SEED);
+        world = new GameWorld(SEED);
     }
 
     public long SEED;
@@ -88,7 +88,7 @@ public class GameScreen implements Screen, Disposable {
         Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-        worldView.getCamera().position.set(world.getPlayerX() * TILE_HEIGHT + 4, world.getPlayerY() * TILE_WIDTH + 4, 0);
+        worldView.getCamera().position.set(world.getPlayerX() * TILE_HEIGHT + (TILE_HEIGHT / 2), world.getPlayerY() * TILE_WIDTH + (TILE_WIDTH / 2), 0);
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.render();

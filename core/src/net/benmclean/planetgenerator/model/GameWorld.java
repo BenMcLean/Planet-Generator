@@ -77,7 +77,7 @@ public class GameWorld {
         for (int x=0; x<bareDungeon.length; x++) copyDungeon[x] = bareDungeon[x].clone();
 
         Coord here = dungeonUtil.randomFloor(copyDungeon);
-        playerCoord = here;
+        setPlayer(here);
         copyDungeon[here.getX()][here.getY()] = '#';
     }
 
