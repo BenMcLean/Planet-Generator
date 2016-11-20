@@ -2,16 +2,23 @@ package net.benmclean.planetgenerator.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import net.benmclean.planetgenerator.controller.GameInputProcessor;
+import net.benmclean.planetgenerator.model.GameWorld;
+import net.benmclean.utils.OrthogonalTiledMapIterator;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {
@@ -35,23 +42,44 @@ public class GameScreen implements Screen, Disposable {
     private Viewport worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     private Viewport screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     private SpriteBatch batch = new SpriteBatch();
-    //private TiledMap map = new TiledMap();
-    //private TiledMapRenderer tiledMapRenderer;
+    private TiledMap map = new TiledMap();
+    private TiledMapRenderer tiledMapRenderer;
     private FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_HEIGHT, VIRTUAL_WIDTH, true, true);
     private Texture screenTexture;
     private TextureRegion screenRegion = new TextureRegion();
-    //private OrthogonalTiledMapIterator visibleIterator;
-//    public GameWorld world;
-//    public GameInputProcessor input;
+    private OrthogonalTiledMapIterator visibleIterator;
+    public GameWorld world;
+    public GameInputProcessor input;
+
+    public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
+        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
+        cell.setTile(tile);
+        return cell;
+    }
 
     @Override
     public void show() {
+        MapLayers layers = map.getLayers();
+        TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_HEIGHT, TILE_WIDTH);
+        for (int x = 0; x < world.SIZE_X; x++) {
+            for (int y = 0; y < world.SIZE_Y; y++) {
+                StaticTiledMapTile tile = null;
+                Boolean answer = world.isWall(x, y);
+                if (answer != null && !answer)
+                    tile = new StaticTiledMapTile(assets.floor);
+                else if (answer != null)
+                    tile = new StaticTiledMapTile(assets.wall);
+                if (tile != null) layer.setCell(x, y, makeCell(tile));
+            }
+        }
+        layers.add(layer);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         screenView.getCamera().position.set(32, 32, 0);
         screenView.update(VIRTUAL_HEIGHT, VIRTUAL_WIDTH);
-//        visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
+        visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
         batch.enableBlending();
-//        input = new GameInputProcessor(world);
-//        Gdx.input.setInputProcessor(input);
+        input = new GameInputProcessor();
+        Gdx.input.setInputProcessor(input);
     }
 
     @Override
@@ -60,10 +88,10 @@ public class GameScreen implements Screen, Disposable {
         Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-//        worldView.getCamera().position.set(world.getPlayerX() * TILE_HEIGHT + 4, world.getPlayerY() * TILE_WIDTH + 4, 0);
+        worldView.getCamera().position.set(world.getPlayerX() * TILE_HEIGHT + 4, world.getPlayerY() * TILE_WIDTH + 4, 0);
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-//        tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
-//        tiledMapRenderer.render();
+        tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
+        tiledMapRenderer.render();
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
 
