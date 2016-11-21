@@ -31,8 +31,8 @@ public class GameScreen implements Screen, Disposable {
     }
 
     public long SEED;
-    public static final int VIRTUAL_WIDTH = 64;
-    public static final int VIRTUAL_HEIGHT = 64;
+    public static final int VIRTUAL_WIDTH = 320;
+    public static final int VIRTUAL_HEIGHT = 200;
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
     public static final double visibilityThreshold = 0.2d;
@@ -74,7 +74,7 @@ public class GameScreen implements Screen, Disposable {
         }
         layers.add(layer);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-        screenView.getCamera().position.set(32, 32, 0);
+        screenView.getCamera().position.set(VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH / 2, 0);
         screenView.update(VIRTUAL_HEIGHT, VIRTUAL_WIDTH);
         visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
         batch.enableBlending();
@@ -149,7 +149,7 @@ public class GameScreen implements Screen, Disposable {
 
     public static void toggleFullscreen() {
         if (Gdx.graphics.isFullscreen())
-            Gdx.graphics.setWindowedMode(VIRTUAL_WIDTH * 12, VIRTUAL_HEIGHT * 12);
+            Gdx.graphics.setWindowedMode(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         else
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
     }
