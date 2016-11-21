@@ -1,7 +1,5 @@
 package net.benmclean.planetgenerator.view;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
  */
 public class Assets {
     public Texture one;
-    private AssetManager manager;
     private TextureAtlas atlas;
 
     public Assets () {
@@ -21,10 +18,10 @@ public class Assets {
         one = new Texture(pixmap1);
         one.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         pixmap1.dispose();
-        tempStuff();
 
-        manager = new AssetManager();
-        manager.load(new AssetDescriptor("art.atlas", TextureAtlas.class));
+        atlas = new TextureAtlas("art.atlas");
+        wall = atlas.findRegion("biomes/Tri1");
+        floor = atlas.findRegion("terrain/GrassWater");
     }
 
     public TextureAtlas.AtlasRegion wall;
