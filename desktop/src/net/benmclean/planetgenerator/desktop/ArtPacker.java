@@ -6,7 +6,7 @@ import java.io.File;
 
 public class ArtPacker {
     public static void main(final String[] args) throws Exception {
-        TexturePacker.process("../assets-raw/", "", "art");
+        TexturePacker.process("../assets-raw", ".", "art");
     }
 
     private static void delete(final File delete) {
