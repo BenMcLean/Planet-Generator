@@ -9,8 +9,8 @@ import squidpony.squidmath.SquidID;
 
 public class GameWorld {
 
-    public static final int SIZE_X = 64;
-    public static final int SIZE_Y = 64;
+    public static final int SIZE_X = 128;
+    public static final int SIZE_Y = 128;
     public boolean[][] known = new boolean[SIZE_X][SIZE_Y];
     public double[][] light;
     public static final double visibilityThreshold = 0.00001d;
@@ -25,7 +25,7 @@ public class GameWorld {
     public int playerHP = 50;
     public int playerMaxHP = 100;
     protected SquidID playerSquidID;
-    Coord playerCoord = Coord.get(25, 25);
+    protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
 
     public int getPlayerX() {
         return getPlayerCoord().getX();
@@ -76,9 +76,10 @@ public class GameWorld {
         char[][] copyDungeon = new char[SIZE_X][];
         for (int x=0; x<bareDungeon.length; x++) copyDungeon[x] = bareDungeon[x].clone();
 
-        Coord here = dungeonUtil.randomFloor(copyDungeon);
-        setPlayer(here);
-        copyDungeon[here.getX()][here.getY()] = '#';
+        setPlayer(SIZE_X / 2, SIZE_Y / 2);
+//        Coord here = dungeonUtil.randomFloor(copyDungeon);
+//        setPlayer(here);
+//        copyDungeon[here.getX()][here.getY()] = '#';
     }
 
     public Boolean isWall(int x, int y) {
