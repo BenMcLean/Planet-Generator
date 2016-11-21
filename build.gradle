@@ -18,7 +18,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "Planet-Generator"
-        squidlibVersion = '059d2595a1' // https://jitpack.io/#SquidPony/SquidLib
+        squidlibVersion = '5e76e41296' // https://jitpack.io/#SquidPony/SquidLib
         gdxVersion = '1.9.4' // https://libgdx.badlogicgames.com/versions.html
         roboVMVersion = '2.2.0'
         box2DLightsVersion = '1.4'
