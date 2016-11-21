@@ -44,7 +44,7 @@ public class GameScreen implements Screen, Disposable {
     private SpriteBatch batch = new SpriteBatch();
     private TiledMap map = new TiledMap();
     private TiledMapRenderer tiledMapRenderer;
-    private FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_HEIGHT, VIRTUAL_WIDTH, true, true);
+    private FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true, true);
     private Texture screenTexture;
     private TextureRegion screenRegion = new TextureRegion();
     private OrthogonalTiledMapIterator visibleIterator;
@@ -60,7 +60,7 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void show() {
         MapLayers layers = map.getLayers();
-        TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_HEIGHT, TILE_WIDTH);
+        TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
         for (int x = 0; x < world.SIZE_X; x++) {
             for (int y = 0; y < world.SIZE_Y; y++) {
                 StaticTiledMapTile tile = null;
@@ -74,8 +74,8 @@ public class GameScreen implements Screen, Disposable {
         }
         layers.add(layer);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-        screenView.getCamera().position.set(VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH / 2, 0);
-        screenView.update(VIRTUAL_HEIGHT, VIRTUAL_WIDTH);
+        screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
+        screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
         batch.enableBlending();
         input = new GameInputProcessor();
@@ -88,7 +88,7 @@ public class GameScreen implements Screen, Disposable {
         Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-        worldView.getCamera().position.set(world.getPlayerX() * TILE_HEIGHT + (TILE_HEIGHT / 2), world.getPlayerY() * TILE_WIDTH + (TILE_WIDTH / 2), 0);
+        worldView.getCamera().position.set(world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2), world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2), 0);
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.render();
