@@ -6,14 +6,15 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
@@ -43,11 +44,12 @@ public class GameScreen implements Screen, Disposable {
     private Viewport screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     private SpriteBatch batch = new SpriteBatch();
     private TiledMap map = new TiledMap();
-    private TiledMapRenderer tiledMapRenderer;
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
     private FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true, true);
     private Texture screenTexture;
     private TextureRegion screenRegion = new TextureRegion();
     private OrthogonalTiledMapIterator visibleIterator;
+    ShaderProgram shader;
     public GameWorld world;
     public GameInputProcessor input;
 
@@ -59,6 +61,10 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void show() {
+        shader  = new ShaderProgram(Gdx.files.internal("shaders/VertexShader.glsl"), Gdx.files.internal("shaders/FragmentShader.glsl"));
+        //shader.pedantic = false;
+        if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
+
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
         for (int x = 0; x < world.SIZE_X; x++) {
@@ -91,7 +97,9 @@ public class GameScreen implements Screen, Disposable {
         worldView.getCamera().position.set(world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2), world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2), 0);
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
+        tiledMapRenderer.getBatch().setShader(shader);
         tiledMapRenderer.render();
+        tiledMapRenderer.getBatch().setShader(null);
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
 
