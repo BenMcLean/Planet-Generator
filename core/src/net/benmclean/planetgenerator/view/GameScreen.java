@@ -70,7 +70,8 @@ public class GameScreen implements Screen, Disposable {
 
         Pixmap paletteMap = new Pixmap(palette.length, 1, Pixmap.Format.RGBA8888);
         for (int x = 0; x < palette.length; ++x) {
-            paletteMap.drawPixel(x, 0, palette[x].toIntBits());
+            paletteMap.setColor(palette[x]);
+            paletteMap.drawPixel(x, 0);
         }
 
         paletteTexture = new Texture(paletteMap);
