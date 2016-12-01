@@ -63,10 +63,10 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void show() {
         Color[] palette = new Color[4];
-        palette[0].set(156/255f,189/255f,15/255f,255/255f);
-        palette[1].set(140/255f,173/255f,15/255f,255/255f);
-        palette[2].set(48/255f,98/255f,48/255f,255/255f);
-        palette[3].set(15/255f,56/255f,15/255f,255/255f);
+        palette[0] = new Color(156/255f,189/255f,15/255f,255/255f);
+        palette[1] = new Color(140/255f,173/255f,15/255f,255/255f);
+        palette[2] = new Color(48/255f,98/255f,48/255f,255/255f);
+        palette[3] = new Color(15/255f,56/255f,15/255f,255/255f);
 
         Pixmap paletteMap = new Pixmap(palette.length, 1, Pixmap.Format.RGBA8888);
         for (int x = 0; x < palette.length; ++x) {
@@ -79,6 +79,9 @@ public class GameScreen implements Screen, Disposable {
         shader  = new ShaderProgram(Gdx.files.internal("shaders/VertexShader.glsl"), Gdx.files.internal("shaders/FragmentShader.glsl"));
         shader.pedantic = false;
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
+
+        paletteTexture.bind(3);
+        shader.setUniformi("u_texPalette", 3);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
