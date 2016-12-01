@@ -52,6 +52,7 @@ public class GameScreen implements Screen, Disposable {
     ShaderProgram shader;
     public GameWorld world;
     public GameInputProcessor input;
+    public Texture paletteTexture;
 
     public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -61,8 +62,22 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void show() {
+        Color[] palette = new Color[4];
+        palette[0].set(156/255f,189/255f,15/255f,255/255f);
+        palette[1].set(140/255f,173/255f,15/255f,255/255f);
+        palette[2].set(48/255f,98/255f,48/255f,255/255f);
+        palette[3].set(15/255f,56/255f,15/255f,255/255f);
+
+        Pixmap paletteMap = new Pixmap(palette.length, 1, Pixmap.Format.RGBA8888);
+        for (int x = 0; x < palette.length; ++x) {
+            paletteMap.drawPixel(x, 0, palette[x].toIntBits());
+        }
+
+        paletteTexture = new Texture(paletteMap);
+        paletteMap.dispose();
+
         shader  = new ShaderProgram(Gdx.files.internal("shaders/VertexShader.glsl"), Gdx.files.internal("shaders/FragmentShader.glsl"));
-        //shader.pedantic = false;
+        shader.pedantic = false;
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
 
         MapLayers layers = map.getLayers();
