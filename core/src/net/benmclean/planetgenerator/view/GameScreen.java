@@ -120,6 +120,7 @@ public class GameScreen implements Screen, Disposable {
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.getBatch().setShader(shader);
+        Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
         tiledMapRenderer.render();
         tiledMapRenderer.getBatch().setShader(null);
         batch.setProjectionMatrix(worldView.getCamera().combined);
