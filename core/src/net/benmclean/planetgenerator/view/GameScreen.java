@@ -70,27 +70,12 @@ public class GameScreen implements Screen, Disposable {
         palette[2] = new Color(48/255f,98/255f,48/255f,255/255f);
         palette[3] = new Color(15/255f,56/255f,15/255f,255/255f);
 
-        Pixmap paletteMap = new Pixmap(palette.length, 1, Pixmap.Format.RGBA8888);
-        for (int x = 0; x < palette.length; ++x) {
-            paletteMap.setColor(palette[x]);
-            paletteMap.drawPixel(x, 0);
-        }
-
-        paletteTexture = new Texture(paletteMap);
-        paletteMap.dispose();
-
         shader  = new ShaderProgram(Gdx.files.internal("shaders/VertexShader.glsl"), Gdx.files.internal("shaders/FragmentShader.glsl"));
-        shader.pedantic = false;
+        //shader.pedantic = false;
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
 
-        colorVec4 = new float[16];
-        for (int x=0; x<4; x++) {
-            colorVec4[x * 4] = palette[x].r;
-            colorVec4[x * 4 + 1] = palette[x].g;
-            colorVec4[x * 4 + 2] = palette[x].b;
-            colorVec4[x * 4 + 3] = palette[x].a;
-        }
-        shader.setUniform4fv("palette[0]", colorVec4, 0, 16);
+        for (int x=0; x<palette.length; x++)
+            shader.setUniformf("u_palette[" + x + "]", palette[x]);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
@@ -126,9 +111,8 @@ public class GameScreen implements Screen, Disposable {
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.getBatch().setShader(shader);
 
-        assets.atlas.getTextures().first().bind(1);
-        shader.setUniformi("u_texture", 2);
-        shader.setUniform4fv("palette[0]", colorVec4, 0, 16);
+        assets.atlas.getTextures().first().bind(0);
+        shader.setUniformi("u_texture", 0);
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
         tiledMapRenderer.render();
         tiledMapRenderer.getBatch().setShader(null);
