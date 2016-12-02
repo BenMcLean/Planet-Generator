@@ -90,7 +90,7 @@ public class GameScreen implements Screen, Disposable {
             colorVec4[x * 4 + 2] = palette[x].b;
             colorVec4[x * 4 + 3] = palette[x].a;
         }
-        shader.setUniform3fv("palette[0]", colorVec4, 0, 16);
+        shader.setUniform4fv("palette[0]", colorVec4, 0, 16);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
@@ -128,7 +128,7 @@ public class GameScreen implements Screen, Disposable {
 
         assets.atlas.getTextures().first().bind(1);
         shader.setUniformi("u_texture", 2);
-        shader.setUniform3fv("palette[0]", colorVec4, 0, 16);
+        shader.setUniform4fv("palette[0]", colorVec4, 0, 16);
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
         tiledMapRenderer.render();
         tiledMapRenderer.getBatch().setShader(null);
