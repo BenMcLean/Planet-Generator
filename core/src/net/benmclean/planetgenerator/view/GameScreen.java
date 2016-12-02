@@ -54,6 +54,7 @@ public class GameScreen implements Screen, Disposable {
     public GameWorld world;
     public GameInputProcessor input;
     public Texture paletteTexture;
+    public float[] colorVec4;
 
     public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -82,14 +83,14 @@ public class GameScreen implements Screen, Disposable {
         shader.pedantic = false;
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
 
-        float[] colorVec4 = new float[16];
+        colorVec4 = new float[16];
         for (int x=0; x<4; x++) {
             colorVec4[x * 4] = palette[x].r;
-            colorVec4[x * 4 + 1] = palette[x+1].g;
-            colorVec4[x * 4 + 2] = palette[x+2].b;
-            colorVec4[x * 4 + 3] = palette[x+3].a;
+            colorVec4[x * 4 + 1] = palette[x].g;
+            colorVec4[x * 4 + 2] = palette[x].b;
+            colorVec4[x * 4 + 3] = palette[x].a;
         }
-        shader.setUniform3fv("palette[0]",colorVec4, 0, 16);
+        shader.setUniform3fv("palette[0]", colorVec4, 0, 16);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
@@ -127,10 +128,7 @@ public class GameScreen implements Screen, Disposable {
 
         assets.atlas.getTextures().first().bind(1);
         shader.setUniformi("u_texture", 2);
-
-        paletteTexture.bind(2);
-        shader.setUniformi("u_texPalette", 2);
-
+        shader.setUniform3fv("palette[0]", colorVec4, 0, 16);
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
         tiledMapRenderer.render();
         tiledMapRenderer.getBatch().setShader(null);
