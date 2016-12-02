@@ -49,6 +49,7 @@ public class GameScreen implements Screen, Disposable {
     private Texture screenTexture;
     private TextureRegion screenRegion = new TextureRegion();
     private OrthogonalTiledMapIterator visibleIterator;
+    private Color[] palette;
     ShaderProgram shader;
     public GameWorld world;
     public GameInputProcessor input;
@@ -62,7 +63,7 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void show() {
-        Color[] palette = new Color[4];
+        palette = new Color[4];
         palette[0] = new Color(156/255f,189/255f,15/255f,255/255f);
         palette[1] = new Color(140/255f,173/255f,15/255f,255/255f);
         palette[2] = new Color(48/255f,98/255f,48/255f,255/255f);
@@ -81,11 +82,14 @@ public class GameScreen implements Screen, Disposable {
         shader.pedantic = false;
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
 
-        paletteTexture.bind(3);
-        shader.setUniformi("u_texPalette", 3);
-
-        assets.atlas.getTextures().first().bind(2);
-        shader.setUniformi("u_texture", 2);
+        float[] colorVec4 = new float[16];
+        for (int x=0; x<4; x++) {
+            colorVec4[x * 4] = palette[x].r;
+            colorVec4[x * 4 + 1] = palette[x+1].g;
+            colorVec4[x * 4 + 2] = palette[x+2].b;
+            colorVec4[x * 4 + 3] = palette[x+3].a;
+        }
+        shader.setUniform3fv("palette[0]",colorVec4, 0, 16);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
@@ -120,6 +124,13 @@ public class GameScreen implements Screen, Disposable {
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.getBatch().setShader(shader);
+
+        assets.atlas.getTextures().first().bind(1);
+        shader.setUniformi("u_texture", 2);
+
+        paletteTexture.bind(2);
+        shader.setUniformi("u_texPalette", 2);
+
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
         tiledMapRenderer.render();
         tiledMapRenderer.getBatch().setShader(null);
