@@ -74,14 +74,10 @@ public class GameScreen implements Screen, Disposable {
         //shader.pedantic = false;
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
 
-        for (int x=0; x<palette.length; x++) {
-            int location = shader.getUniformLocation("u_palette[" + x + "]");
-            Gdx.app.debug("location", Integer.toString(location));
-            shader.setUniformf(
-                    location,
-                    palette[x]
-            );
-        }
+        int location = shader.getUniformLocation("u_palette[0]");
+        Gdx.app.debug("location", Integer.toString(location));
+        for (int x=0; x<palette.length; x++)
+            shader.setUniformf(location + x, palette[x]);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
