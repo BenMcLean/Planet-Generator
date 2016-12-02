@@ -84,6 +84,9 @@ public class GameScreen implements Screen, Disposable {
         paletteTexture.bind(3);
         shader.setUniformi("u_texPalette", 3);
 
+        assets.atlas.getTextures().first().bind(2);
+        shader.setUniformi("u_texture", 2);
+
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
         for (int x = 0; x < world.SIZE_X; x++) {

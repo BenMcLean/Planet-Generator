@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
  */
 public class Assets {
     public Texture one;
-    private TextureAtlas atlas;
+    public TextureAtlas atlas;
 
     public Assets () {
         Pixmap pixmap1 = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
