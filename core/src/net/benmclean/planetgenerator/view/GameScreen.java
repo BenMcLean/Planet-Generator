@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
@@ -37,7 +36,7 @@ public class GameScreen implements Screen, Disposable {
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
     public static final double visibilityThreshold = 0.2d;
-    public Assets assets = new Assets();
+    public Assets assets;
     private Color worldBackgroundColor = Color.BLACK;
     private Color screenBackgroundColor = Color.BLACK;
     private Viewport worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -64,20 +63,15 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void show() {
+        assets = new Assets();
+
         palette = new Color[4];
-        palette[0] = new Color(156/255f,189/255f,15/255f,255/255f);
-        palette[1] = new Color(140/255f,173/255f,15/255f,255/255f);
-        palette[2] = new Color(48/255f,98/255f,48/255f,255/255f);
-        palette[3] = new Color(15/255f,56/255f,15/255f,255/255f);
+        palette[0] = new Color(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
+        palette[1] = new Color(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
+        palette[2] = new Color(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
+        palette[3] = new Color(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
 
-        shader  = new ShaderProgram(Gdx.files.internal("shaders/VertexShader.glsl"), Gdx.files.internal("shaders/FragmentShader.glsl"));
-        //shader.pedantic = false;
-        if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
-
-        int location = shader.getUniformLocation("u_palette[0]");
-        Gdx.app.debug("location", Integer.toString(location));
-        for (int x=0; x<palette.length; x++)
-            shader.setUniformf(location + x, palette[x]);
+        assets.applyPalette(palette);
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
@@ -111,11 +105,7 @@ public class GameScreen implements Screen, Disposable {
         worldView.getCamera().position.set(world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2), world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2), 0);
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
-        tiledMapRenderer.getBatch().setShader(shader);
-
-        assets.atlas.getTextures().first().bind(0);
-        shader.setUniformi("u_texture", 0);
-        Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
+        tiledMapRenderer.getBatch().setShader(assets.shader);
         tiledMapRenderer.render();
         tiledMapRenderer.getBatch().setShader(null);
         batch.setProjectionMatrix(worldView.getCamera().combined);
