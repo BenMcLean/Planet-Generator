@@ -55,7 +55,7 @@ public class Assets {
 
         atlas = new TextureAtlas("art.atlas");
         wall = atlas.findRegion("biomes/Tri1");
-        floor = atlas.findRegion("terrain/GrassWater");
+        floor = atlas.findRegion("utils/color1");
     }
 
     public void applyPalette (Color[] palette) {
