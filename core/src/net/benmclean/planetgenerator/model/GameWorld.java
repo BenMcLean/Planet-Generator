@@ -35,7 +35,9 @@ public class GameWorld {
         return getPlayerCoord().getY();
     }
 
-    public Coord getPlayerCoord() { return playerCoord; }
+    public Coord getPlayerCoord() {
+        return playerCoord;
+    }
 
     public void setPlayerX(int x) {
         setPlayer(x, getPlayerY());
@@ -74,9 +76,10 @@ public class GameWorld {
 
         bareDungeon = dungeonGen.generate();
         char[][] copyDungeon = new char[SIZE_X][];
-        for (int x=0; x<bareDungeon.length; x++) copyDungeon[x] = bareDungeon[x].clone();
+        for (int x = 0; x < bareDungeon.length; x++) copyDungeon[x] = bareDungeon[x].clone();
 
-        setPlayer(SIZE_X / 2, SIZE_Y / 2);
+        //setPlayer(SIZE_X / 2, SIZE_Y / 2);
+        setPlayer(0, 0);
 //        Coord here = dungeonUtil.randomFloor(copyDungeon);
 //        setPlayer(here);
 //        copyDungeon[here.getX()][here.getY()] = '#';
@@ -88,5 +91,6 @@ public class GameWorld {
         return bareDungeon[x][y] == '#';
     }
 
-    public void endTurn () {}
+    public void endTurn() {
+    }
 }

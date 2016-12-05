@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -18,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
-import net.benmclean.utils.OrthogonalTiledMapIterator;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {
@@ -35,7 +33,6 @@ public class GameScreen implements Screen, Disposable {
     public static final int VIRTUAL_HEIGHT = 200;
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
-    public static final double visibilityThreshold = 0.2d;
     public Assets assets;
     private Color worldBackgroundColor = Color.BLACK;
     private Color screenBackgroundColor = Color.BLACK;
@@ -47,14 +44,11 @@ public class GameScreen implements Screen, Disposable {
     private FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true, true);
     private Texture screenTexture;
     private TextureRegion screenRegion = new TextureRegion();
-    private OrthogonalTiledMapIterator visibleIterator;
-    private Color[] palette;
-    private Color[] gameboy;
-    ShaderProgram shader;
+    private Color[][] palettes;
+    private Color[] greyPalette;
+    private Color[] gameboyPalette;
     public GameWorld world;
     public GameInputProcessor input;
-    public Texture paletteTexture;
-    public float[] colorVec4;
 
     public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -66,19 +60,21 @@ public class GameScreen implements Screen, Disposable {
     public void show() {
         assets = new Assets();
 
-        palette = new Color[4];
-        palette[0] = new Color(0 / 255f, 0 / 255f, 0/ 255f, 255 / 255f);
-        palette[1] = new Color(85 / 255f, 85 / 255f, 85 / 255f, 255 / 255f);
-        palette[2] = new Color(170 / 255f, 170 / 255f, 170 / 255f, 255 / 255f);
-        palette[3] = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
+        greyPalette = new Color[4];
+        greyPalette[0] = new Color(0 / 255f, 0 / 255f, 0 / 255f, 255 / 255f);
+        greyPalette[1] = new Color(85 / 255f, 85 / 255f, 85 / 255f, 255 / 255f);
+        greyPalette[2] = new Color(170 / 255f, 170 / 255f, 170 / 255f, 255 / 255f);
+        greyPalette[3] = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
 
-        gameboy = new Color[4];
-        gameboy[0] = new Color(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
-        gameboy[1] = new Color(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
-        gameboy[2] = new Color(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
-        gameboy[3] = new Color(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
+        gameboyPalette = new Color[4];
+        gameboyPalette[0] = new Color(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
+        gameboyPalette[1] = new Color(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
+        gameboyPalette[2] = new Color(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
+        gameboyPalette[3] = new Color(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
 
-        assets.applyPalette(palette);
+        palettes = new Color[2][];
+        palettes[0] = greyPalette;
+        palettes[1] = gameboyPalette;
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
@@ -102,7 +98,6 @@ public class GameScreen implements Screen, Disposable {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
         screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-        //visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
         batch.enableBlending();
         input = new GameInputProcessor();
         Gdx.input.setInputProcessor(input);
@@ -114,21 +109,26 @@ public class GameScreen implements Screen, Disposable {
         Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-        worldView.getCamera().position.set(world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2), world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2), 0);
-        worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-
-        tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.getBatch().setShader(assets.shader);
 
-        tiledMapRenderer.getBatch().begin();
-        assets.applyPalette(palette);
-        tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(0));
-        tiledMapRenderer.getBatch().end();
-
-        tiledMapRenderer.getBatch().begin();
-        assets.applyPalette(gameboy);
-        tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(1));
-        tiledMapRenderer.getBatch().end();
+        for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
+            tiledMapRenderer.getBatch().begin();
+            assets.applyPalette(palettes[layer]);
+            for (int x = -1; x <= 1; x++)
+                for (int y = -1; y <= 1; y++) {
+                    aimCamera(
+                            worldView.getCamera(),
+                            world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2),
+                            world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2),
+                            x,
+                            y
+                    );
+                    worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+                    tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
+                    tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(layer));
+                }
+            tiledMapRenderer.getBatch().end();
+        }
 
         tiledMapRenderer.getBatch().setShader(null);
 
@@ -192,5 +192,18 @@ public class GameScreen implements Screen, Disposable {
             Gdx.graphics.setWindowedMode(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         else
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+    }
+
+    public void aimCamera(Camera camera, float x, float y, int dx, int dy) {
+        if (dx > 0)
+            x = world.SIZE_X * TILE_WIDTH * dx - x;
+        else if (dx < 0)
+            x = world.SIZE_X * TILE_WIDTH * dx + x;
+        if (dy > 0)
+            y = world.SIZE_Y * TILE_HEIGHT * dy - y;
+        else if (dy < 0)
+            y = world.SIZE_Y * TILE_HEIGHT * dy + y;
+
+        camera.position.set(x, y, 0);
     }
 }
