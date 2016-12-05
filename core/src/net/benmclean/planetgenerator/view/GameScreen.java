@@ -119,17 +119,21 @@ public class GameScreen implements Screen, Disposable {
 
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.getBatch().setShader(assets.shader);
-        assets.applyPalette(palette);
+
         tiledMapRenderer.getBatch().begin();
+        assets.applyPalette(palette);
         tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(0));
+        tiledMapRenderer.getBatch().end();
+
+        tiledMapRenderer.getBatch().begin();
         assets.applyPalette(gameboy);
         tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(1));
-        tiledMapRenderer.getBatch().setShader(null);
         tiledMapRenderer.getBatch().end();
+
+        tiledMapRenderer.getBatch().setShader(null);
 
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
-
 
         batch.end();
         frameBuffer.end();
