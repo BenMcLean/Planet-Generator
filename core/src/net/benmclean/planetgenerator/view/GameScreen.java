@@ -68,8 +68,8 @@ public class GameScreen implements Screen, Disposable {
 
         palette = new Color[4];
         palette[0] = new Color(0 / 255f, 0 / 255f, 0/ 255f, 255 / 255f);
-        palette[1] = new Color(85 / 255f, 85 / 255f, 85 / 255f, 85 / 255f);
-        palette[2] = new Color(170 / 255f, 170 / 255f, 170 / 255f, 170 / 255f);
+        palette[1] = new Color(85 / 255f, 85 / 255f, 85 / 255f, 255 / 255f);
+        palette[2] = new Color(170 / 255f, 170 / 255f, 170 / 255f, 255 / 255f);
         palette[3] = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
 
         gameboy = new Color[4];
