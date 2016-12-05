@@ -49,6 +49,7 @@ public class GameScreen implements Screen, Disposable {
     private TextureRegion screenRegion = new TextureRegion();
     private OrthogonalTiledMapIterator visibleIterator;
     private Color[] palette;
+    private Color[] gameboy;
     ShaderProgram shader;
     public GameWorld world;
     public GameInputProcessor input;
@@ -66,31 +67,42 @@ public class GameScreen implements Screen, Disposable {
         assets = new Assets();
 
         palette = new Color[4];
-        palette[0] = new Color(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
-        palette[1] = new Color(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
-        palette[2] = new Color(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
-        palette[3] = new Color(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
+        palette[0] = new Color(0 / 255f, 0 / 255f, 0/ 255f, 255 / 255f);
+        palette[1] = new Color(85 / 255f, 85 / 255f, 85 / 255f, 85 / 255f);
+        palette[2] = new Color(170 / 255f, 170 / 255f, 170 / 255f, 170 / 255f);
+        palette[3] = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
+
+        gameboy = new Color[4];
+        gameboy[0] = new Color(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
+        gameboy[1] = new Color(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
+        gameboy[2] = new Color(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
+        gameboy[3] = new Color(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
 
         assets.applyPalette(palette);
 
         MapLayers layers = map.getLayers();
-        TiledMapTileLayer layer = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
+        TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
+        for (int x = 0; x < layer.length; x++)
+            layer[x] = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
         for (int x = 0; x < world.SIZE_X; x++) {
             for (int y = 0; y < world.SIZE_Y; y++) {
                 StaticTiledMapTile tile = null;
                 Boolean answer = world.isWall(x, y);
-                if (answer != null && !answer)
+                if (answer != null && !answer) {
                     tile = new StaticTiledMapTile(assets.floor);
-                else if (answer != null)
+                    layer[1].setCell(x, y, makeCell(tile));
+                } else if (answer != null) {
                     tile = new StaticTiledMapTile(assets.wall);
-                if (tile != null) layer.setCell(x, y, makeCell(tile));
+                    layer[0].setCell(x, y, makeCell(tile));
+                }
             }
         }
-        layers.add(layer);
+        for (int x = 0; x < layer.length; x++)
+            layers.add(layer[x]);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
         screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-        visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
+        //visibleIterator = new OrthogonalTiledMapIterator((OrthographicCamera) worldView.getCamera(), layer);
         batch.enableBlending();
         input = new GameInputProcessor();
         Gdx.input.setInputProcessor(input);
@@ -104,12 +116,20 @@ public class GameScreen implements Screen, Disposable {
         worldView.apply();
         worldView.getCamera().position.set(world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2), world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2), 0);
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+
         tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
         tiledMapRenderer.getBatch().setShader(assets.shader);
-        tiledMapRenderer.render();
+        assets.applyPalette(palette);
+        tiledMapRenderer.getBatch().begin();
+        tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(0));
+        assets.applyPalette(gameboy);
+        tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(1));
         tiledMapRenderer.getBatch().setShader(null);
+        tiledMapRenderer.getBatch().end();
+
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
+
 
         batch.end();
         frameBuffer.end();
