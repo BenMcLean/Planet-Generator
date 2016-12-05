@@ -114,14 +114,13 @@ public class GameScreen implements Screen, Disposable {
         for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
             tiledMapRenderer.getBatch().begin();
             assets.applyPalette(palettes[layer]);
-            for (int x = -1; x <= 1; x++)
-                for (int y = -1; y <= 1; y++) {
-                    aimCamera(
-                            worldView.getCamera(),
-                            world.getPlayerX() * TILE_WIDTH + (TILE_WIDTH / 2),
-                            world.getPlayerY() * TILE_HEIGHT + (TILE_HEIGHT / 2),
-                            x,
-                            y
+            for (int dx = -1; dx <= 1; dx++)
+                for (int dy = -1; dy <= 1; dy++) {
+                    worldView.getCamera().position.set(
+                            // player position + center of tile + over the edge for wrapping
+                            world.getPlayerX() * TILE_WIDTH + TILE_WIDTH / 2 + world.SIZE_X * TILE_WIDTH * dx,
+                            world.getPlayerY() * TILE_HEIGHT + TILE_HEIGHT / 2 + world.SIZE_Y * TILE_HEIGHT * dy,
+                            0
                     );
                     worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
                     tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
@@ -192,18 +191,5 @@ public class GameScreen implements Screen, Disposable {
             Gdx.graphics.setWindowedMode(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         else
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-    }
-
-    public void aimCamera(Camera camera, float x, float y, int dx, int dy) {
-        if (dx > 0)
-            x = world.SIZE_X * TILE_WIDTH * dx - x;
-        else if (dx < 0)
-            x = world.SIZE_X * TILE_WIDTH * dx + x;
-        if (dy > 0)
-            y = world.SIZE_Y * TILE_HEIGHT * dy - y;
-        else if (dy < 0)
-            y = world.SIZE_Y * TILE_HEIGHT * dy + y;
-
-        camera.position.set(x, y, 0);
     }
 }
