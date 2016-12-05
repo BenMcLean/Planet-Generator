@@ -34,16 +34,16 @@ public class GameScreen implements Screen, Disposable {
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
     public Assets assets;
-    private Color worldBackgroundColor = Color.BLACK;
-    private Color screenBackgroundColor = Color.BLACK;
-    private Viewport worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-    private Viewport screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-    private SpriteBatch batch = new SpriteBatch();
-    private TiledMap map = new TiledMap();
+    private Color worldBackgroundColor;
+    private Color screenBackgroundColor;
+    private Viewport worldView;
+    private Viewport screenView;
+    private SpriteBatch batch;
+    private TiledMap map;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
-    private FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true, true);
+    private FrameBuffer frameBuffer;
     private Texture screenTexture;
-    private TextureRegion screenRegion = new TextureRegion();
+    private TextureRegion screenRegion;
     private Color[][] palettes;
     private Color[] greyPalette;
     private Color[] gameboyPalette;
@@ -59,6 +59,14 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void show() {
         assets = new Assets();
+        worldBackgroundColor = Color.BLACK;
+        screenBackgroundColor = Color.BLACK;
+        worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        batch = new SpriteBatch();
+        map = new TiledMap();
+        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true, true);
+        screenRegion = new TextureRegion();
 
         greyPalette = new Color[4];
         greyPalette[0] = new Color(0 / 255f, 0 / 255f, 0 / 255f, 255 / 255f);
