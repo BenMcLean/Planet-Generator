@@ -20,7 +20,7 @@ public class GameInputProcessor implements InputProcessor {
             keyPressed[i] = false;
     }
 
-    public static final double REPEAT_RATE = 0.12;
+    public static final double REPEAT_RATE = 0.05;
     private double timeSinceRepeat = 0;
 
     public final static ArrayList<Integer> TRACKED_KEYS_ARRAY = new ArrayList<Integer>(Arrays.asList(
