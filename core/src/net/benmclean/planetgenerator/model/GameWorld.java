@@ -53,10 +53,20 @@ public class GameWorld {
     public Boolean movePlayer(int dx, int dy) {
         //Boolean answer = isWall(getPlayerX() + dx, getPlayerY() + dy);
         //if (answer != null && !answer) {
-            setPlayer(getPlayerX() + dx, getPlayerY() + dy);
-            return true;
+        setPlayer(wrapX(getPlayerX() + dx), wrapY(getPlayerY() + dy));
+        return true;
         //}
         //return false;
+    }
+
+    public int wrapX(int x) {
+        if (x < 0) return wrapX(x + SIZE_X);
+        return x % SIZE_X;
+    }
+
+    public int wrapY(int y) {
+        if (y < 0) return wrapX(y + SIZE_Y);
+        return y % SIZE_Y;
     }
 
     public GameWorld(long SEED) {
@@ -69,8 +79,8 @@ public class GameWorld {
         char[][] copyDungeon = new char[SIZE_X][];
         for (int x = 0; x < bareDungeon.length; x++) copyDungeon[x] = bareDungeon[x].clone();
 
-        //setPlayer(SIZE_X / 2, SIZE_Y / 2);
-        setPlayer(0, 0);
+        setPlayer(SIZE_X / 2, SIZE_Y / 2);
+        //setPlayer(0, 0);
 //        Coord here = dungeonUtil.randomFloor(copyDungeon);
 //        setPlayer(here);
 //        copyDungeon[here.getX()][here.getY()] = '#';
