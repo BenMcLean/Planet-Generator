@@ -60,13 +60,15 @@ public class GameWorld {
     }
 
     public int wrapX(int x) {
-        if (x < 0) return wrapX(x + SIZE_X);
-        return x % SIZE_X;
+        return wrap(x, SIZE_X);
     }
 
     public int wrapY(int y) {
-        if (y < 0) return wrapX(y + SIZE_Y);
-        return y % SIZE_Y;
+        return wrap(y, SIZE_Y);
+    }
+
+    public int wrap(int coord, int max) {
+        return coord < 0 ? wrap(coord + max, max) : coord % max;
     }
 
     public GameWorld(long SEED) {
@@ -79,8 +81,8 @@ public class GameWorld {
         char[][] copyDungeon = new char[SIZE_X][];
         for (int x = 0; x < bareDungeon.length; x++) copyDungeon[x] = bareDungeon[x].clone();
 
-        setPlayer(SIZE_X / 2, SIZE_Y / 2);
-        //setPlayer(0, 0);
+        //setPlayer(SIZE_X / 2, SIZE_Y / 2);
+        setPlayer(0, 0);
 //        Coord here = dungeonUtil.randomFloor(copyDungeon);
 //        setPlayer(here);
 //        copyDungeon[here.getX()][here.getY()] = '#';
