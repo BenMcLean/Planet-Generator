@@ -5,26 +5,17 @@ import squidpony.squidgrid.mapping.DungeonGenerator;
 import squidpony.squidgrid.mapping.DungeonUtility;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
-import squidpony.squidmath.SquidID;
 
 public class GameWorld {
 
     public static final int SIZE_X = 128;
     public static final int SIZE_Y = 128;
-    public boolean[][] known = new boolean[SIZE_X][SIZE_Y];
-    public double[][] light;
-    public static final double visibilityThreshold = 0.00001d;
-
     private long SEED;
     private RNG rng;
     private DungeonGenerator dungeonGen;
     private DungeonUtility dungeonUtil;
     private FOV fov = new FOV();
     private char[][] bareDungeon;
-    //public LazySpatialMap<Mob> mobs = new LazySpatialMap<Mob>();
-    public int playerHP = 50;
-    public int playerMaxHP = 100;
-    protected SquidID playerSquidID;
     protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
 
     public int getPlayerX() {
@@ -60,12 +51,12 @@ public class GameWorld {
     }
 
     public Boolean movePlayer(int dx, int dy) {
-        Boolean answer = isWall(getPlayerX() + dx, getPlayerY() + dy);
-        if (answer != null && !answer) {
+        //Boolean answer = isWall(getPlayerX() + dx, getPlayerY() + dy);
+        //if (answer != null && !answer) {
             setPlayer(getPlayerX() + dx, getPlayerY() + dy);
             return true;
-        }
-        return false;
+        //}
+        //return false;
     }
 
     public GameWorld(long SEED) {

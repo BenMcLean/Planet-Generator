@@ -3,17 +3,23 @@ package net.benmclean.planetgenerator.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import net.benmclean.planetgenerator.model.Direction;
+import net.benmclean.planetgenerator.model.GameWorld;
+import net.benmclean.planetgenerator.view.GameScreen;
 
 import java.util.*;
 
 public class GameInputProcessor implements InputProcessor {
-//    public GameWorld world;
+    public GameWorld world;
+    public GameScreen screen;
 
-    public GameInputProcessor () {
-//        this.world = world;
-        for (int i=0; i<TRACKED_KEYS_ARRAY.size(); i++)
+    public GameInputProcessor(GameWorld world, GameScreen screen) {
+        this.world = world;
+        this.screen = screen;
+        for (int i = 0; i < TRACKED_KEYS_ARRAY.size(); i++)
             keyPressed[i] = false;
     }
+
     public static final double REPEAT_RATE = 0.12;
     private double timeSinceRepeat = 0;
 
@@ -43,8 +49,8 @@ public class GameInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (TRACKED_KEYS.contains(keycode)) keyPressed[keyInt(keycode)] = true;
 
-//        if (keycode == Input.Keys.ENTER && (keyPressed[keyInt(Input.Keys.ALT_LEFT)] || keyPressed[keyInt(Input.Keys.ALT_RIGHT)]))
-//            GameScreen.toggleFullscreen();
+        if (keycode == Input.Keys.ENTER && (keyPressed[keyInt(Input.Keys.ALT_LEFT)] || keyPressed[keyInt(Input.Keys.ALT_RIGHT)]))
+            screen.toggleFullscreen();
         timeSinceRepeat = 0;
         moveFromInput(keycode);
         return true;
@@ -86,25 +92,35 @@ public class GameInputProcessor implements InputProcessor {
         return false;
     }
 
+    public void tick(float delta) {
+        timeSinceRepeat += delta;
+        if (timeSinceRepeat >= REPEAT_RATE) {
+            timeSinceRepeat = 0;
+            for (int key : TRACKED_KEYS)
+                if (keyPressed[keyInt(key)])
+                    moveFromInput(key);
+        }
+    }
+
     public void moveFromInput(int keycode) {
-        boolean moved = true;
+        //boolean moved = true;
         switch (keycode) {
             case Input.Keys.ESCAPE:
                 Gdx.app.exit();
             case Input.Keys.UP:
-//                world.movePlayer(Direction.NORTH);
+                world.movePlayer(Direction.NORTH);
                 break;
             case Input.Keys.RIGHT:
-//                world.movePlayer(Direction.EAST);
+                world.movePlayer(Direction.EAST);
                 break;
             case Input.Keys.DOWN:
-//                world.movePlayer(Direction.SOUTH);
+                world.movePlayer(Direction.SOUTH);
                 break;
             case Input.Keys.LEFT:
-//                world.movePlayer(Direction.WEST);
+                world.movePlayer(Direction.WEST);
                 break;
             default:
-                moved=false;
+                //moved=false;
                 break;
         }
 //        if (moved) world.endTurn();

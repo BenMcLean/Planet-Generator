@@ -107,12 +107,14 @@ public class GameScreen implements Screen, Disposable {
         screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
         screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch.enableBlending();
-        input = new GameInputProcessor();
+        input = new GameInputProcessor(world, this);
         Gdx.input.setInputProcessor(input);
     }
 
     @Override
     public void render(float delta) {
+        input.tick(delta);
+
         frameBuffer.begin();
         Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
