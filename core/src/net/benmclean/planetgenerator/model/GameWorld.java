@@ -1,5 +1,6 @@
 package net.benmclean.planetgenerator.model;
 
+import net.benmclean.utils.OpenSimplexNoiseTileable3D;
 import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.mapping.DungeonGenerator;
 import squidpony.squidgrid.mapping.DungeonUtility;
@@ -17,6 +18,7 @@ public class GameWorld {
     private FOV fov = new FOV();
     private char[][] bareDungeon;
     protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
+    protected OpenSimplexNoiseTileable3D noise;
 
     public int getPlayerX() {
         return getPlayerCoord().getX();
@@ -74,6 +76,7 @@ public class GameWorld {
     public GameWorld(long SEED) {
         //for (boolean i[] : known) java.util.Arrays.fill(i, true);
         rng = new RNG(SEED);
+        noise = new OpenSimplexNoiseTileable3D(SEED, SIZE_X, SIZE_Y, 1);
         dungeonGen = new DungeonGenerator(SIZE_X, SIZE_Y, rng);
         dungeonUtil = new DungeonUtility(rng);
 
@@ -90,8 +93,9 @@ public class GameWorld {
 
     public Boolean isWall(int x, int y) {
         if (x < 0 || y < 0 || x > SIZE_X || y > SIZE_Y) return null;
-        if (x == 0 || y == 0 || x == SIZE_X - 1 || y == SIZE_Y - 1) return true;
-        return bareDungeon[x][y] == '#';
+        //if (x == 0 || y == 0 || x == SIZE_X - 1 || y == SIZE_Y - 1) return true;
+        return noise.eval(x/6f, y/6f, 0) < 0.25;
+        //return bareDungeon[x][y] == '#';
     }
 
     public void endTurn() {
