@@ -14,6 +14,8 @@ package net.benmclean.utils;
  * - Changed seed-based constructor to be independent
  *   of any particular randomization library, so results
  *   will be the same when ported to other languages.
+ *
+ *   Retrieved from: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
  */
 
 public class OpenSimplexNoise {
