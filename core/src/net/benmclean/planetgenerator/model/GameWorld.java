@@ -70,7 +70,8 @@ public class GameWorld {
     }
 
     public int wrap(int coord, int max) {
-        return (coord % max + max) % max;
+        return coord < 0 ? coord % max + max : coord % max;
+        //return (coord % max + max) % max;
     }
 
     public GameWorld(long SEED) {
