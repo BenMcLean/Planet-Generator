@@ -25,7 +25,7 @@ public class Assets {
                         "varying vec2 v_texCoords;\n\n" +
                         "void main() {\n" +
                         "    v_color = a_color;\n" +
-                        "    v_color.a = v_color.a * (256f / 255f);\n" +
+                        "    v_color.a = v_color.a * 1.0039216;\n" + // 1.0039216 is (256f / 255f)
                         "    v_texCoords = a_texCoord0;\n" +
                         "    gl_Position = u_projTrans * a_position;\n" +
                         "}"
