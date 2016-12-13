@@ -44,9 +44,9 @@ public class GameScreen implements Screen, Disposable {
     private FrameBuffer frameBuffer;
     private Texture screenTexture;
     private TextureRegion screenRegion;
-    private Color[][] palettes;
-    private Color[] greyPalette;
-    private Color[] gameboyPalette;
+    private Texture[] palettes;
+    private Texture greyPalette;
+    private Texture gameboyPalette;
     public GameWorld world;
     public GameInputProcessor input;
 
@@ -65,22 +65,34 @@ public class GameScreen implements Screen, Disposable {
         screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch = new SpriteBatch();
         map = new TiledMap();
-        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true, true);
+        frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
 
-        greyPalette = new Color[4];
-        greyPalette[0] = new Color(0 / 255f, 0 / 255f, 0 / 255f, 255 / 255f);
-        greyPalette[1] = new Color(85 / 255f, 85 / 255f, 85 / 255f, 255 / 255f);
-        greyPalette[2] = new Color(170 / 255f, 170 / 255f, 170 / 255f, 255 / 255f);
-        greyPalette[3] = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
+        Pixmap pixmap = new Pixmap(4, 1, Pixmap.Format.RGBA8888);
 
-        gameboyPalette = new Color[4];
-        gameboyPalette[0] = new Color(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
-        gameboyPalette[1] = new Color(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
-        gameboyPalette[2] = new Color(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
-        gameboyPalette[3] = new Color(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
+        pixmap.setColor(0 / 255f, 0 / 255f, 0 / 255f, 255 / 255f);
+        pixmap.drawPixel(0, 0);
+        pixmap.setColor(85 / 255f, 85 / 255f, 85 / 255f, 255 / 255f);
+        pixmap.drawPixel(1, 0);
+        pixmap.setColor(170 / 255f, 170 / 255f, 170 / 255f, 255 / 255f);
+        pixmap.drawPixel(2, 0);
+        pixmap.setColor(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
+        pixmap.drawPixel(3, 0);
+        greyPalette = new Texture(pixmap);
 
-        palettes = new Color[2][];
+        pixmap.setColor(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
+        pixmap.drawPixel(0, 0);
+        pixmap.setColor(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
+        pixmap.drawPixel(1, 0);
+        pixmap.setColor(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
+        pixmap.drawPixel(2, 0);
+        pixmap.setColor(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
+        pixmap.drawPixel(3, 0);
+        gameboyPalette = new Texture(pixmap);
+
+        pixmap.dispose();
+
+        palettes = new Texture[2];
         palettes[0] = greyPalette;
         palettes[1] = gameboyPalette;
 
@@ -93,10 +105,10 @@ public class GameScreen implements Screen, Disposable {
                 StaticTiledMapTile tile = null;
                 Boolean answer = world.isWall(x, y);
                 if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(assets.floor);
+                    tile = new StaticTiledMapTile(assets.wall);
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
-                    tile = new StaticTiledMapTile(assets.wall);
+                    tile = new StaticTiledMapTile(assets.floor);
                     layer[0].setCell(x, y, makeCell(tile));
                 }
             }
@@ -123,7 +135,10 @@ public class GameScreen implements Screen, Disposable {
 
         for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
             tiledMapRenderer.getBatch().begin();
-            assets.applyPalette(palettes[layer]);
+            palettes[layer].bind(1);
+            tiledMapRenderer.getBatch().getShader().setUniformi("u_texPalette", 1);
+            Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0); // reset to texture 0 for SpriteBatch
+
             for (int dx = -1; dx <= 1; dx++)
                 for (int dy = -1; dy <= 1; dy++) {
                     worldView.getCamera().position.set(

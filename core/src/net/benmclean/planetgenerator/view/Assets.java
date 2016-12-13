@@ -16,32 +16,36 @@ public class Assets {
     public TextureAtlas atlas;
 
     public Assets () {
+        // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
+        // fragmentShader is where the magic happens
         shader = new ShaderProgram(
-                "attribute vec4 a_position;\n" +
-                        "attribute vec4 a_color;\n" +
-                        "attribute vec2 a_texCoord0;\n" +
-                        "uniform mat4 u_projTrans;\n" +
-                        "varying vec4 v_color;\n" +
-                        "varying vec2 v_texCoords;\n\n" +
-                        "void main() {\n" +
-                        "    v_color = a_color;\n" +
-                        "    v_color.a = v_color.a * 1.0039216;\n" + // 1.0039216 is (256f / 255f)
-                        "    v_texCoords = a_texCoord0;\n" +
-                        "    gl_Position = u_projTrans * a_position;\n" +
-                        "}"
+                "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+                        + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+                        + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+                        + "uniform mat4 u_projTrans;\n" //
+                        + "varying vec4 v_color;\n" //
+                        + "varying vec2 v_texCoords;\n" //
+                        + "\n" //
+                        + "void main()\n" //
+                        + "{\n" //
+                        + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+                        + "   v_color.a = v_color.a * (255.0/254.0);\n" //
+                        + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+                        + "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+                        + "}\n"
                 ,
                 "#ifdef GL_ES\n" +
                         "#define LOWP lowp\n" +
                         "precision mediump float;\n" +
                         "#else\n" +
                         "#define LOWP\n" +
-                        "#endif\n\n" +
-                        "varying LOWP vec4 v_color;\n" +
+                        "#endif\n" +
                         "varying vec2 v_texCoords;\n" +
-                        "uniform vec4 u_palette[4];\n" +
+                        "uniform sampler2D u_texPalette;\n" +
                         "uniform sampler2D u_texture;\n\n" +
                         "void main() {\n" +
-                        "    gl_FragColor = u_palette[int(texture2D(u_texture, v_texCoords).r * 3.9999)];\n" +
+                        "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
+                        "	gl_FragColor = texture2D(u_texPalette, vec2(color.r, 0)).rgba;\n" +
                         "}"
         );
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
@@ -55,7 +59,7 @@ public class Assets {
 
         atlas = new TextureAtlas("art.atlas");
         wall = atlas.findRegion("biomes/Tri1");
-        floor = atlas.findRegion("utils/color1");
+        floor = atlas.findRegion("terrain/GrassWater");
     }
 
     public void applyPalette (Color[] palette) {
