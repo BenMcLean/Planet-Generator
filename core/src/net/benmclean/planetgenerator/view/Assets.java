@@ -41,8 +41,7 @@ public class Assets {
                         "uniform vec4 u_palette[4];\n" +
                         "uniform sampler2D u_texture;\n\n" +
                         "void main() {\n" +
-                        "    int whatever = int(texture2D(u_texture, v_texCoords).r * 3.9999);\n" +
-                        "    gl_FragColor = u_palette[whatever];\n" +
+                        "    gl_FragColor = u_palette[int(texture2D(u_texture, v_texCoords).r * 3.9999)];\n" +
                         "}"
         );
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
