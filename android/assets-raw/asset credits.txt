@@ -1,3 +1,5 @@
+Any asset not credited here was created by Ben McLean.
+
 This project uses tiles from the following sets:
 http://opengameart.org/content/blowhard-2-blow-harder
 http://opengameart.org/content/27-bricks
