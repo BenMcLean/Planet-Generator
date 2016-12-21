@@ -81,9 +81,9 @@ public class GameWorld {
     }
 
     public Boolean isWall(int x, int y) {
-        if (x < 0 || y < 0 || x > SIZE_X || y > SIZE_Y) return null;
+        //if (x < 0 || y < 0 || x > SIZE_X || y > SIZE_Y) return null;
         //if (x == 0 || y == 0 || x == SIZE_X - 1 || y == SIZE_Y - 1) return true;
-        return noise.eval(x/6f, y/6f, 0) < 0.25;
+        return noise.eval(wrapX(x)/6f, wrapY(y)/6f, 0) < 0.25;
         //return bareDungeon[x][y] == '#';
     }
 

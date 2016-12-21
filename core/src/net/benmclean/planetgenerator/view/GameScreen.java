@@ -100,6 +100,7 @@ public class GameScreen implements Screen, Disposable {
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
         for (int x = 0; x < layer.length; x++)
             layer[x] = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
+        String name = "";
         for (int x = 0; x < world.SIZE_X; x++) {
             for (int y = 0; y < world.SIZE_Y; y++) {
                 StaticTiledMapTile tile = null;
@@ -108,7 +109,17 @@ public class GameScreen implements Screen, Disposable {
                     tile = new StaticTiledMapTile(assets.wall);
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
-                    tile = new StaticTiledMapTile(assets.floor);
+                    name = "terrain/GrassShore";
+                    if (!world.isWall(x, y+1)) name += "N";
+                    if (!world.isWall(x, y-1)) name += "S";
+                    if (!world.isWall(x+1, y)) name += "E";
+                    if (!world.isWall(x-1, y)) name += "W";
+                    if (world.isWall(x+1, y) && world.isWall(x, y+1) && !world.isWall(x+1, y+1)) name += "NEC";
+                    if (world.isWall(x+1, y) && world.isWall(x, y-1) && !world.isWall(x+1, y-1)) name += "SEC";
+                    if (world.isWall(x-1, y) && world.isWall(x, y-1) && !world.isWall(x-1, y-1)) name += "SWC";
+                    if (world.isWall(x-1, y) && world.isWall(x, y+1) && !world.isWall(x-1, y+1)) name += "NWC";
+                    if (assets.atlas.findRegion(name) == null) name = "utils/color2";
+                    tile = new StaticTiledMapTile(assets.atlas.findRegion(name));
                     layer[0].setCell(x, y, makeCell(tile));
                 }
             }
