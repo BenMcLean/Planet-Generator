@@ -93,7 +93,7 @@ public class GameScreen implements Screen, Disposable {
         pixmap.dispose();
 
         palettes = new Texture[2];
-        palettes[0] = greyPalette;
+        palettes[0] = gameboyPalette;
         palettes[1] = gameboyPalette;
 
         MapLayers layers = map.getLayers();
@@ -106,7 +106,7 @@ public class GameScreen implements Screen, Disposable {
                 StaticTiledMapTile tile = null;
                 Boolean answer = world.isWall(x, y);
                 if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(assets.wall);
+                    tile = new StaticTiledMapTile(assets.atlas.findRegion("utils/color3"));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
                     name = "terrain/GrassShore";
