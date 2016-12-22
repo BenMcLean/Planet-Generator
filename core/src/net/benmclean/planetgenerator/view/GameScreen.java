@@ -109,7 +109,7 @@ public class GameScreen implements Screen, Disposable {
                     tile = new StaticTiledMapTile(assets.atlas.findRegion("utils/color3"));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
-                    name = "terrain/SnowShore";
+                    name = "terrain/SandShore";
                     if (!world.isWall(x, y+1)) name += "N";
                     if (!world.isWall(x, y-1)) name += "S";
                     if (!world.isWall(x+1, y)) name += "E";

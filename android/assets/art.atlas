@@ -3003,478 +3003,667 @@ terrain/SandShoreE
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreN
+terrain/SandShoreENWC
   rotate: false
   xy: 272, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreNE
+terrain/SandShoreESWC
   rotate: false
   xy: 272, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreNEC
+terrain/SandShoreESWCNWC
   rotate: false
   xy: 288, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreNW
+terrain/SandShoreEW
   rotate: false
   xy: 304, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreNWC
+terrain/SandShoreN
   rotate: false
   xy: 288, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreS
+terrain/SandShoreNE
   rotate: false
   xy: 288, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreSE
+terrain/SandShoreNEC
   rotate: false
   xy: 304, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreSEC
+terrain/SandShoreNECNWC
   rotate: false
   xy: 320, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreSW
+terrain/SandShoreNECSEC
   rotate: false
   xy: 304, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreSWC
+terrain/SandShoreNECSECNWC
   rotate: false
   xy: 304, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreW
+terrain/SandShoreNECSECSWCNWC
   rotate: false
   xy: 320, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandWater
+terrain/SandShoreNECSWC
   rotate: false
   xy: 336, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffE
+terrain/SandShoreNEW
   rotate: false
   xy: 320, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffN
+terrain/SandShoreNS
   rotate: false
   xy: 320, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffNE
+terrain/SandShoreNSE
   rotate: false
   xy: 336, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffNEC
+terrain/SandShoreNSEC
   rotate: false
   xy: 352, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffNW
+terrain/SandShoreNSECSWC
   rotate: false
   xy: 336, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffNWC
+terrain/SandShoreNSEW
   rotate: false
   xy: 336, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffS
+terrain/SandShoreNSW
   rotate: false
   xy: 352, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffSE
+terrain/SandShoreNSWC
   rotate: false
   xy: 368, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffSEC
+terrain/SandShoreNW
   rotate: false
   xy: 352, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffSW
+terrain/SandShoreNWC
   rotate: false
   xy: 352, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffSWC
+terrain/SandShoreS
   rotate: false
   xy: 368, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCliffW
+terrain/SandShoreSE
   rotate: false
   xy: 384, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowCrack
+terrain/SandShoreSEC
   rotate: false
   xy: 368, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreE
+terrain/SandShoreSECNWC
   rotate: false
   xy: 368, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreENWC
+terrain/SandShoreSECSWC
   rotate: false
   xy: 384, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreESWC
+terrain/SandShoreSEW
   rotate: false
   xy: 400, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreESWCNWC
+terrain/SandShoreSNEC
   rotate: false
   xy: 384, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreEW
+terrain/SandShoreSNECNWC
   rotate: false
   xy: 384, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreN
+terrain/SandShoreSNWC
   rotate: false
   xy: 400, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNE
+terrain/SandShoreSW
   rotate: false
   xy: 416, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNEC
+terrain/SandShoreSWC
   rotate: false
   xy: 400, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECNWC
+terrain/SandShoreSWCNWC
   rotate: false
   xy: 400, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECSEC
+terrain/SandShoreW
   rotate: false
   xy: 416, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECSECNWC
+terrain/SandShoreWNEC
   rotate: false
   xy: 432, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECSECSWC
+terrain/SandShoreWNECSEC
   rotate: false
   xy: 416, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECSECSWCNWC
+terrain/SandShoreWSEC
   rotate: false
   xy: 416, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECSWC
+terrain/SandWater
   rotate: false
   xy: 432, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNECSWCNWC
+terrain/SnowCliffE
   rotate: false
   xy: 448, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNEW
+terrain/SnowCliffN
   rotate: false
   xy: 432, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNS
+terrain/SnowCliffNE
   rotate: false
   xy: 432, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNSE
+terrain/SnowCliffNEC
   rotate: false
   xy: 448, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNSEC
+terrain/SnowCliffNW
   rotate: false
   xy: 464, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNSECSWC
+terrain/SnowCliffNWC
   rotate: false
   xy: 448, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNSEW
+terrain/SnowCliffS
   rotate: false
   xy: 448, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNSW
+terrain/SnowCliffSE
   rotate: false
   xy: 464, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNSWC
+terrain/SnowCliffSEC
   rotate: false
   xy: 480, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNW
+terrain/SnowCliffSW
   rotate: false
   xy: 464, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreNWC
+terrain/SnowCliffSWC
   rotate: false
   xy: 464, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreS
+terrain/SnowCliffW
   rotate: false
   xy: 480, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSE
+terrain/SnowCrack
   rotate: false
   xy: 496, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSEC
+terrain/SnowShoreE
   rotate: false
   xy: 480, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSECNWC
+terrain/SnowShoreENWC
   rotate: false
   xy: 480, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSECSWC
+terrain/SnowShoreESWC
   rotate: false
   xy: 496, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSECSWCNWC
+terrain/SnowShoreESWCNWC
   rotate: false
   xy: 512, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSEW
+terrain/SnowShoreEW
   rotate: false
   xy: 496, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSNEC
+terrain/SnowShoreN
   rotate: false
   xy: 496, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSNECNWC
+terrain/SnowShoreNE
   rotate: false
   xy: 512, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSNWC
+terrain/SnowShoreNEC
   rotate: false
   xy: 528, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSW
+terrain/SnowShoreNECNWC
   rotate: false
   xy: 512, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSWC
+terrain/SnowShoreNECSEC
   rotate: false
   xy: 512, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreSWCNWC
+terrain/SnowShoreNECSECNWC
   rotate: false
   xy: 528, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreW
+terrain/SnowShoreNECSECSWC
   rotate: false
   xy: 544, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreWNEC
+terrain/SnowShoreNECSECSWCNWC
   rotate: false
   xy: 528, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreWNECSEC
+terrain/SnowShoreNECSWC
   rotate: false
   xy: 528, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowShoreWSEC
+terrain/SnowShoreNECSWCNWC
   rotate: false
   xy: 544, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SnowWater
+terrain/SnowShoreNEW
   rotate: false
   xy: 560, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNS
+  rotate: false
+  xy: 544, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNSE
+  rotate: false
+  xy: 544, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNSEC
+  rotate: false
+  xy: 560, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNSECSWC
+  rotate: false
+  xy: 576, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNSEW
+  rotate: false
+  xy: 560, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNSW
+  rotate: false
+  xy: 560, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNSWC
+  rotate: false
+  xy: 576, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNW
+  rotate: false
+  xy: 592, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreNWC
+  rotate: false
+  xy: 576, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreS
+  rotate: false
+  xy: 576, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSE
+  rotate: false
+  xy: 592, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSEC
+  rotate: false
+  xy: 608, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSECNWC
+  rotate: false
+  xy: 592, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSECSWC
+  rotate: false
+  xy: 592, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSECSWCNWC
+  rotate: false
+  xy: 608, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSEW
+  rotate: false
+  xy: 624, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSNEC
+  rotate: false
+  xy: 608, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSNECNWC
+  rotate: false
+  xy: 608, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSNWC
+  rotate: false
+  xy: 624, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSW
+  rotate: false
+  xy: 640, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSWC
+  rotate: false
+  xy: 624, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreSWCNWC
+  rotate: false
+  xy: 624, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreW
+  rotate: false
+  xy: 640, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreWNEC
+  rotate: false
+  xy: 656, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreWNECSEC
+  rotate: false
+  xy: 640, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowShoreWSEC
+  rotate: false
+  xy: 640, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SnowWater
+  rotate: false
+  xy: 656, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
