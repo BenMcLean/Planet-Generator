@@ -98,6 +98,12 @@ public class GameScreen implements Screen, Disposable {
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
+        Assets.CoordCheckerInterface coordChecker = new Assets.CoordCheckerInterface() {
+            @Override
+            public boolean where(int x, int y) {
+                return world.isWall(x, y);
+            }
+        };
         for (int x = 0; x < layer.length; x++)
             layer[x] = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
         String name = "";
@@ -109,17 +115,16 @@ public class GameScreen implements Screen, Disposable {
                     tile = new StaticTiledMapTile(assets.atlas.findRegion("utils/color3"));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
-                    name = "terrain/GrassShore";
-                    if (!world.isWall(x, y + 1)) name += "N";
-                    if (!world.isWall(x, y - 1)) name += "S";
-                    if (!world.isWall(x + 1, y)) name += "E";
-                    if (!world.isWall(x - 1, y)) name += "W";
-                    if (world.isWall(x + 1, y) && world.isWall(x, y + 1) && !world.isWall(x + 1, y + 1)) name += "NEC";
-                    if (world.isWall(x + 1, y) && world.isWall(x, y - 1) && !world.isWall(x + 1, y - 1)) name += "SEC";
-                    if (world.isWall(x - 1, y) && world.isWall(x, y - 1) && !world.isWall(x - 1, y - 1)) name += "SWC";
-                    if (world.isWall(x - 1, y) && world.isWall(x, y + 1) && !world.isWall(x - 1, y + 1)) name += "NWC";
-                    if (assets.atlas.findRegion(name) == null) name = "utils/test";
-                    tile = new StaticTiledMapTile(assets.atlas.findRegion(name));
+                    tile = new StaticTiledMapTile(
+                            assets.atlas.findRegion(
+                                    assets.terrainName(
+                                            "terrain/GrassShore",
+                                            x,
+                                            y,
+                                            coordChecker
+                                    )
+                            )
+                    );
                     layer[0].setCell(x, y, makeCell(tile));
                 }
             }

@@ -85,6 +85,22 @@ public class Assets {
         floor = new TextureAtlas.AtlasRegion(floorTesture, 0, 0, 16, 16);
     }
 
+    public static abstract class CoordCheckerInterface {
+        public abstract boolean where (int x, int y);
+    }
+    String terrainName(String name, int x, int y, CoordCheckerInterface where) {
+        if (!where.where(x, y + 1)) name += "N";
+        if (!where.where(x, y - 1)) name += "S";
+        if (!where.where(x + 1, y)) name += "E";
+        if (!where.where(x - 1, y)) name += "W";
+        if (where.where(x + 1, y) && where.where(x, y + 1) && !where.where(x + 1, y + 1)) name += "NEC";
+        if (where.where(x + 1, y) && where.where(x, y - 1) && !where.where(x + 1, y - 1)) name += "SEC";
+        if (where.where(x - 1, y) && where.where(x, y - 1) && !where.where(x - 1, y - 1)) name += "SWC";
+        if (where.where(x - 1, y) && where.where(x, y + 1) && !where.where(x - 1, y + 1)) name += "NWC";
+        if (atlas.findRegion(name) == null) return "utils/test";
+        return name;
+    }
+
     public void dispose() {
         one.dispose();
     }
