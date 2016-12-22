@@ -107,6 +107,7 @@ public class GameInputProcessor implements InputProcessor {
         switch (keycode) {
             case Input.Keys.ESCAPE:
                 Gdx.app.exit();
+                break;
             case Input.Keys.UP:
                 world.movePlayer(Direction.NORTH);
                 break;
