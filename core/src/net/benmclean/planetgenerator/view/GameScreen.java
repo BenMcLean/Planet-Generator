@@ -147,10 +147,10 @@ public class GameScreen implements Screen, Disposable {
 
         tiledMapRenderer.getBatch().setShader(null);
 
-        batch.setProjectionMatrix(worldView.getCamera().combined);
-        batch.begin();
-
-        batch.end();
+//        batch.setProjectionMatrix(worldView.getCamera().combined);
+//        batch.begin();
+//
+//        batch.end();
         frameBuffer.end();
 
         Gdx.gl.glClearColor(screenBackgroundColor.r, screenBackgroundColor.g, screenBackgroundColor.b, 1);
