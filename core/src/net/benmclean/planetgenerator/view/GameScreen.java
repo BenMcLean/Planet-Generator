@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
+import net.benmclean.planetgenerator.model.Palette4;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {
@@ -44,9 +45,7 @@ public class GameScreen implements Screen, Disposable {
     private FrameBuffer frameBuffer;
     private Texture screenTexture;
     private TextureRegion screenRegion;
-    private Texture[] palettes;
-    private Texture greyPalette;
-    private Texture gameboyPalette;
+    private Palette4[] palettes;
     public GameWorld world;
     public GameInputProcessor input;
 
@@ -68,33 +67,9 @@ public class GameScreen implements Screen, Disposable {
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
 
-        Pixmap pixmap = new Pixmap(4, 1, Pixmap.Format.RGBA8888);
-
-        pixmap.setColor(0 / 255f, 0 / 255f, 0 / 255f, 255 / 255f);
-        pixmap.drawPixel(0, 0);
-        pixmap.setColor(85 / 255f, 85 / 255f, 85 / 255f, 255 / 255f);
-        pixmap.drawPixel(1, 0);
-        pixmap.setColor(170 / 255f, 170 / 255f, 170 / 255f, 255 / 255f);
-        pixmap.drawPixel(2, 0);
-        pixmap.setColor(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
-        pixmap.drawPixel(3, 0);
-        greyPalette = new Texture(pixmap);
-
-        pixmap.setColor(15 / 255f, 56 / 255f, 15 / 255f, 255 / 255f);
-        pixmap.drawPixel(0, 0);
-        pixmap.setColor(48 / 255f, 98 / 255f, 48 / 255f, 255 / 255f);
-        pixmap.drawPixel(1, 0);
-        pixmap.setColor(140 / 255f, 173 / 255f, 15 / 255f, 255 / 255f);
-        pixmap.drawPixel(2, 0);
-        pixmap.setColor(156 / 255f, 189 / 255f, 15 / 255f, 255 / 255f);
-        pixmap.drawPixel(3, 0);
-        gameboyPalette = new Texture(pixmap);
-
-        pixmap.dispose();
-
-        palettes = new Texture[2];
-        palettes[0] = gameboyPalette;
-        palettes[1] = gameboyPalette;
+        palettes = new Palette4[2];
+        palettes[0] = Palette4.gameboy();
+        palettes[1] = palettes[0];
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
@@ -151,7 +126,7 @@ public class GameScreen implements Screen, Disposable {
 
         for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
             tiledMapRenderer.getBatch().begin();
-            palettes[layer].bind(1);
+            palettes[layer].getTexture().bind(1);
             tiledMapRenderer.getBatch().getShader().setUniformi("u_texPalette", 1);
             Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0); // reset to texture 0 for SpriteBatch
 
@@ -210,6 +185,8 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void dispose() {
+        for (int x = 0; x < palettes.length; x++)
+            palettes[x].dispose();
         batch.dispose();
         frameBuffer.dispose();
         assets.dispose();
