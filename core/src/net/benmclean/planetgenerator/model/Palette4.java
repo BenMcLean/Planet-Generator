@@ -56,8 +56,7 @@ public class Palette4 implements Disposable {
         pixmap.drawPixel(2, 0);
         pixmap.setColor(r3, g3, b3, a3);
         pixmap.drawPixel(3, 0);
-        makeTexture();
-        return this;
+        return makeTexture();
     }
 
     public Palette4(int[][] x) {
@@ -98,8 +97,7 @@ public class Palette4 implements Disposable {
         pixmap.drawPixel(2, 0);
         pixmap.setColor(r3 / 255f, g3 / 255f, b3 / 255f, a3 / 255f);
         pixmap.drawPixel(3, 0);
-        makeTexture();
-        return this;
+        return makeTexture();
     }
 
     public Palette4(Color[] x) {
@@ -120,8 +118,7 @@ public class Palette4 implements Disposable {
         pixmap.drawPixel(2, 0);
         pixmap.setColor(color3);
         pixmap.drawPixel(3, 0);
-        makeTexture();
-        return this;
+        return makeTexture();
     }
 
     protected Palette4 makeTexture() {
