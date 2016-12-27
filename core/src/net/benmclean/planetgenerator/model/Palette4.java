@@ -16,16 +16,16 @@ public class Palette4 implements Disposable {
         pixmap = new Pixmap(4, 1, Pixmap.Format.RGBA8888);
     }
 
-    public Palette4(float[][] x) {
-        this(x[0], x[1], x[2], x[3]);
+    public Palette4(float[][] color) {
+        this(color[0], color[1], color[2], color[3]);
     }
 
-    public Palette4(float[] zero, float[] one, float[] two, float[] three) {
+    public Palette4(float[] color0, float[] color1, float[] color2, float[] color3) {
         this(
-                zero[0], zero[1], zero[2], zero[3],
-                one[0], one[1], one[2], one[3],
-                two[0], two[1], two[2], two[3],
-                three[0], three[1], three[2], three[3]
+                color0[0], color0[1], color0[2], color0[3],
+                color1[0], color1[1], color1[2], color1[3],
+                color2[0], color2[1], color2[2], color2[3],
+                color3[0], color3[1], color3[2], color3[3]
         );
     }
 
@@ -59,15 +59,17 @@ public class Palette4 implements Disposable {
         return makeTexture();
     }
 
-    public Palette4(int[][] x) {
-        this(x[0], x[1], x[2], x[3]);
+    public Palette4(int[][] color) {
+        this(color[0], color[1], color[2], color[3]);
     }
 
-    public Palette4(int[] zero, int[] one, int[] two, int[] three) {
-        this(zero[0], zero[1], zero[2], zero[3],
-                one[0], one[1], one[2], one[3],
-                two[0], two[1], two[2], two[3],
-                three[0], three[1], three[2], three[3]);
+    public Palette4(int[] color0, int[] color1, int[] color2, int[] color3) {
+        this(
+                color0[0], color0[1], color0[2], color0[3],
+                color1[0], color1[1], color1[2], color1[3],
+                color2[0], color2[1], color2[2], color2[3],
+                color3[0], color3[1], color3[2], color3[3]
+        );
     }
 
     public Palette4(
@@ -100,8 +102,8 @@ public class Palette4 implements Disposable {
         return makeTexture();
     }
 
-    public Palette4(Color[] x) {
-        this(x[0], x[1], x[2], x[3]);
+    public Palette4(Color[] color) {
+        this(color[0], color[1], color[2], color[3]);
     }
 
     public Palette4(Color color0, Color color1, Color color2, Color color3) {
