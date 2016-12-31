@@ -107,6 +107,7 @@ project(":core") {
         compile "com.github.SquidPony.SquidLib:squidlib:$squidlibVersion"
         compile "com.github.SquidPony.SquidLib:squidlib-util:$squidlibVersion"
         compile "com.github.tommyettinger:regexodus:$regexodusVersion"
+        //compile 'com.github.SudoPlayGames:Joise:v1.0.2' // https://jitpack.io/#SudoPlayGames/Joise/
     }
 }
 
