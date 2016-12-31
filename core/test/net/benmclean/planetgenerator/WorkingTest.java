@@ -13,6 +13,13 @@ public class WorkingTest {
 
     @Test
     @Ignore
+    public void thisAlwaysFails() {
+        System.out.println("wut");
+        assertTrue(false);
+    }
+
+    @Test
+    @Ignore
     public void thisIsIgnored() {
     }
 }
