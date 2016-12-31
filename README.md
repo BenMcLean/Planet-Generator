@@ -14,6 +14,7 @@ To build for HTML5, run "gradlew.bat html:dist"
 
 ## Code
 * [libGDX](https://libgdx.badlogicgames.com/)
+* [libGDX-utils](https://bitbucket.org/dermetfan/libgdx-utils/)
 * [SquidLib](https://github.com/SquidPony/SquidLib)
 * [Joise](https://github.com/SudoPlayGames/Joise)
 
