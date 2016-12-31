@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
-import net.benmclean.planetgenerator.model.Palette4;
+import net.benmclean.utils.Palette4;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {

@@ -1,4 +1,4 @@
-package net.benmclean.planetgenerator.model;
+package net.benmclean.utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
