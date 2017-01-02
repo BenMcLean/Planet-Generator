@@ -10,8 +10,8 @@
 	<inherits name='squidlib' />
 	<inherits name='squidlib-util' />
 	<inherits name="regexodus" />
+	<inherits name="joise" />
 	<inherits name="net.benmclean.utils" />
-
 	<inherits name='PlanetGeneratorGame' />
 	<entry-point class='net.benmclean.planetgenerator.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
