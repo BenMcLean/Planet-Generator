@@ -28,7 +28,7 @@ public class GameWorld {
         class joiseWriter implements com.sudoplay.joise.mapping.Mapping2DWriter {
             @Override
             public void write(int x, int y, double value) {
-                world[x][y] = value >= 0.5;
+                world[x][y] = value >= 0;
             }
         }
 
