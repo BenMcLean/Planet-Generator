@@ -26,7 +26,7 @@ allprojects {
         gdxUtilsVersion = '0.13.3'
         squidlibVersion = 'fa26302416' // https://jitpack.io/#SquidPony/SquidLib
         regexodusVersion = '0.1.7'
-        benJoiseVersion = '89fdfdc5a2' // https://jitpack.io/#BenMcLean/Joise/
+        benJoiseVersion = '19fc6270ef' // https://jitpack.io/#BenMcLean/Joise/
     }
 
     repositories {
