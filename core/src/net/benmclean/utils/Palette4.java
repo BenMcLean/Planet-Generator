@@ -160,4 +160,13 @@ public class Palette4 implements Disposable {
                 255, 255, 255, 255
         );
     }
+
+    public static Palette4 earth() {
+        return new Palette4(
+                0, 0, 0, 255,
+                0, 119, 255, 255,
+                15, 215, 255, 255,
+                159, 227, 14, 255
+        );
+    }
 }

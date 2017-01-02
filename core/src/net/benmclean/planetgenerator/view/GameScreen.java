@@ -68,7 +68,7 @@ public class GameScreen implements Screen, Disposable {
         screenRegion = new TextureRegion();
 
         palettes = new Palette4[2];
-        palettes[0] = Palette4.gameboy();
+        palettes[0] = Palette4.earth();
         palettes[1] = palettes[0];
 
         MapLayers layers = map.getLayers();
