@@ -26,7 +26,8 @@ allprojects {
         gdxUtilsVersion = '0.13.3'
         squidlibVersion = 'fa26302416' // https://jitpack.io/#SquidPony/SquidLib
         regexodusVersion = '0.1.7'
-        benJoiseVersion = '19fc6270ef' // https://jitpack.io/#BenMcLean/Joise/
+        JoiseVersion = '1.0.2'
+        benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
     }
 
     repositories {
@@ -111,7 +112,7 @@ project(":core") {
         compile "com.github.SquidPony.SquidLib:squidlib:$squidlibVersion"
         compile "com.github.SquidPony.SquidLib:squidlib-util:$squidlibVersion"
         compile "com.github.tommyettinger:regexodus:$regexodusVersion"
-        //compile "com.sudoplay.joise:joise:1.0.2" // https://search.maven.org/#artifactdetails%7Ccom.sudoplay.joise%7Cjoise%7C1.0.2%7Cjar
+        //compile "com.sudoplay.joise:joise:$JoiseVersion" // https://search.maven.org/#artifactdetails%7Ccom.sudoplay.joise%7Cjoise%7C1.0.2%7Cjar
         compile "com.github.BenMcLean:Joise:$benJoiseVersion"
         compile fileTree(dir: 'libs', include: '*.jar')
 
