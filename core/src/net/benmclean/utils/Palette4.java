@@ -1,8 +1,11 @@
 package net.benmclean.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -12,8 +15,10 @@ public class Palette4 implements Disposable {
     protected Pixmap pixmap;
     protected Texture texture;
 
-    protected void makePixmap() {
+    protected Palette4 makePixmap() {
+        if (pixmap != null) pixmap.dispose();
         pixmap = new Pixmap(4, 1, Pixmap.Format.RGBA8888);
+        return this;
     }
 
     public Palette4(float[][] color) {
@@ -48,6 +53,7 @@ public class Palette4 implements Disposable {
             float r1, float g1, float b1, float a1,
             float r2, float g2, float b2, float a2,
             float r3, float g3, float b3, float a3) {
+        makePixmap();
         pixmap.setColor(r0, g0, b0, a0);
         pixmap.drawPixel(0, 0);
         pixmap.setColor(r1, g1, b1, a1);
@@ -77,7 +83,6 @@ public class Palette4 implements Disposable {
             int r1, int g1, int b1, int a1,
             int r2, int g2, int b2, int a2,
             int r3, int g3, int b3, int a3) {
-        makePixmap();
         set(
                 r0, g0, b0, a0,
                 r1, g1, b1, a1,
@@ -91,6 +96,7 @@ public class Palette4 implements Disposable {
             int r1, int g1, int b1, int a1,
             int r2, int g2, int b2, int a2,
             int r3, int g3, int b3, int a3) {
+        makePixmap();
         pixmap.setColor(r0 / 255f, g0 / 255f, b0 / 255f, a0 / 255f);
         pixmap.drawPixel(0, 0);
         pixmap.setColor(r1 / 255f, g1 / 255f, b1 / 255f, a1 / 255f);
@@ -107,11 +113,11 @@ public class Palette4 implements Disposable {
     }
 
     public Palette4(Color color0, Color color1, Color color2, Color color3) {
-        makePixmap();
         set(color0, color1, color2, color3);
     }
 
     public Palette4 set(Color color0, Color color1, Color color2, Color color3) {
+        makePixmap();
         pixmap.setColor(color0);
         pixmap.drawPixel(0, 0);
         pixmap.setColor(color1);
@@ -168,5 +174,24 @@ public class Palette4 implements Disposable {
                 15, 215, 255, 255,
                 159, 227, 14, 255
         );
+    }
+
+    public Palette4 bind(ShaderProgram shader) {
+        return bind(this, shader);
+    }
+
+    public Palette4 bind(ShaderProgram shader, int unit) {
+        return bind(this, shader, unit);
+    }
+
+    public static Palette4 bind(Palette4 palette4, ShaderProgram shader) {
+        return bind(palette4, shader, 1);
+    }
+
+    public static Palette4 bind(Palette4 palette4, ShaderProgram shader, int unit) {
+        palette4.getTexture().bind(unit);
+        shader.setUniformi("u_texPalette", unit);
+        Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0); // reset to texture 0 for SpriteBatch
+        return palette4;
     }
 }

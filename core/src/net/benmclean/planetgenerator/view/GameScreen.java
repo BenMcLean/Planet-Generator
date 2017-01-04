@@ -46,6 +46,7 @@ public class GameScreen implements Screen, Disposable {
     private Texture screenTexture;
     private TextureRegion screenRegion;
     private Palette4[] palettes;
+    private Palette4 playerPalette;
     public GameWorld world;
     public GameInputProcessor input;
 
@@ -70,6 +71,13 @@ public class GameScreen implements Screen, Disposable {
         palettes = new Palette4[2];
         palettes[0] = Palette4.earth();
         palettes[1] = palettes[0];
+
+        playerPalette = new Palette4(
+                0, 0, 0, 255,
+                85, 85, 85, 255,
+                170, 170, 170, 255,
+                255, 255, 255, 0
+        );
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
@@ -126,9 +134,7 @@ public class GameScreen implements Screen, Disposable {
 
         for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
             tiledMapRenderer.getBatch().begin();
-            palettes[layer].getTexture().bind(1);
-            tiledMapRenderer.getBatch().getShader().setUniformi("u_texPalette", 1);
-            Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0); // reset to texture 0 for SpriteBatch
+            palettes[layer].bind(tiledMapRenderer.getBatch().getShader());
 
             for (int dx = -1; dx <= 1; dx++)
                 for (int dy = -1; dy <= 1; dy++) {
@@ -144,13 +150,35 @@ public class GameScreen implements Screen, Disposable {
                 }
             tiledMapRenderer.getBatch().end();
         }
-
         tiledMapRenderer.getBatch().setShader(null);
 
-//        batch.setProjectionMatrix(worldView.getCamera().combined);
-//        batch.begin();
-//
-//        batch.end();
+        worldView.getCamera().position.set(
+                // player position + center of tile
+                world.getPlayerX() * TILE_WIDTH + TILE_WIDTH / 2,
+                world.getPlayerY() * TILE_HEIGHT + TILE_HEIGHT / 2,
+                0
+        );
+        worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        batch.setProjectionMatrix(worldView.getCamera().combined);
+        batch.setShader(assets.shader);
+        batch.begin();
+        playerPalette.bind(batch.getShader());
+
+        batch.draw(
+                assets.atlas.findRegion("characters/AstronautS0"),
+                world.getPlayerX() * TILE_WIDTH,
+                world.getPlayerY() * TILE_HEIGHT
+        );
+
+//        batch.setColor(Color.RED);
+//        for (int x = 0; x < world.SIZE_X; x++) {
+//            drawSquareOverTile(batch, x, x);
+//            drawSquareOverTile(batch, world.SIZE_X - x, x);
+//        }
+//        batch.setColor(Color.WHITE);
+
+        batch.end();
+        batch.setShader(null);
         frameBuffer.end();
 
         Gdx.gl.glClearColor(screenBackgroundColor.r, screenBackgroundColor.g, screenBackgroundColor.b, 1);
