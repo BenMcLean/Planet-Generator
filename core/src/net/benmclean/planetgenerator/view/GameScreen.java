@@ -74,8 +74,8 @@ public class GameScreen implements Screen, Disposable {
 
         playerPalette = new Palette4(
                 0, 0, 0, 255,
-                85, 85, 85, 255,
-                170, 170, 170, 255,
+                127, 127, 127, 255,
+                255, 255, 255, 255,
                 255, 255, 255, 0
         );
 
