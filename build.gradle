@@ -26,8 +26,8 @@ allprojects {
         gdxUtilsVersion = '0.13.4-SNAPSHOT'
         squidlibVersion = '87403be657' // https://jitpack.io/#SquidPony/SquidLib
         regexodusVersion = '0.1.7'
-        JoiseVersion = '1.0.2'
-        benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
+        JoiseVersion = '1.0.3' // https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.sudoplay.joise%22
+        //benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
         inGameConsoleVersion = '0.5.2'
     }
 
@@ -94,8 +94,9 @@ project(":html") {
         compile "com.github.SquidPony.SquidLib:squidlib:$squidlibVersion:sources"
         compile "com.github.SquidPony.SquidLib:squidlib-util:$squidlibVersion:sources"
         compile "com.github.tommyettinger:regexodus:$regexodusVersion:sources"
-        compile 'com.github.BenMcLean:Joise:$benJoiseVersion:sources'
         compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion:sources"
+        compile "com.sudoplay.joise:joise:$JoiseVersion:sources"
+        //compile 'com.github.BenMcLean:Joise:$benJoiseVersion:sources'
     }
 }
 
@@ -114,8 +115,8 @@ project(":core") {
         compile "com.github.SquidPony.SquidLib:squidlib:$squidlibVersion"
         compile "com.github.SquidPony.SquidLib:squidlib-util:$squidlibVersion"
         compile "com.github.tommyettinger:regexodus:$regexodusVersion"
-        //compile "com.sudoplay.joise:joise:$JoiseVersion" // https://search.maven.org/#artifactdetails%7Ccom.sudoplay.joise%7Cjoise%7C1.0.2%7Cjar
-        compile "com.github.BenMcLean:Joise:$benJoiseVersion"
+        compile "com.sudoplay.joise:joise:$JoiseVersion"
+        //compile "com.github.BenMcLean:Joise:$benJoiseVersion"
         compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
 
         testCompile "junit:junit:4.11"
