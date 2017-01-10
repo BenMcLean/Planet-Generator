@@ -29,6 +29,7 @@ allprojects {
         JoiseVersion = '1.0.5' // https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.sudoplay.joise%22
         //benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
         inGameConsoleVersion = '0.5.2'
+        benConsoleVersion = '7e0c1a9a64' // https://jitpack.io/#BenMcLean/libgdx-inGameConsole/
     }
 
     repositories {
@@ -94,9 +95,10 @@ project(":html") {
         compile "com.github.SquidPony.SquidLib:squidlib:$squidlibVersion:sources"
         compile "com.github.SquidPony.SquidLib:squidlib-util:$squidlibVersion:sources"
         compile "com.github.tommyettinger:regexodus:$regexodusVersion:sources"
-        compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion:sources"
         compile "com.sudoplay.joise:joise:$JoiseVersion:sources"
         //compile 'com.github.BenMcLean:Joise:$benJoiseVersion:sources'
+        //compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion:sources"
+        compile 'com.github.BenMcLean:libgdx-inGameConsole:$benConsoleVersion:sources'
     }
 }
 
@@ -117,7 +119,8 @@ project(":core") {
         compile "com.github.tommyettinger:regexodus:$regexodusVersion"
         compile "com.sudoplay.joise:joise:$JoiseVersion"
         //compile "com.github.BenMcLean:Joise:$benJoiseVersion"
-        compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
+        compile "com.github.BenMcLean:libgdx-inGameConsole:$benConsoleVersion"
+        //compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
 
         testCompile "junit:junit:4.11"
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"

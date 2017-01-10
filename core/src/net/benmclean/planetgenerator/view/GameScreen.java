@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
 import net.benmclean.utils.Palette4;
@@ -49,6 +50,7 @@ public class GameScreen implements Screen, Disposable {
     private Palette4 playerPalette;
     public GameWorld world;
     public GameInputProcessor input;
+    private GUIConsole console;
 
     public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -120,6 +122,8 @@ public class GameScreen implements Screen, Disposable {
         batch.enableBlending();
         input = new GameInputProcessor(world, this);
         Gdx.input.setInputProcessor(input);
+
+        console = new GUIConsole();
     }
 
     @Override
@@ -193,6 +197,8 @@ public class GameScreen implements Screen, Disposable {
         screenRegion.flip(false, true);
         batch.draw(screenRegion, 0, 0);
         batch.end();
+
+        console.draw();
     }
 
     public void drawRect(SpriteBatch batch, int x, int y, int width, int height) {
@@ -209,6 +215,7 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void resize(int width, int height) {
         screenView.update(width, height);
+        console.update(width, height);
     }
 
     @Override
@@ -218,6 +225,7 @@ public class GameScreen implements Screen, Disposable {
         batch.dispose();
         frameBuffer.dispose();
         assets.dispose();
+        console.dispose();
     }
 
     @Override
