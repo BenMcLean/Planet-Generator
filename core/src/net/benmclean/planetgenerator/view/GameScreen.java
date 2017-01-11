@@ -123,7 +123,7 @@ public class GameScreen implements Screen, Disposable {
         input = new GameInputProcessor(world, this);
         Gdx.input.setInputProcessor(input);
 
-        console = new GUIConsole();
+        console = new GUIConsole(assets.commodore64);
     }
 
     @Override

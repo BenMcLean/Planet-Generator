@@ -1,10 +1,12 @@
 package net.benmclean.planetgenerator.view;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
@@ -14,6 +16,7 @@ public class Assets {
     public ShaderProgram shader;
     public Texture one;
     public TextureAtlas atlas;
+    public Skin commodore64;
 
     public Assets () {
         // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
@@ -60,12 +63,8 @@ public class Assets {
         atlas = new TextureAtlas("art.atlas");
         wall = atlas.findRegion("biomes/Tri1");
         floor = atlas.findRegion("terrain/GrassWater");
-    }
 
-    public void applyPalette (Color[] palette) {
-        int location = shader.getUniformLocation("u_palette[0]");
-        for (int x = 0; x < palette.length; x++)
-            shader.setUniformf(location + x, palette[x]);
+        commodore64 = new Skin(new FileHandle("commodore64/uiskin.json"));
     }
 
     public TextureAtlas.AtlasRegion wall;
