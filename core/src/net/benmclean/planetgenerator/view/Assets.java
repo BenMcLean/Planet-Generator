@@ -1,6 +1,6 @@
 package net.benmclean.planetgenerator.view;
 
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -64,7 +64,7 @@ public class Assets {
         wall = atlas.findRegion("biomes/Tri1");
         floor = atlas.findRegion("terrain/GrassWater");
 
-        commodore64 = new Skin(new FileHandle("commodore64/uiskin.json"));
+        commodore64 = new Skin(Gdx.files.internal("commodore64/uiskin.json"));
     }
 
     public TextureAtlas.AtlasRegion wall;
