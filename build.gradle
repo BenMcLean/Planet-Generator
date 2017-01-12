@@ -98,7 +98,7 @@ project(":html") {
         compile "com.sudoplay.joise:joise:$JoiseVersion:sources"
         //compile 'com.github.BenMcLean:Joise:$benJoiseVersion:sources'
         //compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion:sources"
-        compile 'com.github.BenMcLean:libgdx-inGameConsole:$benConsoleVersion:sources'
+        compile "com.github.BenMcLean:libgdx-inGameConsole:$benConsoleVersion:sources"
     }
 }
 
