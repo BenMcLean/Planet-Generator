@@ -12,6 +12,54 @@ import com.badlogic.gdx.utils.Disposable;
  * Created by Benjamin on 12/26/2016.
  */
 public class Palette4 implements Disposable {
+    public static final String vertexShader =                 "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+            + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+            + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+            + "uniform mat4 u_projTrans;\n" //
+            + "varying vec4 v_color;\n" //
+            + "varying vec2 v_texCoords;\n" //
+            + "\n" //
+            + "void main()\n" //
+            + "{\n" //
+            + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
+            + "   v_color.a = v_color.a * (255.0/254.0);\n" //
+            + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
+            + "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+            + "}\n";
+
+    public static final String fragmentShader = "#ifdef GL_ES\n" +
+            "#define LOWP lowp\n" +
+            "precision mediump float;\n" +
+            "#else\n" +
+            "#define LOWP\n" +
+            "#endif\n" +
+            "varying vec2 v_texCoords;\n" +
+            "uniform sampler2D u_texPalette;\n" +
+            "uniform sampler2D u_texture;\n\n" +
+            "void main() {\n" +
+            "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
+            "	gl_FragColor = texture2D(u_texPalette, vec2(color.r, 0)).rgba;\n" +
+            "}";
+
+    public static final String fragmentShaderYieldTransparency = "#ifdef GL_ES\n" +
+            "#define LOWP lowp\n" +
+            "precision mediump float;\n" +
+            "#else\n" +
+            "#define LOWP\n" +
+            "#endif\n" +
+            "varying vec2 v_texCoords;\n" +
+            "uniform sampler2D u_texPalette;\n" +
+            "uniform sampler2D u_texture;\n\n" +
+            "void main() {\n" +
+            "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
+            "	gl_FragColor = (" +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).r, " +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).g, " +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).b, " +
+            "       texture2D(u_texture, v_texCoords).a" +
+            "   );" +
+            "}";
+
     protected Pixmap pixmap;
     protected Texture texture;
 

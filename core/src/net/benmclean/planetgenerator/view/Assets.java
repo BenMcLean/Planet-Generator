@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import net.benmclean.utils.Palette4;
 
 /**
  * Created by Benjamin on 11/19/2016.
@@ -21,36 +22,8 @@ public class Assets {
     public Assets () {
         // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
         // fragmentShader is where the magic happens
-        shader = new ShaderProgram(
-                "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
-                        + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
-                        + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
-                        + "uniform mat4 u_projTrans;\n" //
-                        + "varying vec4 v_color;\n" //
-                        + "varying vec2 v_texCoords;\n" //
-                        + "\n" //
-                        + "void main()\n" //
-                        + "{\n" //
-                        + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
-                        + "   v_color.a = v_color.a * (255.0/254.0);\n" //
-                        + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
-                        + "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
-                        + "}\n"
-                ,
-                "#ifdef GL_ES\n" +
-                        "#define LOWP lowp\n" +
-                        "precision mediump float;\n" +
-                        "#else\n" +
-                        "#define LOWP\n" +
-                        "#endif\n" +
-                        "varying vec2 v_texCoords;\n" +
-                        "uniform sampler2D u_texPalette;\n" +
-                        "uniform sampler2D u_texture;\n\n" +
-                        "void main() {\n" +
-                        "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
-                        "	gl_FragColor = texture2D(u_texPalette, vec2(color.r, 0)).rgba;\n" +
-                        "}"
-        );
+        shader = new ShaderProgram(Palette4.vertexShader, Palette4.fragmentShader);
+
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
         shader.begin();
 
