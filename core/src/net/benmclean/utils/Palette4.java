@@ -35,7 +35,7 @@ public class Palette4 implements Disposable {
             "#endif\n" +
             "varying vec2 v_texCoords;\n" +
             "uniform sampler2D u_texPalette;\n" +
-            "uniform sampler2D u_texture;\n\n" +
+            "uniform sampler2D u_texture;\n" +
             "void main() {\n" +
             "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
             "	gl_FragColor = texture2D(u_texPalette, vec2(color.r, 0)).rgba;\n" +
@@ -49,15 +49,15 @@ public class Palette4 implements Disposable {
             "#endif\n" +
             "varying vec2 v_texCoords;\n" +
             "uniform sampler2D u_texPalette;\n" +
-            "uniform sampler2D u_texture;\n\n" +
+            "uniform sampler2D u_texture;\n" +
             "void main() {\n" +
             "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
-            "	gl_FragColor = (" +
-            "       texture2D(u_texPalette, vec2(color.r, 0)).r, " +
-            "       texture2D(u_texPalette, vec2(color.r, 0)).g, " +
-            "       texture2D(u_texPalette, vec2(color.r, 0)).b, " +
-            "       texture2D(u_texture, v_texCoords).a" +
-            "   );" +
+            "	gl_FragColor = vec4(\n" +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).r, \n" +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).g, \n" +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).b, \n" +
+            "       texture2D(u_texture, v_texCoords).a\n" +
+            "   );\n" +
             "}";
 
     protected Pixmap pixmap;
