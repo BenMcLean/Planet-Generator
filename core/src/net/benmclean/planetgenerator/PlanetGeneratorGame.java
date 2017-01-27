@@ -5,7 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 public class PlanetGeneratorGame extends Game {
-    public long SEED = 42; //System.currentTimeMillis();
+    public long SEED = System.currentTimeMillis();
 
     @Override
     public void create() {

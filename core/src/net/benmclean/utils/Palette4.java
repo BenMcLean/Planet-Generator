@@ -12,7 +12,8 @@ import com.badlogic.gdx.utils.Disposable;
  * Created by Benjamin on 12/26/2016.
  */
 public class Palette4 implements Disposable {
-    public static final String vertexShader =                 "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
+	// vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
+    public static final String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
             + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
             + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
             + "uniform mat4 u_projTrans;\n" //
@@ -56,7 +57,7 @@ public class Palette4 implements Disposable {
             "       texture2D(u_texPalette, vec2(color.r, 0)).r, \n" +
             "       texture2D(u_texPalette, vec2(color.r, 0)).g, \n" +
             "       texture2D(u_texPalette, vec2(color.r, 0)).b, \n" +
-            "       texture2D(u_texture, v_texCoords).a\n" +
+            "       color.a\n" +
             "   );\n" +
             "}";
 
@@ -66,6 +67,7 @@ public class Palette4 implements Disposable {
     protected Palette4 makePixmap() {
         if (pixmap != null) pixmap.dispose();
         pixmap = new Pixmap(4, 1, Pixmap.Format.RGBA8888);
+        pixmap.setBlending(Pixmap.Blending.None);
         return this;
     }
 

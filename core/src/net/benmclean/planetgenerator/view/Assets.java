@@ -22,7 +22,7 @@ public class Assets {
     public Assets () {
         // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
         // fragmentShader is where the magic happens
-        shader = new ShaderProgram(Palette4.vertexShader, Palette4.fragmentShaderYieldTransparency);
+        shader = new ShaderProgram(Palette4.vertexShader, Palette4.fragmentShader);
 
         if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
         shader.begin();
