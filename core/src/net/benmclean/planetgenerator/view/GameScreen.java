@@ -31,7 +31,7 @@ public class GameScreen implements Screen, Disposable {
     }
 
     public long SEED;
-    public static final int VIRTUAL_WIDTH = 320;
+    public static final int VIRTUAL_WIDTH = 355;
     public static final int VIRTUAL_HEIGHT = 200;
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
