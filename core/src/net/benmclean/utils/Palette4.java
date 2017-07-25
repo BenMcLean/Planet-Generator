@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  * Created by Benjamin on 12/26/2016.
  */
 public class Palette4 implements Disposable {
-	// vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
+    // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
     public static final String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
             + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
             + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
@@ -34,12 +35,13 @@ public class Palette4 implements Disposable {
             "#else\n" +
             "#define LOWP\n" +
             "#endif\n" +
+            "varying LOWP vec4 v_color;\n" +
             "varying vec2 v_texCoords;\n" +
             "uniform sampler2D u_texPalette;\n" +
             "uniform sampler2D u_texture;\n" +
             "void main() {\n" +
-            "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
-            "	gl_FragColor = texture2D(u_texPalette, vec2(color.r, 0)).rgba;\n" +
+            "   float color = texture2D(u_texture, v_texCoords).r;\n" + // on separate line for GWT
+            "	gl_FragColor = texture2D(u_texPalette, vec2(color, 0)).rgba * v_color.rgba;\n" +
             "}";
 
     public static final String fragmentShaderYieldTransparency = "#ifdef GL_ES\n" +
@@ -48,16 +50,15 @@ public class Palette4 implements Disposable {
             "#else\n" +
             "#define LOWP\n" +
             "#endif\n" +
+            "varying LOWP vec4 v_color;\n" +
             "varying vec2 v_texCoords;\n" +
             "uniform sampler2D u_texPalette;\n" +
             "uniform sampler2D u_texture;\n" +
             "void main() {\n" +
-            "   vec4 color = texture2D(u_texture, v_texCoords).rgba;\n" + // on separate line for GWT
+            "   vec2 color = texture2D(u_texture, v_texCoords).ra;" +
             "	gl_FragColor = vec4(\n" +
-            "       texture2D(u_texPalette, vec2(color.r, 0)).r, \n" +
-            "       texture2D(u_texPalette, vec2(color.r, 0)).g, \n" +
-            "       texture2D(u_texPalette, vec2(color.r, 0)).b, \n" +
-            "       color.a\n" +
+            "       texture2D(u_texPalette, vec2(color.r, 0)).rgb * v_color.rgb, \n" +
+            "       color.y * v_color.a\n" +
             "   );\n" +
             "}";
 
@@ -226,6 +227,24 @@ public class Palette4 implements Disposable {
         );
     }
 
+    public static Palette4 blueUI() {
+        return new Palette4(
+                0, 0, 0, 255,
+                0, 0, 127, 255,
+                0, 0, 255, 255,
+                170, 170, 255, 255
+        );
+    }
+
+    public static Palette4 greenUI() {
+        return new Palette4(
+                0, 0, 0, 255,
+                0, 62, 0, 255,
+                0, 127, 0, 255,
+                0, 255, 0, 255
+        );
+    }
+
     public Palette4 bind(ShaderProgram shader) {
         return bind(this, shader);
     }
@@ -243,5 +262,19 @@ public class Palette4 implements Disposable {
         shader.setUniformi("u_texPalette", unit);
         Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0); // reset to texture 0 for SpriteBatch
         return palette4;
+    }
+
+    public static ShaderProgram makeShader () {
+        return makeShader(Palette4.fragmentShaderYieldTransparency);
+    }
+
+    public static ShaderProgram makeShader (String fragment) {
+        return makeShader(Palette4.vertexShader, fragment);
+    }
+
+    public static ShaderProgram makeShader (String vertex, String fragment) {
+        ShaderProgram shader = new ShaderProgram(vertex, fragment);
+        if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
+        return shader;
     }
 }
