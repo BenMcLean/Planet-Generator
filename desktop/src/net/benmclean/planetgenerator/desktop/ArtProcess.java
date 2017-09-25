@@ -25,13 +25,17 @@ public class ArtProcess {
 
             Palette4 palette = Palette4.gameboy();
             Color color = new Color();
-            Color newColor = new Color();
+            final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
 
             for (int x = 0; x < pixmap.getWidth(); x++) {
                 for (int y = 0; y < pixmap.getHeight(); y++) {
                     color.set(pixmap.getPixel(x, y));
-                    newColor.set(palette.getPixel((int) (color.r * 3.9999)));
-                    pixmap.drawPixel(x, y, Color.rgba8888(newColor.r, newColor.g, newColor.b, color.a));
+//                    newColor.set(palette.getPixel((int) (color.r * 3.9999)));
+//                    pixmap.drawPixel(x, y, Color.rgba8888(newColor.r, newColor.g, newColor.b, color.a));
+                    if (color.a > .05)
+                        pixmap.drawPixel(x, y, palette.getPixel((int) (color.r * 3.9999)));
+                    else
+                        pixmap.drawPixel(x, y, transparent);
                 }
             }
 
