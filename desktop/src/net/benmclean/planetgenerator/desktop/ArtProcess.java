@@ -24,8 +24,8 @@ public class ArtProcess {
             pixmap.setBlending(Pixmap.Blending.None);
 
             Palette4 palette = Palette4.gameboy();
-            Color color = Color.WHITE;
-            Color newColor = Color.WHITE;
+            Color color = new Color();
+            Color newColor = new Color();
 
             for (int x = 0; x < pixmap.getWidth(); x++) {
                 for (int y = 0; y < pixmap.getHeight(); y++) {
