@@ -1,5 +1,18 @@
 
 art.png
+size: 16,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+palette
+  rotate: false
+  xy: 0, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+
+art2.png
 size: 1024,64
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1573,7 +1586,7 @@ biomes/Tri1W
   offset: 0, 0
   index: -1
 
-art2.png
+art3.png
 size: 512,16
 format: RGBA8888
 filter: Nearest,Nearest
@@ -1775,7 +1788,7 @@ bricks/brick27
   offset: 0, 0
   index: -1
 
-art3.png
+art4.png
 size: 1024,32
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2537,7 +2550,7 @@ characters/WomanW2
   offset: 0, 0
   index: -1
 
-art4.png
+art5.png
 size: 1024,16
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2809,7 +2822,7 @@ emotes/question mark
   offset: 0, 0
   index: -1
 
-art5.png
+art6.png
 size: 512,16
 format: RGBA8888
 filter: Nearest,Nearest
@@ -2948,7 +2961,7 @@ extra crap/022
   offset: 0, 0
   index: -1
 
-art6.png
+art7.png
 size: 1024,64
 format: RGBA8888
 filter: Nearest,Nearest
@@ -4214,7 +4227,7 @@ terrain/SnowWater
   offset: 0, 0
   index: -1
 
-art7.png
+art8.png
 size: 128,16
 format: RGBA8888
 filter: Nearest,Nearest
@@ -4250,6 +4263,13 @@ utils/color3
 utils/test
   rotate: false
   xy: 64, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+utils/test2
+  rotate: false
+  xy: 80, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
