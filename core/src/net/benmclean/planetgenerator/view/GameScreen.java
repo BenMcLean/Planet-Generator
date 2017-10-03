@@ -61,7 +61,6 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void show() {
         assets = new Assets();
-        worldBackgroundColor = Color.BLACK;
         screenBackgroundColor = Color.BLACK;
         worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -73,6 +72,8 @@ public class GameScreen implements Screen, Disposable {
         palettes = new Palette4[2];
         palettes[0] = Palette4.earth();
         palettes[1] = palettes[0];
+
+        worldBackgroundColor = Color.SKY;
 
         playerPalette = new Palette4(
                 0, 0, 0, 255,

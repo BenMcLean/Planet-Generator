@@ -3022,6 +3022,13 @@ terrain/GrassCliffS
   orig: 16, 16
   offset: 0, 0
   index: -1
+terrain/GrassShoreS
+  rotate: false
+  xy: 16, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 terrain/GrassCliffSE
   rotate: false
   xy: 16, 0
@@ -3274,954 +3281,947 @@ terrain/GrassShoreNWSEC
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreS
+terrain/GrassShoreSE
   rotate: false
   xy: 176, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSE
+terrain/GrassShoreSEC
   rotate: false
   xy: 160, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSEC
+terrain/GrassShoreSECNWC
   rotate: false
   xy: 160, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSECNWC
+terrain/GrassShoreSECSWC
   rotate: false
   xy: 176, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSECSWC
+terrain/GrassShoreSECSWCNWC
   rotate: false
   xy: 192, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSECSWCNWC
+terrain/GrassShoreSENWC
   rotate: false
   xy: 176, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSENWC
+terrain/GrassShoreSEW
   rotate: false
   xy: 176, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSEW
+terrain/GrassShoreSNEC
   rotate: false
   xy: 192, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSNEC
+terrain/GrassShoreSNECNWC
   rotate: false
   xy: 208, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSNECNWC
+terrain/GrassShoreSNWC
   rotate: false
   xy: 192, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSNWC
+terrain/GrassShoreSW
   rotate: false
   xy: 192, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSW
+terrain/GrassShoreSWC
   rotate: false
   xy: 208, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSWC
+terrain/GrassShoreSWCNWC
   rotate: false
   xy: 224, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSWCNWC
+terrain/GrassShoreSWNEC
   rotate: false
   xy: 208, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreSWNEC
+terrain/GrassShoreW
   rotate: false
   xy: 208, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreW
+terrain/GrassShoreWNEC
   rotate: false
   xy: 224, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreWNEC
+terrain/GrassShoreWNECSEC
   rotate: false
   xy: 240, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreWNECSEC
+terrain/GrassShoreWSEC
   rotate: false
   xy: 224, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassShoreWSEC
+terrain/GrassWater
   rotate: false
   xy: 224, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/GrassWater
+terrain/SandCliffE
   rotate: false
   xy: 240, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffE
+terrain/SandCliffN
   rotate: false
   xy: 256, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffN
+terrain/SandCliffNE
   rotate: false
   xy: 240, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffNE
+terrain/SandCliffNEC
   rotate: false
   xy: 240, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffNEC
+terrain/SandCliffNW
   rotate: false
   xy: 256, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffNW
+terrain/SandCliffNWC
   rotate: false
   xy: 272, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffNWC
+terrain/SandCliffS
   rotate: false
   xy: 256, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandCliffS
+terrain/SandShoreS
   rotate: false
-  xy: 256, 0
+  xy: 256, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandCliffSE
   rotate: false
-  xy: 272, 32
+  xy: 256, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandCliffSEC
   rotate: false
-  xy: 288, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandCliffSW
-  rotate: false
-  xy: 272, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandCliffSWC
-  rotate: false
-  xy: 272, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandCliffW
-  rotate: false
-  xy: 288, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreE
-  rotate: false
-  xy: 304, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreENWC
-  rotate: false
-  xy: 288, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreESWC
-  rotate: false
-  xy: 288, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreESWCNWC
-  rotate: false
-  xy: 304, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreEW
-  rotate: false
-  xy: 320, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreN
-  rotate: false
-  xy: 304, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNE
-  rotate: false
-  xy: 304, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNEC
-  rotate: false
-  xy: 320, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNECNWC
-  rotate: false
-  xy: 336, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNECSEC
-  rotate: false
-  xy: 320, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNECSECNWC
-  rotate: false
-  xy: 320, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNECSECSWCNWC
-  rotate: false
-  xy: 336, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNECSWC
-  rotate: false
-  xy: 352, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNESWC
-  rotate: false
-  xy: 336, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNEW
-  rotate: false
-  xy: 336, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNS
-  rotate: false
-  xy: 352, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNSE
-  rotate: false
-  xy: 368, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNSEC
-  rotate: false
-  xy: 352, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNSECSWC
-  rotate: false
-  xy: 352, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNSEW
-  rotate: false
-  xy: 368, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNSW
-  rotate: false
-  xy: 384, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNSWC
-  rotate: false
-  xy: 368, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNW
-  rotate: false
-  xy: 368, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNWC
-  rotate: false
-  xy: 384, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreNWSEC
-  rotate: false
-  xy: 400, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreS
-  rotate: false
-  xy: 384, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSE
-  rotate: false
-  xy: 384, 0
+  xy: 272, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreSEC
   rotate: false
-  xy: 400, 32
+  xy: 272, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreSECNWC
+terrain/SandCliffSW
   rotate: false
-  xy: 416, 48
+  xy: 288, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-terrain/SandShoreSECSWC
+terrain/SandCliffSWC
   rotate: false
-  xy: 400, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSENWC
-  rotate: false
-  xy: 400, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSEW
-  rotate: false
-  xy: 416, 32
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSNEC
-  rotate: false
-  xy: 432, 48
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSNECNWC
-  rotate: false
-  xy: 416, 16
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSNWC
-  rotate: false
-  xy: 416, 0
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-terrain/SandShoreSW
-  rotate: false
-  xy: 432, 32
+  xy: 272, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreSWC
   rotate: false
-  xy: 448, 48
+  xy: 272, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandCliffW
+  rotate: false
+  xy: 272, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreE
+  rotate: false
+  xy: 288, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreENWC
+  rotate: false
+  xy: 304, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreESWC
+  rotate: false
+  xy: 288, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreESWCNWC
+  rotate: false
+  xy: 288, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreEW
+  rotate: false
+  xy: 304, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreN
+  rotate: false
+  xy: 320, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNE
+  rotate: false
+  xy: 304, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNEC
+  rotate: false
+  xy: 304, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNECNWC
+  rotate: false
+  xy: 320, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNECSEC
+  rotate: false
+  xy: 336, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNECSECNWC
+  rotate: false
+  xy: 320, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNECSECSWCNWC
+  rotate: false
+  xy: 320, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNECSWC
+  rotate: false
+  xy: 336, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNESWC
+  rotate: false
+  xy: 352, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNEW
+  rotate: false
+  xy: 336, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNS
+  rotate: false
+  xy: 336, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNSE
+  rotate: false
+  xy: 352, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNSEC
+  rotate: false
+  xy: 368, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNSECSWC
+  rotate: false
+  xy: 352, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNSEW
+  rotate: false
+  xy: 352, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNSW
+  rotate: false
+  xy: 368, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNSWC
+  rotate: false
+  xy: 384, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNW
+  rotate: false
+  xy: 368, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNWC
+  rotate: false
+  xy: 368, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreNWSEC
+  rotate: false
+  xy: 384, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSE
+  rotate: false
+  xy: 400, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSECNWC
+  rotate: false
+  xy: 384, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSECSWC
+  rotate: false
+  xy: 384, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSENWC
+  rotate: false
+  xy: 400, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSEW
+  rotate: false
+  xy: 416, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSNEC
+  rotate: false
+  xy: 400, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSNECNWC
+  rotate: false
+  xy: 400, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSNWC
+  rotate: false
+  xy: 416, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+terrain/SandShoreSW
+  rotate: false
+  xy: 432, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreSWCNWC
   rotate: false
-  xy: 432, 16
+  xy: 416, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreSWNEC
   rotate: false
-  xy: 432, 0
+  xy: 416, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreW
   rotate: false
-  xy: 448, 32
+  xy: 432, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreWNEC
   rotate: false
-  xy: 464, 48
+  xy: 448, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreWNECSEC
   rotate: false
-  xy: 448, 16
+  xy: 432, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandShoreWSEC
   rotate: false
-  xy: 448, 0
+  xy: 432, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SandWater
   rotate: false
-  xy: 464, 32
+  xy: 448, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffE
   rotate: false
-  xy: 480, 48
+  xy: 464, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffN
   rotate: false
-  xy: 464, 16
+  xy: 448, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffNE
   rotate: false
-  xy: 464, 0
+  xy: 448, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffNEC
   rotate: false
-  xy: 480, 32
+  xy: 464, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffNW
   rotate: false
-  xy: 496, 48
+  xy: 480, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffNWC
   rotate: false
-  xy: 480, 16
+  xy: 464, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffS
   rotate: false
-  xy: 480, 0
+  xy: 464, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffSE
   rotate: false
-  xy: 496, 32
+  xy: 480, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffSEC
   rotate: false
-  xy: 512, 48
+  xy: 496, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffSW
   rotate: false
-  xy: 496, 16
+  xy: 480, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffSWC
   rotate: false
-  xy: 496, 0
+  xy: 480, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCliffW
   rotate: false
-  xy: 512, 32
+  xy: 496, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowCrack
   rotate: false
-  xy: 528, 48
+  xy: 512, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreE
   rotate: false
-  xy: 512, 16
+  xy: 496, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreENWC
   rotate: false
-  xy: 512, 0
+  xy: 496, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreESWC
   rotate: false
-  xy: 528, 32
+  xy: 512, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreESWCNWC
   rotate: false
-  xy: 544, 48
+  xy: 528, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreEW
   rotate: false
-  xy: 528, 16
+  xy: 512, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreN
   rotate: false
-  xy: 528, 0
+  xy: 512, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNE
   rotate: false
-  xy: 544, 32
+  xy: 528, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNEC
   rotate: false
-  xy: 560, 48
+  xy: 544, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECNWC
   rotate: false
-  xy: 544, 16
+  xy: 528, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECSEC
   rotate: false
-  xy: 544, 0
+  xy: 528, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECSECNWC
   rotate: false
-  xy: 560, 32
+  xy: 544, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECSECSWC
   rotate: false
-  xy: 576, 48
+  xy: 560, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECSECSWCNWC
   rotate: false
-  xy: 560, 16
+  xy: 544, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECSWC
   rotate: false
-  xy: 560, 0
+  xy: 544, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNECSWCNWC
   rotate: false
-  xy: 576, 32
+  xy: 560, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNESWC
   rotate: false
-  xy: 592, 48
+  xy: 576, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNEW
   rotate: false
-  xy: 576, 16
+  xy: 560, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNS
   rotate: false
-  xy: 576, 0
+  xy: 560, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNSE
   rotate: false
-  xy: 592, 32
+  xy: 576, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNSEC
   rotate: false
-  xy: 608, 48
+  xy: 592, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNSECSWC
   rotate: false
-  xy: 592, 16
+  xy: 576, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNSEW
   rotate: false
-  xy: 592, 0
+  xy: 576, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNSW
   rotate: false
-  xy: 608, 32
+  xy: 592, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNSWC
   rotate: false
-  xy: 624, 48
+  xy: 608, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNW
   rotate: false
-  xy: 608, 16
+  xy: 592, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNWC
   rotate: false
-  xy: 608, 0
+  xy: 592, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreNWSEC
   rotate: false
-  xy: 624, 32
+  xy: 608, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreS
   rotate: false
-  xy: 640, 48
+  xy: 624, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSE
   rotate: false
-  xy: 624, 16
+  xy: 608, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSEC
   rotate: false
-  xy: 624, 0
+  xy: 608, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSECNWC
   rotate: false
-  xy: 640, 32
+  xy: 624, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSECSWC
   rotate: false
-  xy: 656, 48
+  xy: 640, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSECSWCNWC
   rotate: false
-  xy: 640, 16
+  xy: 624, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSENWC
   rotate: false
-  xy: 640, 0
+  xy: 624, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSEW
   rotate: false
-  xy: 656, 32
+  xy: 640, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSNEC
   rotate: false
-  xy: 672, 48
+  xy: 656, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSNECNWC
   rotate: false
-  xy: 656, 16
+  xy: 640, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSNWC
   rotate: false
-  xy: 656, 0
+  xy: 640, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSW
   rotate: false
-  xy: 672, 32
+  xy: 656, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSWC
   rotate: false
-  xy: 688, 48
+  xy: 672, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSWCNWC
   rotate: false
-  xy: 672, 16
+  xy: 656, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreSWNEC
   rotate: false
-  xy: 672, 0
+  xy: 656, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreW
   rotate: false
-  xy: 688, 32
+  xy: 672, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreWNEC
   rotate: false
-  xy: 704, 48
+  xy: 688, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreWNECSEC
   rotate: false
-  xy: 688, 16
+  xy: 672, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowShoreWSEC
   rotate: false
-  xy: 688, 0
+  xy: 672, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 terrain/SnowWater
   rotate: false
-  xy: 704, 32
+  xy: 688, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
