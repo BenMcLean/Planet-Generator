@@ -74,7 +74,7 @@ public class GameScreen implements Screen, Disposable {
         palettes[0] = new PaletteShader(Palette4.earth());
         palettes[1] = new PaletteShader(Palette4.earth());
 
-        worldBackgroundColor = Color.SKY;
+        worldBackgroundColor = Color.DARK_GRAY;
 
         playerPalette = new PaletteShader(new Palette4(
                 0, 0, 0, 255,
@@ -136,11 +136,11 @@ public class GameScreen implements Screen, Disposable {
         Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-        tiledMapRenderer.getBatch().setShader(assets.shader);
+//        tiledMapRenderer.getBatch().setShader(assets.shader);
 
         for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
             tiledMapRenderer.getBatch().begin();
-            palettes[layer].bind(tiledMapRenderer.getBatch().getShader());
+//            palettes[layer].bind(tiledMapRenderer.getBatch().getShader());
 
             for (int dx = -1; dx <= 1; dx++)
                 for (int dy = -1; dy <= 1; dy++) {
@@ -156,7 +156,7 @@ public class GameScreen implements Screen, Disposable {
                 }
             tiledMapRenderer.getBatch().end();
         }
-        tiledMapRenderer.getBatch().setShader(null);
+//        tiledMapRenderer.getBatch().setShader(null);
 
         worldView.getCamera().position.set(
                 // player position + center of tile
@@ -166,9 +166,9 @@ public class GameScreen implements Screen, Disposable {
         );
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch.setProjectionMatrix(worldView.getCamera().combined);
-        batch.setShader(assets.shader);
+//        batch.setShader(assets.shader);
         batch.begin();
-        playerPalette.bind(batch.getShader());
+//        playerPalette.bind(batch.getShader());
 
         batch.draw(
                 assets.atlas.findRegion("characters/AstronautS0"),
@@ -184,7 +184,7 @@ public class GameScreen implements Screen, Disposable {
 //        batch.setColor(Color.WHITE);
 
         batch.end();
-        batch.setShader(null);
+//        batch.setShader(null);
         frameBuffer.end();
 
         Gdx.gl.glClearColor(screenBackgroundColor.r, screenBackgroundColor.g, screenBackgroundColor.b, 1);
