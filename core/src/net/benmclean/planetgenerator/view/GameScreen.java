@@ -19,6 +19,7 @@ import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
 import net.benmclean.utils.Palette4;
+import net.benmclean.utils.PaletteShader;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {
@@ -46,8 +47,8 @@ public class GameScreen implements Screen, Disposable {
     private FrameBuffer frameBuffer;
     private Texture screenTexture;
     private TextureRegion screenRegion;
-    private Palette4[] palettes;
-    private Palette4 playerPalette;
+    private PaletteShader[] palettes;
+    private PaletteShader playerPalette;
     public GameWorld world;
     public GameInputProcessor input;
     private GUIConsole console;
@@ -69,18 +70,18 @@ public class GameScreen implements Screen, Disposable {
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
 
-        palettes = new Palette4[2];
-        palettes[0] = Palette4.earth();
-        palettes[1] = palettes[0];
+        palettes = new PaletteShader[2];
+        palettes[0] = new PaletteShader(Palette4.earth());
+        palettes[1] = new PaletteShader(Palette4.earth());
 
         worldBackgroundColor = Color.SKY;
 
-        playerPalette = new Palette4(
+        playerPalette = new PaletteShader(new Palette4(
                 0, 0, 0, 255,
                 127, 127, 127, 255,
                 255, 255, 255, 255,
                 255, 255, 255, 0
-        );
+        ));
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];

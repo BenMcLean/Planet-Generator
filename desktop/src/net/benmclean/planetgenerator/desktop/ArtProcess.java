@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import net.benmclean.utils.Palette4;
 
 public class ArtProcess {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         new LwjglApplication(new ArtProcessGame(), config);
     }
@@ -32,9 +32,10 @@ public class ArtProcess {
                     color.set(pixmap.getPixel(x, y));
 //                    newColor.set(palette.getPixel((int) (color.r * 3.9999)));
 //                    pixmap.drawPixel(x, y, Color.rgba8888(newColor.r, newColor.g, newColor.b, color.a));
-                    if (color.a > .05)
-                        pixmap.drawPixel(x, y, palette.getPixel((int) (color.r * 3.9999)));
-                    else
+                    if (color.a > .05) {
+                        pixmap.setColor(palette.get()[((int) (color.r * 3.9999))]);
+                        pixmap.drawPixel(x, y);
+                    } else
                         pixmap.drawPixel(x, y, transparent);
                 }
             }
