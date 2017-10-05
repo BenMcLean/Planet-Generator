@@ -1,9 +1,10 @@
 package net.benmclean.planetgenerator.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,7 +20,7 @@ public class Assets {
     public TextureAtlas atlas;
     public Skin commodore64;
 
-    public Assets () {
+    public Assets() {
         // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
         // fragmentShader is where the magic happens
         shader = new ShaderProgram(PaletteShader.vertexShader, PaletteShader.fragmentShaderYieldTransparency);
@@ -33,33 +34,35 @@ public class Assets {
         one.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         pixmap1.dispose();
 
-        atlas = new TextureAtlas("art.atlas");
-        wall = atlas.findRegion("biomes/Tri1");
-        floor = atlas.findRegion("terrain/GrassWater");
+        //atlas = new TextureAtlas("art.atlas");
+        atlas = packTextureAtlas();
 
         commodore64 = new Skin(Gdx.files.internal("commodore64/uiskin.json"));
     }
 
-    public TextureAtlas.AtlasRegion wall;
-    public TextureAtlas.AtlasRegion floor;
-    public void tempStuff() {
-        Pixmap pixmap1 = new Pixmap(16, 16, Pixmap.Format.RGBA8888);
-        pixmap1.setColor(Color.BLUE);
-        pixmap1.fill();
-        Texture wallTesture = new Texture(pixmap1);
-        wallTesture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        wall = new TextureAtlas.AtlasRegion(wallTesture, 0, 0, 16, 16);
+    public static TextureAtlas packTextureAtlas() {
+        PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
 
-        pixmap1.setColor(Color.GREEN);
-        pixmap1.fill();
-        Texture floorTesture = new Texture(pixmap1);
-        floorTesture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        floor = new TextureAtlas.AtlasRegion(floorTesture, 0, 0, 16, 16);
+        packIn("../assets-raw", "utils", packer);
+        packIn("../assets-raw", "characters", packer);
+        packIn("../assets-raw", "terrain", packer);
+
+        TextureAtlas atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
+        packer.dispose();
+        return atlas;
+    }
+
+    public static void packIn(String path, String category, PixmapPacker packer) {
+        FileHandle[] files = Gdx.files.internal(path + "/" + category).list();
+        for (FileHandle file : files)
+            if (file.extension().equalsIgnoreCase("png"))
+                packer.pack(category + "/" + file.nameWithoutExtension(), new Pixmap(file));
     }
 
     public static abstract class CoordCheckerInterface {
-        public abstract boolean where (int x, int y);
+        public abstract boolean where(int x, int y);
     }
+
     String terrainName(String name, int x, int y, CoordCheckerInterface where) {
         if (!where.where(x, y + 1)) name += "N";
         if (!where.where(x, y - 1)) name += "S";
@@ -75,5 +78,6 @@ public class Assets {
 
     public void dispose() {
         one.dispose();
+        atlas.dispose();
     }
 }
