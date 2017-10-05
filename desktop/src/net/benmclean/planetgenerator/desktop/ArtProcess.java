@@ -33,7 +33,7 @@ public class ArtProcess {
 //                    newColor.set(palette.getPixel((int) (color.r * 3.9999)));
 //                    pixmap.drawPixel(x, y, Color.rgba8888(newColor.r, newColor.g, newColor.b, color.a));
                     if (color.a > .05) {
-                        pixmap.setColor(palette.get()[((int) (color.r * 3.9999))]);
+                        pixmap.setColor(palette.get((int) (color.r * 3.9999)));
                         pixmap.drawPixel(x, y);
                     } else
                         pixmap.drawPixel(x, y, transparent);

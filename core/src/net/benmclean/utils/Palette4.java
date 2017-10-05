@@ -107,6 +107,10 @@ public class Palette4 implements Disposable {
         return palette;
     }
 
+    public Color get(int x) {
+        return palette[x];
+    }
+
     public Pixmap makePixmap() {
         Pixmap pixmap = new Pixmap(size, 1, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
