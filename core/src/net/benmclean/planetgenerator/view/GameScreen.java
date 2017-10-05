@@ -74,7 +74,7 @@ public class GameScreen implements Screen, Disposable {
         palettes[0] = new PaletteShader(Palette4.earth());
         palettes[1] = new PaletteShader(Palette4.earth());
 
-        worldBackgroundColor = Color.DARK_GRAY;
+        worldBackgroundColor = palettes[0].getPalette().get(2);
 
         playerPalette = new PaletteShader(new Palette4(
                 0, 0, 0, 255,
@@ -99,7 +99,7 @@ public class GameScreen implements Screen, Disposable {
                 StaticTiledMapTile tile = null;
                 Boolean answer = world.isWall(x, y);
                 if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(assets.atlas.findRegion("utils/color3"));
+                    tile = new StaticTiledMapTile(assets.atlas.findRegion("terrain/Grass"));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
                     tile = new StaticTiledMapTile(

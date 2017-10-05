@@ -66,6 +66,10 @@ public class PaletteShader implements Disposable {
         texture = palette.makeTexture();
     }
 
+    public Palette4 getPalette() {
+        return palette;
+    }
+
     public PaletteShader bind(ShaderProgram shader) {
         return bind(this, shader);
     }
