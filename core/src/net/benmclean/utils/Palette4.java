@@ -115,8 +115,7 @@ public class Palette4 implements Disposable {
         Pixmap pixmap = new Pixmap(size, 1, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
         for (int x=0; x < size; x++) {
-            pixmap.setColor(palette[x]);
-            pixmap.drawPixel(x, 0);
+            pixmap.drawPixel(x, 0, Color.rgba8888(palette[x]));
         }
         return pixmap;
     }
