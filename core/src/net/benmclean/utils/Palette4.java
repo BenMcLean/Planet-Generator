@@ -80,19 +80,18 @@ public class Palette4 implements Disposable {
             float r1, float g1, float b1, float a1,
             float r2, float g2, float b2, float a2,
             float r3, float g3, float b3, float a3) {
-        palette = new Color[4];
-        palette[0] = new Color(r0, g0, b0, a0);
-        palette[1] = new Color(r1, g1, b1, a1);
-        palette[2] = new Color(r2, g2, b2, a2);
-        palette[3] = new Color(r3, g3, b3, a3);
-        return this;
+        return set(new Color(r0, g0, b0, a0),
+                new Color(r1, g1, b1, a1),
+                new Color(r2, g2, b2, a2),
+                new Color(r3, g3, b3, a3));
     }
 
-    public Palette4 set (Color one, Color two, Color three, Color four) {
-        palette[0].set(one);
-        palette[1].set(two);
-        palette[2].set(three);
-        palette[3].set(four);
+    public Palette4 set (Color zero, Color one, Color two, Color three) {
+        palette = new Color[4];
+        palette[0] = zero;
+        palette[1] = one;
+        palette[2] = two;
+        palette[3] = three;
         return this;
     }
 
