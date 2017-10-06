@@ -1,16 +1,14 @@
 package net.benmclean.planetgenerator.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import net.benmclean.utils.Palette4;
 import net.benmclean.utils.PaletteShader;
 
 /**
@@ -44,48 +42,73 @@ public class Assets {
 
     public static TextureAtlas packTextureAtlas() {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
+        TextureAtlas raw = new TextureAtlas("art.atlas");
 
-        packIn("../assets-raw", "utils", packer);
-        packIn("../assets-raw", "characters", packer);
-        Palette4 earth = Palette4.earth();
-        packIn("../assets-raw", "terrain", earth, packer);
-        earth.dispose();
+        packIn("utils", raw, packer);
+        packIn("characters", raw, packer);
+        //Palette4 earth = Palette4.earth();
+        packIn("terrain", raw, packer);
+        //earth.dispose();
+        raw.dispose();
 
         TextureAtlas atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         packer.dispose();
         return atlas;
     }
 
-    public static void packIn(String path, String category, PixmapPacker packer) {
-        FileHandle[] files = Gdx.files.internal(path + "/" + category).list();
-        for (FileHandle file : files)
-            if (file.extension().equalsIgnoreCase("png"))
-                packer.pack(category + "/" + file.nameWithoutExtension(), new Pixmap(file));
+    public static void packIn(String category, TextureAtlas raw, PixmapPacker packer) {
+        Array<TextureAtlas.AtlasRegion> regions = raw.getRegions();
+        for (TextureAtlas.AtlasRegion region : regions)
+            if (region.name.toString().startsWith(category))
+                packIn(region, packer);
     }
 
-    public static void packIn(String path, String category, Palette4 palette, PixmapPacker packer) {
-        Color color = new Color();
-        final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
+    public static void packIn(TextureAtlas.AtlasRegion region, PixmapPacker packer) {
+        Texture texture = region.getTexture();
+        if (!texture.getTextureData().isPrepared()) {
+            texture.getTextureData().prepare();
+        }
+        Pixmap pixmap = texture.getTextureData().consumePixmap();
 
-        FileHandle[] files = Gdx.files.internal(path + "/" + category).list();
-        for (FileHandle file : files)
-            if (file.extension().equalsIgnoreCase("png")) {
-                Pixmap pixmap = new Pixmap(file);
+        Pixmap result = new Pixmap(region.getRegionWidth(), region.getRegionHeight(), Pixmap.Format.RGBA8888);
+        for (int x = 0; x < region.getRegionWidth(); x++)
+            for (int y = 0; y < region.getRegionHeight(); y++)
+                result.drawPixel(x, y, pixmap.getPixel(region.getRegionX() + x, region.getRegionY() + y));
 
-                for (int x = 0; x < pixmap.getWidth(); x++) {
-                    for (int y = 0; y < pixmap.getHeight(); y++) {
-                        color.set(pixmap.getPixel(x, y));
-                        if (color.a > .05) {
-                            pixmap.drawPixel(x, y, Color.rgba8888(palette.get((int) (color.r * 3.9999))));
-                        } else
-                            pixmap.drawPixel(x, y, transparent);
-                    }
-                }
-
-                packer.pack(category + "/" + file.nameWithoutExtension(), pixmap);
-                pixmap.dispose();
-            }
+        packer.pack(region.toString(), result);
+        texture.dispose();
     }
+
+//    public static void packIn(String path, String category, PixmapPacker packer) {
+//        FileHandle[] files = Gdx.files.internal(path + "/" + category).list();
+//        for (FileHandle file : files)
+//            if (file.extension().equalsIgnoreCase("png"))
+//                packer.pack(category + "/" + file.nameWithoutExtension(), new Pixmap(file));
+//    }
+//
+//    public static void packIn(String path, String category, Palette4 palette, PixmapPacker packer) {
+//        Color color = new Color();
+//        final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
+//
+//        FileHandle[] files = Gdx.files.internal(path + "/" + category).list();
+//        for (FileHandle file : files)
+//            if (file.extension().equalsIgnoreCase("png")) {
+//                Pixmap pixmap = new Pixmap(file);
+//
+//                for (int x = 0; x < pixmap.getWidth(); x++) {
+//                    for (int y = 0; y < pixmap.getHeight(); y++) {
+//                        color.set(pixmap.getPixel(x, y));
+//                        if (color.a > .05) {
+//                            pixmap.drawPixel(x, y, Color.rgba8888(palette.get((int) (color.r * 3.9999))));
+//                        } else
+//                            pixmap.drawPixel(x, y, transparent);
+//                    }
+//                }
+//
+//                packer.pack(category + "/" + file.nameWithoutExtension(), pixmap);
+//                pixmap.dispose();
+//            }
+//    }
 
     public static abstract class CoordCheckerInterface {
         public abstract boolean where(int x, int y);
