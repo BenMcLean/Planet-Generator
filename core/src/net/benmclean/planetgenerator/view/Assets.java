@@ -45,10 +45,12 @@ public class Assets {
     public static TextureAtlas packTextureAtlas() {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
 
-        packIn("../assets-raw", "utils", packer);
-        packIn("../assets-raw", "characters", packer);
+        String path = "raw";
+
+        packIn(path, "utils", packer);
+        packIn(path, "characters", packer);
         Palette4 earth = Palette4.earth();
-        packIn("../assets-raw", "terrain", earth, packer);
+        packIn(path, "terrain", earth, packer);
         earth.dispose();
 
         TextureAtlas atlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
