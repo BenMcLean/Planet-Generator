@@ -1,12 +1,12 @@
 package net.benmclean.planetgenerator.model;
 
 import squidpony.squidmath.Coord;
-import squidpony.squidmath.RNG;
+import squidpony.squidmath.ThrustRNG;
 
 public class GameWorld {
     private Assets assets;
     private long SEED;
-    private RNG rng;
+    private ThrustRNG rng;
     protected Coord playerCoord;
     private Planet planet;
 
@@ -16,7 +16,19 @@ public class GameWorld {
 
     public GameWorld(long SEED, Assets assets) {
         planet = new Planet(SEED, assets);
+        rng = new ThrustRNG(SEED);
         setPlayer(0, 0);
+    }
+
+    public GameWorld nextPlanet() {
+        planet.dispose();
+        SEED = rng.nextLong();
+        planet = new Planet(SEED, assets);
+        return this;
+    }
+
+    public long getSEED() {
+        return SEED;
     }
 
     public Planet getPlanet () {

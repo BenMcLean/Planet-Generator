@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Disposable;
 import com.sudoplay.joise.mapping.Mapping;
 import com.sudoplay.joise.mapping.MappingMode;
 import com.sudoplay.joise.mapping.MappingRange;
@@ -15,7 +16,7 @@ import net.benmclean.utils.Palette4;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
-public class Planet {
+public class Planet implements Disposable {
     public final int SIZE_X = 128;
     public final int SIZE_Y = 128;
     private long SEED;
@@ -147,6 +148,13 @@ public class Planet {
 
         packer.pack(region.toString(), result);
         texture.dispose();
+    }
+
+    /** Does not dispose Assets! */
+    @Override
+    public void dispose() {
+        atlas.dispose();
+        terrainPalette.dispose();
     }
 
     public static abstract class CoordCheckerInterface {
