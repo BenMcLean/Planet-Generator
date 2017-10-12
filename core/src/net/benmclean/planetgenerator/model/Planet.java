@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Array;
 import com.sudoplay.joise.mapping.Mapping;
 import com.sudoplay.joise.mapping.MappingMode;
 import com.sudoplay.joise.mapping.MappingRange;
@@ -25,6 +24,7 @@ public class Planet {
     protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
     protected boolean[][] world;
     private TextureAtlas atlas;
+    private Palette4 terrainPalette;
 
     public TextureAtlas getAtlas () {
         return atlas;
@@ -34,6 +34,10 @@ public class Planet {
         return SEED;
     }
 
+    public Palette4 getTerrainPalette () {
+        return terrainPalette;
+    }
+
     public Planet(Planet planet) {
         this(planet.SEED, planet.assets);
     }
@@ -41,6 +45,9 @@ public class Planet {
     public Planet(long SEED, Assets assets) {
         this.SEED = SEED;
         this.assets = assets;
+        terrainPalette = Palette4.earth();
+        atlas = packTextureAtlas();
+
         world = new boolean[SIZE_X][];
         for (int x = 0; x < world.length; x++)
             world[x] = new boolean[SIZE_Y];
@@ -91,16 +98,13 @@ public class Planet {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
         packIn("utils", assets.atlas, packer);
         packIn("characters", assets.atlas, packer);
-        Palette4 earth = Palette4.earth();
-        packIn("terrain", assets.atlas, earth, packer);
-        earth.dispose();
+        packIn("terrain", assets.atlas, packer, terrainPalette);
         return packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
     }
 
     public static void packIn(String category, TextureAtlas raw, PixmapPacker packer) {
-        Array<TextureAtlas.AtlasRegion> regions = raw.getRegions();
-        for (TextureAtlas.AtlasRegion region : regions)
-            if (region.name.toString().startsWith(category))
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
                 packIn(region, packer);
     }
 
@@ -120,14 +124,13 @@ public class Planet {
         texture.dispose();
     }
 
-    public static void packIn(String category, TextureAtlas raw, Palette4 palette, PixmapPacker packer) {
-        Array<TextureAtlas.AtlasRegion> regions = raw.getRegions();
-        for (TextureAtlas.AtlasRegion region : regions)
-            if (region.name.toString().startsWith(category))
-                packIn(region, palette, packer);
+    public static void packIn(String category, TextureAtlas raw, PixmapPacker packer, Palette4 palette) {
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
+                packIn(region, packer, palette);
     }
 
-    public static void packIn(TextureAtlas.AtlasRegion region, Palette4 palette, PixmapPacker packer) {
+    public static void packIn(TextureAtlas.AtlasRegion region, PixmapPacker packer, Palette4 palette) {
         Texture texture = region.getTexture();
         if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
         Pixmap pixmap = texture.getTextureData().consumePixmap();

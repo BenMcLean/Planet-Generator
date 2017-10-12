@@ -19,8 +19,6 @@ import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
 import net.benmclean.planetgenerator.model.Planet;
-import net.benmclean.utils.Palette4;
-import net.benmclean.utils.PaletteShader;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {
@@ -48,8 +46,6 @@ public class GameScreen implements Screen, Disposable {
     private FrameBuffer frameBuffer;
     private Texture screenTexture;
     private TextureRegion screenRegion;
-    private PaletteShader[] palettes;
-    private PaletteShader playerPalette;
     public GameWorld world;
     public GameInputProcessor input;
     private GUIConsole console;
@@ -70,47 +66,37 @@ public class GameScreen implements Screen, Disposable {
         map = new TiledMap();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
+        worldBackgroundColor = world.getPlanet().getTerrainPalette().get(2);
 
-        palettes = new PaletteShader[2];
-        palettes[0] = new PaletteShader(Palette4.earth());
-        palettes[1] = new PaletteShader(Palette4.earth());
-
-        worldBackgroundColor = palettes[0].getPalette().get(2);
-
-        playerPalette = new PaletteShader(new Palette4(
-                0, 0, 0, 255,
-                127, 127, 127, 255,
-                255, 255, 255, 255,
-                255, 255, 255, 0
-        ));
+//        playerPalette = new PaletteShader(new Palette4(
+//                0, 0, 0, 255,
+//                127, 127, 127, 255,
+//                255, 255, 255, 255,
+//                255, 255, 255, 0
+//        ));
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
         Planet.CoordCheckerInterface coordChecker = new Planet.CoordCheckerInterface() {
             @Override
             public boolean where(int x, int y) {
-                return world.isWall(x, y);
+                return world.getPlanet().isWall(x, y);
             }
         };
         for (int x = 0; x < layer.length; x++)
-            layer[x] = new TiledMapTileLayer(world.SIZE_X, world.SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
+            layer[x] = new TiledMapTileLayer(world.getPlanet().SIZE_X, world.getPlanet().SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
         String name = "";
-        for (int x = 0; x < world.SIZE_X; x++) {
-            for (int y = 0; y < world.SIZE_Y; y++) {
+        for (int x = 0; x < world.getPlanet().SIZE_X; x++) {
+            for (int y = 0; y < world.getPlanet().SIZE_Y; y++) {
                 StaticTiledMapTile tile = null;
-                Boolean answer = world.isWall(x, y);
+                Boolean answer = world.getPlanet().isWall(x, y);
                 if (answer != null && !answer) {
                     tile = new StaticTiledMapTile(assets.atlas.findRegion("terrain/Grass"));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
                     tile = new StaticTiledMapTile(
                             assets.atlas.findRegion(
-                                    Planet.terrainName(
-                                            "terrain/GrassShore",
-                                            x,
-                                            y,
-                                            coordChecker
-                                    )
+                                    world.getPlanet().terrainName(x, y, coordChecker)
                             )
                     );
                     layer[0].setCell(x, y, makeCell(tile));
@@ -147,8 +133,8 @@ public class GameScreen implements Screen, Disposable {
                 for (int dy = -1; dy <= 1; dy++) {
                     worldView.getCamera().position.set(
                             // player position + center of tile + over the edge for wrapping
-                            world.getPlayerX() * TILE_WIDTH + TILE_WIDTH / 2 + world.SIZE_X * TILE_WIDTH * dx,
-                            world.getPlayerY() * TILE_HEIGHT + TILE_HEIGHT / 2 + world.SIZE_Y * TILE_HEIGHT * dy,
+                            world.getPlayerX() * TILE_WIDTH + TILE_WIDTH / 2 + world.getPlanet().SIZE_X * TILE_WIDTH * dx,
+                            world.getPlayerY() * TILE_HEIGHT + TILE_HEIGHT / 2 + world.getPlanet().SIZE_Y * TILE_HEIGHT * dy,
                             0
                     );
                     worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -223,8 +209,6 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void dispose() {
-        for (int x = 0; x < palettes.length; x++)
-            palettes[x].dispose();
         batch.dispose();
         frameBuffer.dispose();
         assets.dispose();
