@@ -91,11 +91,11 @@ public class GameScreen implements Screen, Disposable {
                 StaticTiledMapTile tile = null;
                 Boolean answer = world.getPlanet().isWall(x, y);
                 if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(assets.atlas.findRegion("terrain/Grass"));
+                    tile = new StaticTiledMapTile(world.getPlanet().getAtlas().findRegion("terrain/Grass"));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
                     tile = new StaticTiledMapTile(
-                            assets.atlas.findRegion(
+                            world.getPlanet().getAtlas().findRegion(
                                     world.getPlanet().terrainName(x, y, coordChecker)
                             )
                     );

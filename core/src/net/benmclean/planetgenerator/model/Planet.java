@@ -16,8 +16,8 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
 public class Planet {
-    public static final int SIZE_X = 128;
-    public static final int SIZE_Y = 128;
+    public final int SIZE_X = 128;
+    public final int SIZE_Y = 128;
     private long SEED;
     private RNG rng;
     private Assets assets;
