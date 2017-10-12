@@ -15,7 +15,6 @@ public class GameWorld {
     public static final int SIZE_Y = 128;
     private long SEED;
     private RNG rng;
-    private char[][] bareDungeon;
     protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
     protected boolean[][] world;
     //protected OpenSimplexNoiseTileable3D noise;

@@ -1,0 +1,165 @@
+{
+  com.badlogic.gdx.graphics.g2d.BitmapFont: {
+    default-font: {
+      file: PxPlus_IBM_VGA_8x16.fnt
+    },
+  },
+  com.badlogic.gdx.graphics.Color: {
+    white: {r: 1, g: 1, b: 1, a: 1},
+    lightgrey: {r: 0.66, g: 0.66, b: 0.66, a: 1},
+    darkgrey: {r: 0.33, g: 0.33, b: 0.33, a: 1},
+    black: {r: 0, g: 0, b: 0, a: 1},
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+    dialogDim: {
+      name: white,
+      color: {r: 0, g: 0, b: 0, a: 0.45}
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+    default: {
+      down: button-pressed,
+      up: button,
+    },
+    toggle: {
+      down: button-pressed,
+      checked: button-pressed,
+      up: button,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+    default: {
+      down: button-pressed,
+      up: button,
+      font: default-font,
+      fontColor: black,
+    },
+    toggle: {
+      down: button,
+      up: button,
+      checked: button,
+      font: default-font,
+      fontColor: black,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+    default: {
+      background: scrollpane,
+      vScroll: scroll-vertical,
+      vScrollKnob: scroll-knob-vertical,
+      hScroll: scroll-horizontal,
+      hScrollKnob: scroll-knob-horizontal,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+    default: {
+      font: default-font,
+      fontColor: black,
+      background: select-box,
+      backgroundOpen: select-box-up,
+      scrollStyle: default,
+      listStyle: {
+        font: default-font,
+        fontColorUnselected: white,
+        background: black,
+        fontColorSelected: black,
+        selection: white,
+      },
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+    default-vertical: {
+      handle: splitpane-vertical
+    },
+    default-horizontal: {
+      handle: splitpane-horizontal
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+    default: {
+      titleFont: default-font,
+      background: window-thick-border,
+      titleFontColor: white,
+    },
+    dialog: {
+      titleFont: default-font,
+      background: window-double-border,
+      titleFontColor: white,
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+    default-horizontal: {
+      background: slider,
+      knob: slider-knob,
+    },
+    default-vertical: {
+      background: slider-vertical,
+      knob: slider-knob-vertical,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+    default-horizontal: {
+      background: slider,
+      knob: slider-knob,
+    },
+    default-vertical: {
+      background: slider-vertical,
+      knob: slider-knob-vertical,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+    default: {
+      font: default-font,
+      fontColor: white,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+    default: {
+      selection: darkgrey,
+      background: black,
+      font: default-font,
+      fontColor: white,
+      cursor: cursor,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+    default: {
+      checkboxOn: checked,
+      checkboxOff: unchecked,
+      font: default-font,
+      fontColor: black,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+    default: {
+      background: black
+      fontColorUnselected: lightgrey,
+      selection: darkgrey,
+      fontColorSelected: white,
+      font: default-font,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+    default: {
+      background: black,
+      knob: slider-knob,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+    default: {
+      minus: tree-minus,
+      plus: tree-plus,
+      selection: black,
+    },
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+    default: {
+      label: {
+        font: default-font,
+        fontColor: black,
+      },
+      background: window-single-border,
+      wrapWidth: 150,
+    },
+  },
+}

@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.GameWorld;
+import net.benmclean.planetgenerator.model.Planet;
 import net.benmclean.utils.Palette4;
 import net.benmclean.utils.PaletteShader;
 
@@ -36,7 +37,7 @@ public class GameScreen implements Screen, Disposable {
     public static final int VIRTUAL_HEIGHT = 200;
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
-    public Assets assets;
+    public net.benmclean.planetgenerator.model.Assets assets;
     private Color worldBackgroundColor;
     private Color screenBackgroundColor;
     private Viewport worldView;
@@ -61,7 +62,7 @@ public class GameScreen implements Screen, Disposable {
 
     @Override
     public void show() {
-        assets = new Assets();
+        assets = new net.benmclean.planetgenerator.model.Assets();
         screenBackgroundColor = Color.BLACK;
         worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -85,7 +86,7 @@ public class GameScreen implements Screen, Disposable {
 
         MapLayers layers = map.getLayers();
         TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
-        Assets.CoordCheckerInterface coordChecker = new Assets.CoordCheckerInterface() {
+        Planet.CoordCheckerInterface coordChecker = new Planet.CoordCheckerInterface() {
             @Override
             public boolean where(int x, int y) {
                 return world.isWall(x, y);
@@ -104,7 +105,7 @@ public class GameScreen implements Screen, Disposable {
                 } else if (answer != null) {
                     tile = new StaticTiledMapTile(
                             assets.atlas.findRegion(
-                                    assets.terrainName(
+                                    Planet.terrainName(
                                             "terrain/GrassShore",
                                             x,
                                             y,
