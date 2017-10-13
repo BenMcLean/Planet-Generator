@@ -66,7 +66,7 @@ public class GameScreen implements Screen, Disposable {
         map = new TiledMap();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
-        worldBackgroundColor = world.getPlanet().getTerrainPalette().get(2);
+        worldBackgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
 
 //        playerPalette = new PaletteShader(new Palette4(
 //                0, 0, 0, 255,
