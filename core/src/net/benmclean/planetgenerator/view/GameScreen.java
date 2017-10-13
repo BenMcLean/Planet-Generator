@@ -90,7 +90,7 @@ public class GameScreen implements Screen, Disposable {
                 StaticTiledMapTile tile = null;
                 Boolean answer = world.getPlanet().isWall(x, y);
                 if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(world.getPlanet().getAtlas().findRegion("terrain/Grass"));
+                    tile = new StaticTiledMapTile(world.getPlanet().getAtlas().findRegion("terrain/" + world.getPlanet().terrainName));
                     layer[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
                     tile = new StaticTiledMapTile(
@@ -99,7 +99,7 @@ public class GameScreen implements Screen, Disposable {
                             )
                     );
                     layer[0].setCell(x, y, makeCell(tile));
-                }
+                } else throw new NullPointerException();
             }
         }
         for (int x = 0; x < layer.length; x++)
