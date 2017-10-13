@@ -26,6 +26,7 @@ public class Planet implements Disposable {
     protected boolean[][] world;
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
+    private String terrainName;
 
     public TextureAtlas getAtlas () {
         return atlas;
@@ -46,6 +47,13 @@ public class Planet implements Disposable {
     public Planet(long SEED, Assets assets) {
         this.SEED = SEED;
         this.assets = assets;
+        rng = new RNG(SEED);
+
+        switch (rng.nextInt(3)) {
+            case 1: terrainName = "Sand"; break;
+            case 2: terrainName = "Snow"; break;
+            default: terrainName = "Grass"; break;
+        }
         terrainPalette = Palette4.earth();
         atlas = packTextureAtlas();
 
@@ -162,7 +170,7 @@ public class Planet implements Disposable {
     }
 
     public String terrainName (int x, int y, CoordCheckerInterface where) {
-        return terrainName("terrain/GrassShore", x, y, where);
+        return terrainName("terrain/" + terrainName + "Shore", x, y, where);
     }
 
     public String terrainName(String name, int x, int y, CoordCheckerInterface where) {
