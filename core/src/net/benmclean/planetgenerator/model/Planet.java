@@ -27,6 +27,7 @@ public class Planet implements Disposable {
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
     private String terrainName;
+    public Color backgroundColor;
 
     public TextureAtlas getAtlas () {
         return atlas;
@@ -49,12 +50,13 @@ public class Planet implements Disposable {
         this.assets = assets;
         rng = new RNG(SEED);
 
-        switch (rng.nextInt(3)) {
-            case 1: terrainName = "Sand"; break;
-            case 2: terrainName = "Snow"; break;
+        switch (rng.nextInt(2)) {
+            case 0: terrainName = "Sand"; break;
+            case 1: terrainName = "Snow"; break;
             default: terrainName = "Grass"; break;
         }
         terrainPalette = Palette4.earth();
+        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
         atlas = packTextureAtlas();
 
         world = new boolean[SIZE_X][];

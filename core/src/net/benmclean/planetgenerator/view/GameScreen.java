@@ -66,7 +66,6 @@ public class GameScreen implements Screen, Disposable {
         map = new TiledMap();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
-        worldBackgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
 
 //        playerPalette = new PaletteShader(new Palette4(
 //                0, 0, 0, 255,
@@ -120,7 +119,12 @@ public class GameScreen implements Screen, Disposable {
         input.tick(delta);
 
         frameBuffer.begin();
-        Gdx.gl.glClearColor(worldBackgroundColor.r, worldBackgroundColor.g, worldBackgroundColor.b, 1);
+        Gdx.gl.glClearColor(
+                world.getPlanet().backgroundColor.r,
+                world.getPlanet().backgroundColor.g,
+                world.getPlanet().backgroundColor.b,
+                1f
+        );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
 //        tiledMapRenderer.getBatch().setShader(assets.shader);
