@@ -26,7 +26,7 @@ public class Planet implements Disposable {
     protected boolean[][] world;
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
-    private String terrainName;
+    public String terrainName;
     public Color backgroundColor;
 
     public TextureAtlas getAtlas () {
@@ -108,8 +108,7 @@ public class Planet implements Disposable {
     public TextureAtlas packTextureAtlas() {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
         packIn("utils", assets.atlas, packer);
-        packIn("characters", assets.atlas, packer);
-        packIn("terrain", assets.atlas, packer, terrainPalette);
+        packIn("terrain/" + terrainName, assets.atlas, packer, terrainPalette);
         return packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
     }
 
