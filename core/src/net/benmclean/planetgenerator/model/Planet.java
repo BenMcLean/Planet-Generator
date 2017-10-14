@@ -18,8 +18,8 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
 public class Planet implements Disposable {
-    public final int SIZE_X = 128;
-    public final int SIZE_Y = 128;
+    public final int SIZE_X = 256;
+    public final int SIZE_Y = 256;
     private long SEED;
     private RNG rng;
     private Assets assets;
@@ -51,11 +51,11 @@ public class Planet implements Disposable {
         this.assets = assets;
         rng = new RNG(SEED);
 
-        switch (rng.nextInt(2)) {
-            case 0:
+        switch (rng.nextInt(3)) {
+            case 1:
                 terrainName = "Sand";
                 break;
-            case 1:
+            case 2:
                 terrainName = "Snow";
                 break;
             default:
