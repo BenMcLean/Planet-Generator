@@ -13,6 +13,7 @@ import com.sudoplay.joise.module.ModuleBasisFunction;
 import com.sudoplay.joise.module.ModuleFractal;
 import com.sudoplay.joise.module.ModuleTranslateDomain;
 import net.benmclean.utils.Palette4;
+import squidpony.squidgrid.gui.gdx.SColor;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
@@ -29,15 +30,15 @@ public class Planet implements Disposable {
     public String terrainName;
     public Color backgroundColor;
 
-    public TextureAtlas getAtlas () {
+    public TextureAtlas getAtlas() {
         return atlas;
     }
 
-    public long getSEED () {
+    public long getSEED() {
         return SEED;
     }
 
-    public Palette4 getTerrainPalette () {
+    public Palette4 getTerrainPalette() {
         return terrainPalette;
     }
 
@@ -51,12 +52,26 @@ public class Planet implements Disposable {
         rng = new RNG(SEED);
 
         switch (rng.nextInt(2)) {
-            case 0: terrainName = "Sand"; break;
-            case 1: terrainName = "Snow"; break;
-            default: terrainName = "Grass"; break;
+            case 0:
+                terrainName = "Sand";
+                break;
+            case 1:
+                terrainName = "Snow";
+                break;
+            default:
+                terrainName = "Grass";
+                break;
         }
-        terrainPalette = Palette4.earth();
-        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
+
+//        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
+        backgroundColor = SColor.randomColorWheel(rng, 2, 2);
+        Color land = SColor.randomColorWheel(rng, 2, 2);
+        terrainPalette = new Palette4(
+                Color.BLACK,
+                new Color(backgroundColor.r / 2f, backgroundColor.g / 2f, backgroundColor.b / 2f, 1f),
+                new Color(land.r / 2f, land.g / 2f, land.b / 2f, 1f),
+                land
+        );
         atlas = packTextureAtlas();
 
         world = new boolean[SIZE_X][];
@@ -159,7 +174,9 @@ public class Planet implements Disposable {
         texture.dispose();
     }
 
-    /** Does not dispose Assets! */
+    /**
+     * Does not dispose Assets!
+     */
     @Override
     public void dispose() {
         atlas.dispose();
@@ -170,7 +187,7 @@ public class Planet implements Disposable {
         public abstract boolean where(int x, int y);
     }
 
-    public String terrainName (int x, int y, CoordCheckerInterface where) {
+    public String terrainName(int x, int y, CoordCheckerInterface where) {
         return terrainName("terrain/" + terrainName + "Shore", x, y, where);
     }
 
