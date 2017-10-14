@@ -24,7 +24,7 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.0'
         gdxUtilsVersion = '0.13.4'
-        squidlibVersion = '07a210b67e' // https://jitpack.io/#SquidPony/SquidLib
+        squidlibVersion = '4c8e38bcdc' // https://jitpack.io/#SquidPony/SquidLib
         regexodusVersion = '0.1.7'
         JoiseVersion = '1.0.5' // https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.sudoplay.joise%22
         //benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
