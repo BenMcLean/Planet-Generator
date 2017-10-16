@@ -32,7 +32,8 @@ public class GameInputProcessor implements InputProcessor {
             Input.Keys.ESCAPE,
             Input.Keys.ENTER,
             Input.Keys.ALT_LEFT,
-            Input.Keys.ALT_RIGHT
+            Input.Keys.ALT_RIGHT,
+            Input.Keys.X
     ));
     public final static Set<Integer> TRACKED_KEYS = Collections.unmodifiableSet(
             new HashSet<Integer>(TRACKED_KEYS_ARRAY));
@@ -119,6 +120,9 @@ public class GameInputProcessor implements InputProcessor {
                 break;
             case Input.Keys.LEFT:
                 world.movePlayer(Direction.WEST);
+                break;
+            case Input.Keys.X:
+                world.nextPlanet();
                 break;
             default:
                 //moved=false;

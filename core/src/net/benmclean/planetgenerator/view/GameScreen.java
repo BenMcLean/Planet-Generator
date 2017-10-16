@@ -6,19 +6,15 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
+import net.benmclean.planetgenerator.model.Assets;
 import net.benmclean.planetgenerator.model.GameWorld;
-import net.benmclean.planetgenerator.model.Planet;
 
 public class GameScreen implements Screen, Disposable {
     public GameScreen() {
@@ -33,37 +29,25 @@ public class GameScreen implements Screen, Disposable {
     public long SEED;
     public static final int VIRTUAL_WIDTH = 355;
     public static final int VIRTUAL_HEIGHT = 200;
-    public static final int TILE_WIDTH = 16;
-    public static final int TILE_HEIGHT = 16;
-    public net.benmclean.planetgenerator.model.Assets assets;
     private Color worldBackgroundColor;
     private Color screenBackgroundColor;
     private Viewport worldView;
     private Viewport screenView;
     private SpriteBatch batch;
-    private TiledMap map;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private FrameBuffer frameBuffer;
     private Texture screenTexture;
     private TextureRegion screenRegion;
     public GameWorld world;
     public GameInputProcessor input;
-    private GUIConsole console;
-
-    public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
-        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
-        cell.setTile(tile);
-        return cell;
-    }
+//    private GUIConsole console;
 
     @Override
     public void show() {
-        assets = new net.benmclean.planetgenerator.model.Assets();
         screenBackgroundColor = Color.BLACK;
         worldView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         screenView = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch = new SpriteBatch();
-        map = new TiledMap();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
 
@@ -74,44 +58,14 @@ public class GameScreen implements Screen, Disposable {
 //                255, 255, 255, 0
 //        ));
 
-        MapLayers layers = map.getLayers();
-        TiledMapTileLayer[] layer = new TiledMapTileLayer[2];
-        Planet.CoordCheckerInterface coordChecker = new Planet.CoordCheckerInterface() {
-            @Override
-            public boolean where(int x, int y) {
-                return world.getPlanet().isWall(x, y);
-            }
-        };
-        for (int x = 0; x < layer.length; x++)
-            layer[x] = new TiledMapTileLayer(world.getPlanet().SIZE_X, world.getPlanet().SIZE_Y, TILE_WIDTH, TILE_HEIGHT);
-        String name = "";
-        for (int x = 0; x < world.getPlanet().SIZE_X; x++) {
-            for (int y = 0; y < world.getPlanet().SIZE_Y; y++) {
-                StaticTiledMapTile tile = null;
-                Boolean answer = world.getPlanet().isWall(x, y);
-                if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(world.getPlanet().getAtlas().findRegion("terrain/" + world.getPlanet().terrainName));
-                    layer[1].setCell(x, y, makeCell(tile));
-                } else if (answer != null) {
-                    tile = new StaticTiledMapTile(
-                            world.getPlanet().getAtlas().findRegion(
-                                    world.getPlanet().terrainName(x, y, coordChecker)
-                            )
-                    );
-                    layer[0].setCell(x, y, makeCell(tile));
-                } else throw new NullPointerException();
-            }
-        }
-        for (int x = 0; x < layer.length; x++)
-            layers.add(layer[x]);
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getPlanet().getMap());
         screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
         screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch.enableBlending();
         input = new GameInputProcessor(world, this);
         Gdx.input.setInputProcessor(input);
 
-        console = new GUIConsole(assets.commodore64);
+        //console = new GUIConsole(assets.commodore64);
     }
 
     @Override
@@ -129,7 +83,7 @@ public class GameScreen implements Screen, Disposable {
         worldView.apply();
 //        tiledMapRenderer.getBatch().setShader(assets.shader);
 
-        for (int layer = 0; layer < map.getLayers().getCount(); layer++) {
+        for (MapLayer layer : world.getPlanet().getMap().getLayers()) {
             tiledMapRenderer.getBatch().begin();
 //            palettes[layer].bind(tiledMapRenderer.getBatch().getShader());
 
@@ -137,13 +91,13 @@ public class GameScreen implements Screen, Disposable {
                 for (int dy = -1; dy <= 1; dy++) {
                     worldView.getCamera().position.set(
                             // player position + center of tile + over the edge for wrapping
-                            world.getPlayerX() * TILE_WIDTH + TILE_WIDTH / 2 + world.getPlanet().SIZE_X * TILE_WIDTH * dx,
-                            world.getPlayerY() * TILE_HEIGHT + TILE_HEIGHT / 2 + world.getPlanet().SIZE_Y * TILE_HEIGHT * dy,
+                            world.getPlayerX() * Assets.TILE_WIDTH + Assets.TILE_WIDTH / 2 + world.getPlanet().SIZE_X * Assets.TILE_WIDTH * dx,
+                            world.getPlayerY() * Assets.TILE_HEIGHT + Assets.TILE_HEIGHT / 2 + world.getPlanet().SIZE_Y * Assets.TILE_HEIGHT * dy,
                             0
                     );
                     worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
                     tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
-                    tiledMapRenderer.renderTileLayer((TiledMapTileLayer) map.getLayers().get(layer));
+                    tiledMapRenderer.renderTileLayer((TiledMapTileLayer) layer);
                 }
             tiledMapRenderer.getBatch().end();
         }
@@ -151,8 +105,8 @@ public class GameScreen implements Screen, Disposable {
 
         worldView.getCamera().position.set(
                 // player position + center of tile
-                world.getPlayerX() * TILE_WIDTH + TILE_WIDTH / 2,
-                world.getPlayerY() * TILE_HEIGHT + TILE_HEIGHT / 2,
+                world.getPlayerX() * Assets.TILE_WIDTH + Assets.TILE_WIDTH / 2,
+                world.getPlayerY() * Assets.TILE_HEIGHT + Assets.TILE_HEIGHT / 2,
                 0
         );
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -162,9 +116,9 @@ public class GameScreen implements Screen, Disposable {
 //        playerPalette.bind(batch.getShader());
 
         batch.draw(
-                assets.atlas.findRegion("characters/AstronautS0"),
-                world.getPlayerX() * TILE_WIDTH,
-                world.getPlayerY() * TILE_HEIGHT
+                world.getAssets().atlas.findRegion("characters/AstronautS0"),
+                world.getPlayerX() * Assets.TILE_WIDTH,
+                world.getPlayerY() * Assets.TILE_HEIGHT
         );
 
 //        batch.setColor(Color.RED);
@@ -191,32 +145,32 @@ public class GameScreen implements Screen, Disposable {
         batch.draw(screenRegion, 0, 0);
         batch.end();
 
-        console.draw();
+//        console.draw();
     }
 
     public void drawRect(SpriteBatch batch, int x, int y, int width, int height) {
-        batch.draw(assets.one, x + width - 1, y + 1, 1, height - 1);
-        batch.draw(assets.one, x + 1, y, width - 1, 1);
-        batch.draw(assets.one, x, y, 1, height - 1);
-        batch.draw(assets.one, x, y + height - 1, width - 1, 1);
+        batch.draw(world.getAssets().one, x + width - 1, y + 1, 1, height - 1);
+        batch.draw(world.getAssets().one, x + 1, y, width - 1, 1);
+        batch.draw(world.getAssets().one, x, y, 1, height - 1);
+        batch.draw(world.getAssets().one, x, y + height - 1, width - 1, 1);
     }
 
     public void drawSquareOverTile(SpriteBatch batch, int x, int y) {
-        batch.draw(assets.one, x * TILE_WIDTH, y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+        batch.draw(world.getAssets().one, x * Assets.TILE_WIDTH, y * Assets.TILE_HEIGHT, Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
     }
 
     @Override
     public void resize(int width, int height) {
         screenView.update(width, height);
-        console.update(width, height);
+//        console.update(width, height);
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         frameBuffer.dispose();
-        assets.dispose();
-        console.dispose();
+        world.dispose();
+//        console.dispose();
     }
 
     @Override

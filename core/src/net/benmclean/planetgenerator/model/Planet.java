@@ -1,10 +1,16 @@
 package net.benmclean.planetgenerator.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Disposable;
 import com.sudoplay.joise.mapping.Mapping;
 import com.sudoplay.joise.mapping.MappingMode;
@@ -25,6 +31,7 @@ public class Planet implements Disposable {
     private Assets assets;
     protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
     protected boolean[][] world;
+    private TiledMap map;
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
     public String terrainName;
@@ -74,6 +81,10 @@ public class Planet implements Disposable {
         );
         atlas = packTextureAtlas();
 
+        makeMap();
+    }
+
+    private void makeMap() {
         world = new boolean[SIZE_X][];
         for (int x = 0; x < world.length; x++)
             world[x] = new boolean[SIZE_Y];
@@ -110,6 +121,49 @@ public class Planet implements Disposable {
                 new joiseWriter(),
                 null
         );
+
+        makeTiledMap();
+    }
+
+    private void makeTiledMap() {
+        if (map != null) map.dispose();
+        map = new TiledMap();
+        TiledMapTileLayer[] layers = new TiledMapTileLayer[2];
+        Planet.CoordCheckerInterface coordChecker = new Planet.CoordCheckerInterface() {
+            @Override
+            public boolean where(int x, int y) {
+                return isWall(x, y);
+            }
+        };
+        for (int x=0; x<layers.length; x++)
+            layers[x] = new TiledMapTileLayer(SIZE_X, SIZE_Y, Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+        String name = "";
+        for (int x = 0; x < SIZE_X; x++)
+            for (int y = 0; y < SIZE_Y; y++) {
+                StaticTiledMapTile tile = null;
+                Boolean answer = isWall(x, y);
+                if (answer != null && !answer) {
+                    tile = new StaticTiledMapTile(atlas.findRegion("terrain/" + terrainName));
+                    layers[1].setCell(x, y, makeCell(tile));
+                } else if (answer != null) {
+                    tile = new StaticTiledMapTile(
+                            atlas.findRegion(terrainName(x, y, coordChecker))
+                    );
+                    layers[0].setCell(x, y, makeCell(tile));
+                } else throw new NullPointerException();
+            }
+        for (MapLayer layer : layers)
+            map.getLayers().add(layer);
+    }
+
+    public static TiledMapTileLayer.Cell makeCell(TiledMapTile tile) {
+        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
+        cell.setTile(tile);
+        return cell;
+    }
+
+    public TiledMap getMap() {
+        return map;
     }
 
     public Boolean isWall(int x, int y) {
@@ -120,8 +174,14 @@ public class Planet implements Disposable {
         return world[wrapX(x)][wrapY(y)];
     }
 
-    public TextureAtlas packTextureAtlas() {
+    private TextureAtlas packTextureAtlas() {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
+
+        if (assets.atlas == null) {
+            System.out.println("Blank texture atlas!");
+            Gdx.app.exit();
+        }
+
         packIn("utils", assets.atlas, packer);
         packIn("terrain/" + terrainName, assets.atlas, packer, terrainPalette);
         return packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);

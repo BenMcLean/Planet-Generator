@@ -1,9 +1,10 @@
 package net.benmclean.planetgenerator.model;
 
+import com.badlogic.gdx.utils.Disposable;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.ThrustRNG;
 
-public class GameWorld {
+public class GameWorld implements Disposable {
     private Assets assets;
     private long SEED;
     private ThrustRNG rng;
@@ -15,6 +16,8 @@ public class GameWorld {
     }
 
     public GameWorld(long SEED, Assets assets) {
+        this.SEED = SEED;
+        this.assets = assets;
         planet = new Planet(SEED, assets);
         rng = new ThrustRNG(SEED);
         setPlayer(0, 0);
@@ -33,6 +36,10 @@ public class GameWorld {
 
     public Planet getPlanet () {
         return planet;
+    }
+
+    public Assets getAssets () {
+        return assets;
     }
 
     public int getPlayerX() {
@@ -70,5 +77,11 @@ public class GameWorld {
     public Boolean movePlayer(int dx, int dy) {
         setPlayer(planet.wrapX(getPlayerX() + dx), planet.wrapY(getPlayerY() + dy));
         return true;
+    }
+
+    @Override
+    public void dispose() {
+        planet.dispose();
+        assets.dispose();
     }
 }
