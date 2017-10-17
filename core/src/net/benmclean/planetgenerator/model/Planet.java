@@ -38,6 +38,7 @@ public class Planet implements Disposable {
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
     public String terrainName;
+    public String biomeName;
     public Color backgroundColor;
 
     public TextureAtlas getAtlas() {
@@ -268,6 +269,19 @@ public class Planet implements Disposable {
         if (where.where(x + 1, y) && where.where(x, y - 1) && !where.where(x + 1, y - 1)) name += "SEC";
         if (where.where(x - 1, y) && where.where(x, y - 1) && !where.where(x - 1, y - 1)) name += "SWC";
         if (where.where(x - 1, y) && where.where(x, y + 1) && !where.where(x - 1, y + 1)) name += "NWC";
+        if (atlas.findRegion(name) == null) return "utils/test";
+        return name;
+    }
+
+    public String biomeName(int x, int y, CoordCheckerInterface where) {
+        return terrainName("biomes/" + biomeName, x, y, where);
+    }
+
+    public String biomeName(String name, int x, int y, CoordCheckerInterface where) {
+        if (!where.where(x, y + 1)) name += "N";
+        if (!where.where(x, y - 1)) name += "S";
+        if (!where.where(x + 1, y)) name += "E";
+        if (!where.where(x - 1, y)) name += "W";
         if (atlas.findRegion(name) == null) return "utils/test";
         return name;
     }
