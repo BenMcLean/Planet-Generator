@@ -1,6 +1,5 @@
 package net.benmclean.planetgenerator.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +21,8 @@ import net.benmclean.utils.Palette4;
 import squidpony.squidgrid.gui.gdx.SColor;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
+
+import java.util.HashMap;
 
 public class Planet implements Disposable {
     public final int SIZE_X = 256;
@@ -125,7 +126,17 @@ public class Planet implements Disposable {
         makeTiledMap();
     }
 
-    private void makeTiledMap() {
+    protected static void packInTiles(HashMap<String, StaticTiledMapTile> tiles, TextureAtlas raw, String category) {
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
+                tiles.put(region.name, new StaticTiledMapTile(region));
+    }
+
+    protected void makeTiledMap() {
+        HashMap<String, StaticTiledMapTile> tiles = new HashMap<String, StaticTiledMapTile>();
+        packInTiles(tiles, atlas, "utils" + terrainName);
+        packInTiles(tiles, atlas, "terrain/" + terrainName);
+
         if (map != null) map.dispose();
         map = new TiledMap();
         TiledMapTileLayer[] layers = new TiledMapTileLayer[2];
@@ -135,7 +146,7 @@ public class Planet implements Disposable {
                 return isWall(x, y);
             }
         };
-        for (int x=0; x<layers.length; x++)
+        for (int x = 0; x < layers.length; x++)
             layers[x] = new TiledMapTileLayer(SIZE_X, SIZE_Y, Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
         String name = "";
         for (int x = 0; x < SIZE_X; x++)
@@ -143,12 +154,11 @@ public class Planet implements Disposable {
                 StaticTiledMapTile tile = null;
                 Boolean answer = isWall(x, y);
                 if (answer != null && !answer) {
-                    tile = new StaticTiledMapTile(atlas.findRegion("terrain/" + terrainName));
+                    //tile = new StaticTiledMapTile(atlas.findRegion("terrain/" + terrainName));
+                    tile = tiles.get("terrain/" + terrainName);
                     layers[1].setCell(x, y, makeCell(tile));
                 } else if (answer != null) {
-                    tile = new StaticTiledMapTile(
-                            atlas.findRegion(terrainName(x, y, coordChecker))
-                    );
+                    tile = tiles.get(terrainName(x, y, coordChecker));
                     layers[0].setCell(x, y, makeCell(tile));
                 } else throw new NullPointerException();
             }
@@ -166,7 +176,7 @@ public class Planet implements Disposable {
         return map;
     }
 
-    public Boolean isWall(int x, int y) {
+    public boolean isWall(int x, int y) {
         //if (x < 0 || y < 0 || x > SIZE_X || y > SIZE_Y) return null;
         //if (x == 0 || y == 0 || x == SIZE_X - 1 || y == SIZE_Y - 1) return true;
         //return noise.eval(wrapX(x)/6f, wrapY(y)/6f, 0) < 0.25;
@@ -176,12 +186,6 @@ public class Planet implements Disposable {
 
     private TextureAtlas packTextureAtlas() {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
-
-        if (assets.atlas == null) {
-            System.out.println("Blank texture atlas!");
-            Gdx.app.exit();
-        }
-
         packIn("utils", assets.atlas, packer);
         packIn("terrain/" + terrainName, assets.atlas, packer, terrainPalette);
         return packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
@@ -195,9 +199,7 @@ public class Planet implements Disposable {
 
     public static void packIn(TextureAtlas.AtlasRegion region, PixmapPacker packer) {
         Texture texture = region.getTexture();
-        if (!texture.getTextureData().isPrepared()) {
-            texture.getTextureData().prepare();
-        }
+        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
         Pixmap pixmap = texture.getTextureData().consumePixmap();
 
         Pixmap result = new Pixmap(region.getRegionWidth(), region.getRegionHeight(), Pixmap.Format.RGBA8888);
@@ -229,7 +231,6 @@ public class Planet implements Disposable {
                 else
                     result.drawPixel(x, y, Assets.transparent);
             }
-
         packer.pack(region.toString(), result);
         texture.dispose();
     }
