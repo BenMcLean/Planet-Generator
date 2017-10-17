@@ -21,6 +21,8 @@ import net.benmclean.utils.Palette4;
 import squidpony.squidgrid.gui.gdx.SColor;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
+import squidpony.squidmath.StatefulRNG;
+import squidpony.squidmath.ThrustRNG;
 
 import java.util.HashMap;
 
@@ -46,6 +48,10 @@ public class Planet implements Disposable {
         return SEED;
     }
 
+    public RNG getRNG() {
+        return rng;
+    }
+
     public Palette4 getTerrainPalette() {
         return terrainPalette;
     }
@@ -57,7 +63,7 @@ public class Planet implements Disposable {
     public Planet(long SEED, Assets assets) {
         this.SEED = SEED;
         this.assets = assets;
-        rng = new RNG(SEED);
+        rng = new StatefulRNG(new ThrustRNG(SEED));
 
         switch (rng.nextInt(3)) {
             case 1:
@@ -134,7 +140,7 @@ public class Planet implements Disposable {
 
     protected void makeTiledMap() {
         HashMap<String, StaticTiledMapTile> tiles = new HashMap<String, StaticTiledMapTile>();
-        packInTiles(tiles, atlas, "utils" + terrainName);
+        packInTiles(tiles, atlas, "utils");
         packInTiles(tiles, atlas, "terrain/" + terrainName);
 
         if (map != null) map.dispose();
@@ -151,15 +157,11 @@ public class Planet implements Disposable {
         String name = "";
         for (int x = 0; x < SIZE_X; x++)
             for (int y = 0; y < SIZE_Y; y++) {
-                StaticTiledMapTile tile = null;
                 Boolean answer = isWall(x, y);
                 if (answer != null && !answer) {
-                    //tile = new StaticTiledMapTile(atlas.findRegion("terrain/" + terrainName));
-                    tile = tiles.get("terrain/" + terrainName);
-                    layers[1].setCell(x, y, makeCell(tile));
+                    layers[1].setCell(x, y, makeCell(tiles.get("terrain/" + terrainName)));
                 } else if (answer != null) {
-                    tile = tiles.get(terrainName(x, y, coordChecker));
-                    layers[0].setCell(x, y, makeCell(tile));
+                    layers[0].setCell(x, y, makeCell(tiles.get(terrainName(x, y, coordChecker))));
                 } else throw new NullPointerException();
             }
         for (MapLayer layer : layers)
