@@ -132,17 +132,21 @@ public class Planet implements Disposable {
         makeTiledMap();
     }
 
-    protected static void packInTiles(HashMap<String, StaticTiledMapTile> tiles, TextureAtlas raw, String category) {
+    protected static void packInCells(HashMap<String, TiledMapTileLayer.Cell> cells, TextureAtlas raw, String category) {
         for (TextureAtlas.AtlasRegion region : raw.getRegions())
             if (region.name.startsWith(category))
-                tiles.put(region.name, new StaticTiledMapTile(region));
+                cells.put(region.name,
+                        new TiledMapTileLayer.Cell().setTile(
+                                new StaticTiledMapTile(region)
+                        )
+                );
     }
 
     protected void makeTiledMap() {
-        HashMap<String, StaticTiledMapTile> tiles = new HashMap<String, StaticTiledMapTile>();
-        packInTiles(tiles, atlas, "utils");
-        packInTiles(tiles, atlas, "terrain/" + terrainName);
-
+        HashMap<String, TiledMapTileLayer.Cell> cells = new HashMap<String, TiledMapTileLayer.Cell>();
+        packInCells(cells, atlas, "utils");
+        packInCells(cells, atlas, "terrain/" + terrainName);
+        
         if (map != null) map.dispose();
         map = new TiledMap();
         TiledMapTileLayer[] layers = new TiledMapTileLayer[2];
@@ -159,9 +163,9 @@ public class Planet implements Disposable {
             for (int y = 0; y < SIZE_Y; y++) {
                 Boolean answer = isWall(x, y);
                 if (answer != null && !answer) {
-                    layers[1].setCell(x, y, makeCell(tiles.get("terrain/" + terrainName)));
+                    layers[1].setCell(x, y, cells.get("terrain/" + terrainName));
                 } else if (answer != null) {
-                    layers[0].setCell(x, y, makeCell(tiles.get(terrainName(x, y, coordChecker))));
+                    layers[0].setCell(x, y, cells.get(terrainName(x, y, coordChecker)));
                 } else throw new NullPointerException();
             }
         for (MapLayer layer : layers)
