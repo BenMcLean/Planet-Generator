@@ -135,7 +135,8 @@ public class Planet implements Disposable {
     protected static void packInCells(HashMap<String, TiledMapTileLayer.Cell> cells, TextureAtlas raw, String category) {
         for (TextureAtlas.AtlasRegion region : raw.getRegions())
             if (region.name.startsWith(category))
-                cells.put(region.name,
+                cells.put(
+                        region.name,
                         new TiledMapTileLayer.Cell().setTile(
                                 new StaticTiledMapTile(region)
                         )
@@ -146,7 +147,7 @@ public class Planet implements Disposable {
         HashMap<String, TiledMapTileLayer.Cell> cells = new HashMap<String, TiledMapTileLayer.Cell>();
         packInCells(cells, atlas, "utils");
         packInCells(cells, atlas, "terrain/" + terrainName);
-        
+
         if (map != null) map.dispose();
         map = new TiledMap();
         TiledMapTileLayer[] layers = new TiledMapTileLayer[2];
