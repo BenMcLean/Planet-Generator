@@ -4,17 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import net.benmclean.planetgenerator.model.Direction;
-import net.benmclean.planetgenerator.model.GameWorld;
+import net.benmclean.planetgenerator.model.Universe;
 import net.benmclean.planetgenerator.view.GameScreen;
 
 import java.util.*;
 
 public class GameInputProcessor implements InputProcessor {
-    public GameWorld world;
+    public Universe universe;
     public GameScreen screen;
 
-    public GameInputProcessor(GameWorld world, GameScreen screen) {
-        this.world = world;
+    public GameInputProcessor(Universe universe, GameScreen screen) {
+        this.universe = universe;
         this.screen = screen;
         for (int i = 0; i < TRACKED_KEYS_ARRAY.size(); i++)
             keyPressed[i] = false;
@@ -110,24 +110,24 @@ public class GameInputProcessor implements InputProcessor {
                 Gdx.app.exit();
                 break;
             case Input.Keys.UP:
-                world.movePlayer(Direction.NORTH);
+                universe.movePlayer(Direction.NORTH);
                 break;
             case Input.Keys.RIGHT:
-                world.movePlayer(Direction.EAST);
+                universe.movePlayer(Direction.EAST);
                 break;
             case Input.Keys.DOWN:
-                world.movePlayer(Direction.SOUTH);
+                universe.movePlayer(Direction.SOUTH);
                 break;
             case Input.Keys.LEFT:
-                world.movePlayer(Direction.WEST);
+                universe.movePlayer(Direction.WEST);
                 break;
             case Input.Keys.X:
-                world.nextPlanet();
+                universe.nextPlanet();
                 break;
             default:
                 //moved=false;
                 break;
         }
-//        if (moved) world.endTurn();
+//        if (moved) universe.endTurn();
     }
 }

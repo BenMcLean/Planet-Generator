@@ -5,18 +5,18 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 import squidpony.squidmath.ThrustRNG;
 
-public class GameWorld implements Disposable {
+public class Universe implements Disposable {
     private Assets assets;
     private long SEED;
     private RNG rng;
     protected Coord playerCoord;
     private Planet planet;
 
-    public GameWorld (long SEED) {
+    public Universe (long SEED) {
         this(SEED, new Assets());
     }
 
-    public GameWorld(long SEED, Assets assets) {
+    public Universe(long SEED, Assets assets) {
         this.SEED = SEED;
         this.assets = assets;
         planet = new Planet(SEED, assets);
@@ -24,7 +24,7 @@ public class GameWorld implements Disposable {
         setPlayer(0, 0);
     }
 
-    public GameWorld nextPlanet() {
+    public Universe nextPlanet() {
         planet.dispose();
         SEED = rng.nextLong();
         planet = new Planet(SEED, assets);
