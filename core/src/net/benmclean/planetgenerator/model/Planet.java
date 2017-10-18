@@ -33,10 +33,12 @@ public class Planet implements Disposable {
     private RNG rng;
     private Assets assets;
     protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
-    protected boolean[][] world;
+    protected boolean[][] land;
+    protected boolean[][] biome;
     private TiledMap map;
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
+    private Palette4 biomePalette;
     public String terrainName;
     public String biomeName;
     public Color backgroundColor;
@@ -78,29 +80,91 @@ public class Planet implements Disposable {
                 break;
         }
 
+        switch (rng.nextInt(15)) {
+            case 1:
+                biomeName = "Bump1";
+                break;
+            case 2:
+                biomeName = "Dune0";
+                break;
+            case 3:
+                biomeName = "Hill0";
+                break;
+            case 4:
+                biomeName = "Hill1";
+                break;
+            case 5:
+                biomeName = "Oak0";
+                break;
+            case 6:
+                biomeName = "Oak1";
+                break;
+            case 7:
+                biomeName = "Oval0";
+                break;
+            case 8:
+                biomeName = "Oval1";
+                break;
+            case 9:
+                biomeName = "Palm0";
+                break;
+            case 10:
+                biomeName = "Palm1";
+                break;
+            case 11:
+                biomeName = "Pine0";
+                break;
+            case 12:
+                biomeName = "Pine1";
+                break;
+            case 13:
+                biomeName = "Tri0";
+                break;
+            case 14:
+                biomeName = "Tri1";
+                break;
+            default:
+                biomeName = "Bump0";
+                break;
+        }
+
 //        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
         backgroundColor = SColor.randomColorWheel(rng, 2, 2);
-        Color land = SColor.randomColorWheel(rng, 2, 2);
+        Color landColor = SColor.randomColorWheel(rng, 2, 2);
         terrainPalette = new Palette4(
                 Color.BLACK,
                 new Color(backgroundColor.r / 2f, backgroundColor.g / 2f, backgroundColor.b / 2f, 1f),
-                new Color(land.r / 2f, land.g / 2f, land.b / 2f, 1f),
-                land
+                new Color(landColor.r / 2f, landColor.g / 2f, landColor.b / 2f, 1f),
+                landColor
         );
+
+        Color biome = SColor.randomColorWheel(rng, 2, 2);
+        biomePalette = new Palette4(
+                Color.BLACK,
+                new Color(biome.r / 2f, biome.g / 2f, biome.b / 2f, 1f),
+                biome,
+                new Color(biome.r * 1.5f, biome.g * 1.5f, biome.b * 1.5f, 1f)
+        );
+
         atlas = packTextureAtlas();
 
         makeMap();
     }
 
     private void makeMap() {
-        world = new boolean[SIZE_X][];
-        for (int x = 0; x < world.length; x++)
-            world[x] = new boolean[SIZE_Y];
+        land = new boolean[SIZE_X][];
+        for (int x = 0; x < land.length; x++)
+            land[x] = new boolean[SIZE_Y];
+
+        biome = new boolean[SIZE_X][];
+        for (int x = 0; x < biome.length; x++)
+            biome[x] = new boolean[SIZE_Y];
 
         class joiseWriter implements com.sudoplay.joise.mapping.Mapping2DWriter {
             @Override
             public void write(int x, int y, double value) {
-                world[x][y] = value >= 0;
+                land[x][y] = value >= 0;
+                biome[x][y] = value >= 0.1;
             }
         }
 
@@ -148,14 +212,21 @@ public class Planet implements Disposable {
         HashMap<String, TiledMapTileLayer.Cell> cells = new HashMap<String, TiledMapTileLayer.Cell>();
         packInCells(cells, atlas, "utils");
         packInCells(cells, atlas, "terrain/" + terrainName);
+        packInCells(cells, atlas, "biomes/" + biomeName);
 
         if (map != null) map.dispose();
         map = new TiledMap();
-        TiledMapTileLayer[] layers = new TiledMapTileLayer[2];
-        Planet.CoordCheckerInterface coordChecker = new Planet.CoordCheckerInterface() {
+        TiledMapTileLayer[] layers = new TiledMapTileLayer[3];
+        Planet.CoordCheckerInterface landChecker = new Planet.CoordCheckerInterface() {
             @Override
             public boolean where(int x, int y) {
-                return isWall(x, y);
+                return isLand(x, y);
+            }
+        };
+        Planet.CoordCheckerInterface biomeChecker = new Planet.CoordCheckerInterface() {
+            @Override
+            public boolean where(int x, int y) {
+                return isBiome(x, y);
             }
         };
         for (int x = 0; x < layers.length; x++)
@@ -163,12 +234,12 @@ public class Planet implements Disposable {
         String name = "";
         for (int x = 0; x < SIZE_X; x++)
             for (int y = 0; y < SIZE_Y; y++) {
-                Boolean answer = isWall(x, y);
-                if (answer != null && !answer) {
-                    layers[1].setCell(x, y, cells.get("terrain/" + terrainName));
-                } else if (answer != null) {
-                    layers[0].setCell(x, y, cells.get(terrainName(x, y, coordChecker)));
-                } else throw new NullPointerException();
+                if (isLand(x, y))
+                    layers[0].setCell(x, y, cells.get("terrain/" + terrainName));
+                else if (landChecker.isEdge(x, y))
+                    layers[0].setCell(x, y, cells.get(terrainName(x, y, landChecker)));
+
+                if (isBiome(x, y)) layers[1].setCell(x, y, cells.get(biomeName(x, y, biomeChecker)));
             }
         for (MapLayer layer : layers)
             map.getLayers().add(layer);
@@ -184,18 +255,27 @@ public class Planet implements Disposable {
         return map;
     }
 
-    public boolean isWall(int x, int y) {
+    public boolean isLand(int x, int y) {
         //if (x < 0 || y < 0 || x > SIZE_X || y > SIZE_Y) return null;
         //if (x == 0 || y == 0 || x == SIZE_X - 1 || y == SIZE_Y - 1) return true;
         //return noise.eval(wrapX(x)/6f, wrapY(y)/6f, 0) < 0.25;
         //return bareDungeon[x][y] == '#';
-        return world[wrapX(x)][wrapY(y)];
+        return land[wrapX(x)][wrapY(y)];
+    }
+
+    public boolean isBiome(int x, int y) {
+        //if (x < 0 || y < 0 || x > SIZE_X || y > SIZE_Y) return null;
+        //if (x == 0 || y == 0 || x == SIZE_X - 1 || y == SIZE_Y - 1) return true;
+        //return noise.eval(wrapX(x)/6f, wrapY(y)/6f, 0) < 0.25;
+        //return bareDungeon[x][y] == '#';
+        return biome[wrapX(x)][wrapY(y)];
     }
 
     private TextureAtlas packTextureAtlas() {
         PixmapPacker packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
         packIn("utils", assets.atlas, packer);
         packIn("terrain/" + terrainName, assets.atlas, packer, terrainPalette);
+        packIn("biomes/" + biomeName, assets.atlas, packer, biomePalette);
         return packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
     }
 
@@ -254,6 +334,14 @@ public class Planet implements Disposable {
 
     public static abstract class CoordCheckerInterface {
         public abstract boolean where(int x, int y);
+
+        public boolean isEdge(int x, int y) {
+            for (int dx = -1; dx <= 1; dx++)
+                for (int dy = -1; dy <= 1; dy++)
+                    if (where(x + dx, y + dy))
+                        return true;
+            return false;
+        }
     }
 
     public String terrainName(int x, int y, CoordCheckerInterface where) {
@@ -261,27 +349,27 @@ public class Planet implements Disposable {
     }
 
     public String terrainName(String name, int x, int y, CoordCheckerInterface where) {
-        if (!where.where(x, y + 1)) name += "N";
-        if (!where.where(x, y - 1)) name += "S";
-        if (!where.where(x + 1, y)) name += "E";
-        if (!where.where(x - 1, y)) name += "W";
-        if (where.where(x + 1, y) && where.where(x, y + 1) && !where.where(x + 1, y + 1)) name += "NEC";
-        if (where.where(x + 1, y) && where.where(x, y - 1) && !where.where(x + 1, y - 1)) name += "SEC";
-        if (where.where(x - 1, y) && where.where(x, y - 1) && !where.where(x - 1, y - 1)) name += "SWC";
-        if (where.where(x - 1, y) && where.where(x, y + 1) && !where.where(x - 1, y + 1)) name += "NWC";
+        if (where.where(x, y + 1)) name += "N";
+        if (where.where(x, y - 1)) name += "S";
+        if (where.where(x + 1, y)) name += "E";
+        if (where.where(x - 1, y)) name += "W";
+        if (!where.where(x + 1, y) && !where.where(x, y + 1) && where.where(x + 1, y + 1)) name += "NEC";
+        if (!where.where(x + 1, y) && !where.where(x, y - 1) && where.where(x + 1, y - 1)) name += "SEC";
+        if (!where.where(x - 1, y) && !where.where(x, y - 1) && where.where(x - 1, y - 1)) name += "SWC";
+        if (!where.where(x - 1, y) && !where.where(x, y + 1) && where.where(x - 1, y + 1)) name += "NWC";
         if (atlas.findRegion(name) == null) return "utils/test";
         return name;
     }
 
     public String biomeName(int x, int y, CoordCheckerInterface where) {
-        return terrainName("biomes/" + biomeName, x, y, where);
+        return biomeName("biomes/" + biomeName, x, y, where);
     }
 
     public String biomeName(String name, int x, int y, CoordCheckerInterface where) {
-        if (!where.where(x, y + 1)) name += "N";
-        if (!where.where(x, y - 1)) name += "S";
-        if (!where.where(x + 1, y)) name += "E";
-        if (!where.where(x - 1, y)) name += "W";
+        if (!where.where(x, y - 1)) name += "N";
+        if (!where.where(x, y + 1)) name += "S";
+        if (!where.where(x - 1, y)) name += "E";
+        if (!where.where(x + 1, y)) name += "W";
         if (atlas.findRegion(name) == null) return "utils/test";
         return name;
     }
