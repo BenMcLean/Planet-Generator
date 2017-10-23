@@ -80,7 +80,7 @@ public class Planet implements Disposable {
                 break;
         }
 
-        switch (rng.nextInt(15)) {
+        switch (rng.nextInt(16)) {
             case 1:
                 biomeName = "Bump1";
                 break;
@@ -88,39 +88,42 @@ public class Planet implements Disposable {
                 biomeName = "Dune0";
                 break;
             case 3:
-                biomeName = "Hill0";
+                biomeName = "Dune1";
                 break;
             case 4:
-                biomeName = "Hill1";
+                biomeName = "Hill0";
                 break;
             case 5:
-                biomeName = "Oak0";
+                biomeName = "Hill1";
                 break;
             case 6:
-                biomeName = "Oak1";
+                biomeName = "Oak0";
                 break;
             case 7:
-                biomeName = "Oval0";
+                biomeName = "Oak1";
                 break;
             case 8:
-                biomeName = "Oval1";
+                biomeName = "Oval0";
                 break;
             case 9:
-                biomeName = "Palm0";
+                biomeName = "Oval1";
                 break;
             case 10:
-                biomeName = "Palm1";
+                biomeName = "Palm0";
                 break;
             case 11:
-                biomeName = "Pine0";
+                biomeName = "Palm1";
                 break;
             case 12:
-                biomeName = "Pine1";
+                biomeName = "Pine0";
                 break;
             case 13:
-                biomeName = "Tri0";
+                biomeName = "Pine1";
                 break;
             case 14:
+                biomeName = "Tri0";
+                break;
+            case 15:
                 biomeName = "Tri1";
                 break;
             default:
