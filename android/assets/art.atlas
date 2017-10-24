@@ -1795,6 +1795,13 @@ biomes/Pine0A0
   orig: 16, 16
   offset: 0, 0
   index: -1
+biomes/Pine0NSEW
+  rotate: false
+  xy: 432, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 biomes/Pine0A1
   rotate: false
   xy: 432, 0
@@ -1816,79 +1823,121 @@ biomes/Pine0E
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0Gap0N
+biomes/Pine0EW
   rotate: false
   xy: 480, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0Gap0S
+biomes/Pine0Gap0N
   rotate: false
   xy: 496, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0Gap1N
+biomes/Pine0Gap0S
   rotate: false
   xy: 512, 96
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0Gap1S
+biomes/Pine0Gap1N
   rotate: false
   xy: 528, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0N
+biomes/Pine0Gap1S
   rotate: false
   xy: 448, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0NE
+biomes/Pine0N
   rotate: false
   xy: 448, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0NW
+biomes/Pine0NE
   rotate: false
   xy: 464, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0S
+biomes/Pine0NEW
   rotate: false
   xy: 480, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0SE
+biomes/Pine0NS
   rotate: false
   xy: 496, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0SW
+biomes/Pine0NSE
   rotate: false
   xy: 512, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-biomes/Pine0W
+biomes/Pine0NSW
   rotate: false
   xy: 528, 96
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+biomes/Pine0NW
+  rotate: false
+  xy: 544, 112
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+biomes/Pine0S
+  rotate: false
+  xy: 464, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+biomes/Pine0SE
+  rotate: false
+  xy: 464, 0
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+biomes/Pine0SEW
+  rotate: false
+  xy: 480, 32
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+biomes/Pine0SW
+  rotate: false
+  xy: 496, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+biomes/Pine0W
+  rotate: false
+  xy: 512, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1902,273 +1951,273 @@ biomes/Pine1
   index: -1
 biomes/Pine1A0
   rotate: false
-  xy: 544, 112
+  xy: 528, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1A1
   rotate: false
-  xy: 464, 16
+  xy: 544, 96
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1A2
   rotate: false
-  xy: 464, 0
+  xy: 560, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1E
   rotate: false
-  xy: 480, 32
+  xy: 480, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1Gap0N
   rotate: false
-  xy: 496, 48
+  xy: 480, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1Gap0S
   rotate: false
-  xy: 512, 64
+  xy: 496, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1Gap1N
   rotate: false
-  xy: 528, 80
+  xy: 512, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1Gap1S
   rotate: false
-  xy: 544, 96
+  xy: 528, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1N
   rotate: false
-  xy: 560, 112
+  xy: 544, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1NE
   rotate: false
-  xy: 480, 16
+  xy: 560, 96
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1NW
   rotate: false
-  xy: 480, 0
+  xy: 576, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1S
   rotate: false
-  xy: 496, 32
+  xy: 496, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1SE
   rotate: false
-  xy: 512, 48
+  xy: 496, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1SW
   rotate: false
-  xy: 528, 64
+  xy: 512, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Pine1W
   rotate: false
-  xy: 544, 80
+  xy: 528, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0
   rotate: false
-  xy: 560, 96
+  xy: 544, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0A0
   rotate: false
-  xy: 496, 16
+  xy: 576, 96
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0A1
   rotate: false
-  xy: 496, 0
+  xy: 592, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0A2
   rotate: false
-  xy: 512, 32
+  xy: 512, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0E
   rotate: false
-  xy: 528, 48
+  xy: 512, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0N
   rotate: false
-  xy: 544, 64
+  xy: 528, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0NE
   rotate: false
-  xy: 560, 80
+  xy: 544, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0NW
   rotate: false
-  xy: 576, 96
+  xy: 560, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0S
   rotate: false
-  xy: 592, 112
+  xy: 576, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0SE
   rotate: false
-  xy: 512, 16
+  xy: 592, 96
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0SW
   rotate: false
-  xy: 512, 0
+  xy: 608, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri0W
   rotate: false
-  xy: 528, 32
+  xy: 528, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1
   rotate: false
-  xy: 576, 112
+  xy: 560, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1A0
   rotate: false
-  xy: 544, 48
+  xy: 528, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1A1
   rotate: false
-  xy: 560, 64
+  xy: 544, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1A2
   rotate: false
-  xy: 576, 80
+  xy: 560, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1E
   rotate: false
-  xy: 592, 96
+  xy: 576, 64
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1N
   rotate: false
-  xy: 608, 112
+  xy: 592, 80
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1NE
   rotate: false
-  xy: 528, 16
+  xy: 608, 96
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1NW
   rotate: false
-  xy: 528, 0
+  xy: 624, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1S
   rotate: false
-  xy: 544, 32
+  xy: 544, 16
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1SE
   rotate: false
-  xy: 560, 48
+  xy: 544, 0
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1SW
   rotate: false
-  xy: 576, 64
+  xy: 560, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 biomes/Tri1W
   rotate: false
-  xy: 592, 80
+  xy: 576, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

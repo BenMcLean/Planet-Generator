@@ -20,6 +20,7 @@ To build for HTML5, run "gradlew.bat html:dist"
 * [libgdx-inGameConsole](https://github.com/StrongJoshua/libgdx-inGameConsole)
 
 ## Art
+* [The Ultimate Old-School PC Font Pack](https://int10h.org/oldschool-pc-fonts/)
 * http://www.squaregear.net/fonts/tiny.shtml
 * http://opengameart.org/content/blowhard-2-blow-harder
 * http://opengameart.org/content/blowhard-chronicles
