@@ -130,7 +130,7 @@ public class Planet implements Disposable {
                 biomeName = "Bump0";
                 break;
         }
-        biomeName = "Oak0";
+        //biomeName = "Oak1";
 
 //        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
         backgroundColor = SColor.randomColorWheel(rng, 2, 2);
