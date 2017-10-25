@@ -282,8 +282,14 @@ public class Planet implements Disposable {
         TextureAtlas textureAtlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
         for (TextureAtlas.AtlasRegion region : textureAtlas.getRegions()) {
             TextureAtlas.AtlasRegion raw = assets.atlas.findRegion(region.name);
-            if (raw.pads != null) System.arraycopy(raw.pads, 0, region.pads, 0, raw.pads.length);
-            if (raw.splits != null) System.arraycopy(raw.splits, 0, region.splits, 0, raw.splits.length);
+            if (raw.pads != null) {
+                region.pads = new int[raw.pads.length];
+                System.arraycopy(raw.pads, 0, region.pads, 0, raw.pads.length);
+            }
+            if (raw.splits != null) {
+                region.splits = new int[raw.splits.length];
+                System.arraycopy(raw.splits, 0, region.splits, 0, raw.splits.length);
+            }
         }
         return textureAtlas;
     }
