@@ -84,17 +84,7 @@ public class AtlasRepacker implements Disposable {
      * This method does not copy 9-Patch info by itself!
      */
     public static void pack(TextureAtlas.AtlasRegion region, PixmapPacker packer) {
-        Texture texture = region.getTexture();
-        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
-        Pixmap pixmap = texture.getTextureData().consumePixmap();
-
-        Pixmap result = new Pixmap(region.getRegionWidth(), region.getRegionHeight(), Pixmap.Format.RGBA8888);
-        for (int x = 0; x < region.getRegionWidth(); x++)
-            for (int y = 0; y < region.getRegionHeight(); y++)
-                result.drawPixel(x, y, pixmap.getPixel(region.getRegionX() + x, region.getRegionY() + y));
-
-        packer.pack(region.toString(), result);
-        texture.dispose();
+        pack(region, packer, null);
     }
 
     /**
@@ -125,7 +115,9 @@ public class AtlasRepacker implements Disposable {
         for (int x = 0; x < region.getRegionWidth(); x++)
             for (int y = 0; y < region.getRegionHeight(); y++) {
                 color.set(pixmap.getPixel(region.getRegionX() + x, region.getRegionY() + y));
-                if (color.a > .05)
+                if (palette == null)
+                    result.drawPixel(x, y, pixmap.getPixel(region.getRegionX() + x, region.getRegionY() + y));
+                else if (color.a > .05)
                     result.drawPixel(x, y, Color.rgba8888(palette.get((int) (color.r * 3.9999))));
                 else
                     result.drawPixel(x, y, transparent);
