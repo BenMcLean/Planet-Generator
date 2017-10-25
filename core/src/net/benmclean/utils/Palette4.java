@@ -176,6 +176,4 @@ public class Palette4 implements Disposable {
                 0, 255, 0, 255
         );
     }
-
-
 }
