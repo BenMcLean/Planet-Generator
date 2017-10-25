@@ -7,6 +7,12 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
+/**
+ * AtlasRepacker makes it possible to palette-swap the game's art assets at runtime.
+ * Using the instance versions of the methods will also preserve 9-patch info.
+ * Static versions are also available for use with PixmapPacker, but these will not preserve 9-patch info because while AtlasRegion has 9-patch support, PixmapPacker sadly does not as of this writing.
+ * @author BenMcLean
+ */
 public class AtlasRepacker implements Disposable {
     public static final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
     protected PixmapPacker packer;
