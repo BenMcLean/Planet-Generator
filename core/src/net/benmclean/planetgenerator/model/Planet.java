@@ -279,7 +279,13 @@ public class Planet implements Disposable {
         packIn("utils", assets.atlas, packer);
         packIn("terrain/" + terrainName, assets.atlas, packer, terrainPalette);
         packIn("biomes/" + biomeName, assets.atlas, packer, biomePalette);
-        return packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
+        TextureAtlas textureAtlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
+        for (TextureAtlas.AtlasRegion region : textureAtlas.getRegions()) {
+            TextureAtlas.AtlasRegion raw = assets.atlas.findRegion(region.name);
+            if (raw.pads != null) System.arraycopy(raw.pads, 0, region.pads, 0, raw.pads.length);
+            if (raw.splits != null) System.arraycopy(raw.splits, 0, region.splits, 0, raw.splits.length);
+        }
+        return textureAtlas;
     }
 
     public static void packIn(String category, TextureAtlas raw, PixmapPacker packer) {
