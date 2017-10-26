@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.Assets;
 import net.benmclean.planetgenerator.model.Universe;
@@ -40,7 +41,7 @@ public class GameScreen implements Screen, Disposable {
     private TextureRegion screenRegion;
     public Universe universe;
     public GameInputProcessor input;
-//    private GUIConsole console;
+    protected GUIConsole console;
 
     @Override
     public void show() {
@@ -50,14 +51,6 @@ public class GameScreen implements Screen, Disposable {
         batch = new SpriteBatch();
         frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false, false);
         screenRegion = new TextureRegion();
-
-//        playerPalette = new PaletteShader(new Palette4(
-//                0, 0, 0, 255,
-//                127, 127, 127, 255,
-//                255, 255, 255, 255,
-//                255, 255, 255, 0
-//        ));
-
         tiledMapRenderer = new OrthogonalTiledMapRenderer(universe.getPlanet().getMap());
         screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
         screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
@@ -65,7 +58,7 @@ public class GameScreen implements Screen, Disposable {
         input = new GameInputProcessor(universe, this);
         Gdx.input.setInputProcessor(input);
 
-        //console = new GUIConsole(assets.commodore64);
+        console = new GUIConsole(universe.getAssets().skin);
     }
 
     @Override
@@ -81,12 +74,8 @@ public class GameScreen implements Screen, Disposable {
         );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-//        tiledMapRenderer.getBatch().setShader(assets.shader);
-
         for (MapLayer layer : universe.getPlanet().getMap().getLayers()) {
             tiledMapRenderer.getBatch().begin();
-//            palettes[layer].bind(tiledMapRenderer.getBatch().getShader());
-
             for (int dx = -1; dx <= 1; dx++)
                 for (int dy = -1; dy <= 1; dy++) {
                     worldView.getCamera().position.set(
@@ -101,7 +90,6 @@ public class GameScreen implements Screen, Disposable {
                 }
             tiledMapRenderer.getBatch().end();
         }
-//        tiledMapRenderer.getBatch().setShader(null);
 
         worldView.getCamera().position.set(
                 // player position + center of tile
@@ -111,25 +99,13 @@ public class GameScreen implements Screen, Disposable {
         );
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch.setProjectionMatrix(worldView.getCamera().combined);
-//        batch.setShader(assets.shader);
         batch.begin();
-//        playerPalette.bind(batch.getShader());
-
         batch.draw(
                 universe.getAssets().atlas.findRegion("characters/AstronautS0"),
                 universe.getPlayerX() * Assets.TILE_WIDTH,
                 universe.getPlayerY() * Assets.TILE_HEIGHT
         );
-
-//        batch.setColor(Color.RED);
-//        for (int x = 0; x < universe.SIZE_X; x++) {
-//            drawSquareOverTile(batch, x, x);
-//            drawSquareOverTile(batch, universe.SIZE_X - x, x);
-//        }
-//        batch.setColor(Color.WHITE);
-
         batch.end();
-//        batch.setShader(null);
         frameBuffer.end();
 
         Gdx.gl.glClearColor(screenBackgroundColor.r, screenBackgroundColor.g, screenBackgroundColor.b, 1);
@@ -145,7 +121,7 @@ public class GameScreen implements Screen, Disposable {
         batch.draw(screenRegion, 0, 0);
         batch.end();
 
-//        console.draw();
+        console.draw();
     }
 
     public void drawRect(SpriteBatch batch, int x, int y, int width, int height) {
@@ -162,7 +138,7 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void resize(int width, int height) {
         screenView.update(width, height);
-//        console.update(width, height);
+        console.update(width, height);
     }
 
     @Override
@@ -170,7 +146,7 @@ public class GameScreen implements Screen, Disposable {
         batch.dispose();
         frameBuffer.dispose();
         universe.dispose();
-//        console.dispose();
+        console.dispose();
     }
 
     @Override
