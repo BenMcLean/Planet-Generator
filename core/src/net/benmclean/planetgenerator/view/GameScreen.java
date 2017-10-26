@@ -138,7 +138,7 @@ public class GameScreen implements Screen, Disposable {
     @Override
     public void resize(int width, int height) {
         screenView.update(width, height);
-        console.update(width, height);
+        console.refresh();
     }
 
     @Override
