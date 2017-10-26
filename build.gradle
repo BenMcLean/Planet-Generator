@@ -28,7 +28,7 @@ allprojects {
         regexodusVersion = '0.1.7'
         JoiseVersion = '1.0.5' // https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.sudoplay.joise%22
         //benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
-        inGameConsoleVersion = '0.7.1'
+        inGameConsoleVersion = '0.7.1' // https://jitpack.io/#StrongJoshua/libgdx-inGameConsole/
 //        benConsoleVersion = 'f567b33fc4' // https://jitpack.io/#BenMcLean/libgdx-inGameConsole/
 
     }
