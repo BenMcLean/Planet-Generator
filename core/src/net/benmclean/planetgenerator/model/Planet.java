@@ -161,7 +161,7 @@ public class Planet implements Disposable {
         for (int x = 0; x < biome.length; x++)
             biome[x] = new boolean[SIZE_Y];
 
-        class joiseWriter implements com.sudoplay.joise.mapping.Mapping2DWriter {
+        class joiseWriter implements com.sudoplay.joise.mapping.IMapping2DWriter {
             @Override
             public void write(int x, int y, double value) {
                 land[x][y] = value >= 0;

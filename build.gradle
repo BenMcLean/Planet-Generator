@@ -26,10 +26,10 @@ allprojects {
         gdxUtilsVersion = '0.13.4'
         squidlibVersion = '0550d1a379' // https://jitpack.io/#SquidPony/SquidLib
         regexodusVersion = '0.1.7'
-        JoiseVersion = '1.0.5' // https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.sudoplay.joise%22
+        JoiseVersion = '1.1.0' // https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.sudoplay.joise%22
         //benJoiseVersion = '794477551b' // https://jitpack.io/#BenMcLean/Joise/
 //        inGameConsoleVersion = '0.7.1' // https://jitpack.io/#StrongJoshua/libgdx-inGameConsole/
-        benConsoleVersion = '703cc7f896' // https://jitpack.io/#BenMcLean/libgdx-inGameConsole/
+        benConsoleVersion = 'a7dca2c6fd' // https://jitpack.io/#BenMcLean/libgdx-inGameConsole/
     }
 
     repositories {

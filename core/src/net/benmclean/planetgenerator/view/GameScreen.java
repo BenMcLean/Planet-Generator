@@ -30,7 +30,6 @@ public class GameScreen implements Screen, Disposable {
     public long SEED;
     public static final int VIRTUAL_WIDTH = 355;
     public static final int VIRTUAL_HEIGHT = 200;
-    private Color worldBackgroundColor;
     private Color screenBackgroundColor;
     private Viewport worldView;
     private Viewport screenView;
