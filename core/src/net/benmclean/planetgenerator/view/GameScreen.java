@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.strongjoshua.console.CommandExecutor;
 import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.Assets;
@@ -42,7 +41,7 @@ public class GameScreen implements Screen, Disposable {
     public Universe universe;
     public GameInputProcessor input;
     protected GUIConsole console;
-    public CommandExecutor executor;
+    public Executor executor;
 
     @Override
     public void show() {
@@ -63,23 +62,7 @@ public class GameScreen implements Screen, Disposable {
         console.setLoggingToSystem(true);
         console.setSizePercent(100f,100f);
 
-        executor = new CommandExecutor(){
-            public void say (String stuff) {
-                console.log("Saying: " + stuff);
-            }
-
-            public void planet () {
-                console.log("Loading new planet...");
-                universe.nextPlanet();
-                console.log("Planet " + universe.getPlanet().getSEED()  + " loaded.");
-            }
-
-            public void planet (long SEED) {
-                console.log("Loading Planet " + SEED + "...");
-                universe.nextPlanet(SEED);
-                console.log("Planet " + SEED + " loaded.");
-            }
-        };
+        executor = new Executor().setUniverse(universe);
         console.setCommandExecutor(executor);
     }
 
