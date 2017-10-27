@@ -25,8 +25,12 @@ public class Universe implements Disposable {
     }
 
     public Universe nextPlanet() {
+        return nextPlanet(rng.nextLong());
+    }
+
+    public Universe nextPlanet(long SEED) {
         planet.dispose();
-        SEED = rng.nextLong();
+        this.SEED = SEED;
         planet = new Planet(SEED, assets);
         return this;
     }

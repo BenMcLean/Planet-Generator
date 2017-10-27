@@ -67,6 +67,18 @@ public class GameScreen implements Screen, Disposable {
             public void say (String stuff) {
                 console.log("Saying: " + stuff);
             }
+
+            public void planet () {
+                console.log("Loading new planet...");
+                universe.nextPlanet();
+                console.log("Planet " + universe.getPlanet().getSEED()  + " loaded.");
+            }
+
+            public void planet (long SEED) {
+                console.log("Loading Planet " + SEED + "...");
+                universe.nextPlanet(SEED);
+                console.log("Planet " + SEED + " loaded.");
+            }
         };
         console.setCommandExecutor(executor);
     }
