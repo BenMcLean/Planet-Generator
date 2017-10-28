@@ -27,6 +27,7 @@ To build for HTML5, run "gradlew.bat html:dist"
 * http://opengameart.org/content/27-bricks
 * http://opengameart.org/content/16x16-emotes-for-rpgs-and-digital-pets
 * https://opengameart.org/content/top-down-pokemon-esque-sprites
+* https://opengameart.org/content/smoke-fire-animated-particle-16x16
 
 Looking into also adapting tiles from these sets:
 * http://opengameart.org/content/16x16-8-bit-rpg-character-set
