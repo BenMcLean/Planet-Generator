@@ -3,4 +3,7 @@
 <module>
 	<source path="net/benmclean/planetgenerator" />
 	<extend-configuration-property name="gdx.reflect.include" value="net.benmclean.planetgenerator" />
+	<extend-configuration-property name="gdx.reflect.include" value="net.benmclean.planetgenerator.controller" />
+	<extend-configuration-property name="gdx.reflect.include" value="net.benmclean.planetgenerator.model" />
+	<extend-configuration-property name="gdx.reflect.include" value="net.benmclean.planetgenerator.view" />
 </module>
