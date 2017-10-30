@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
  * AtlasRepacker makes it possible to palette-swap the game's art assets at runtime.
  * Using the instance versions of the methods will also preserve 9-patch info, as will repackAtlas.
  * Static versions of the pack method are also available for use with PixmapPacker, but these will not preserve 9-patch info because while AtlasRegion has 9-patch support, PixmapPacker sadly does not as of this writing.
+ * It is recommended that when mixing procedurally generated images with recolored images from a TextureAtlas, the procedurally generated images coming in as pixmaps should have their names prefixed as "procgen/" or get some other name which is guaranteed to not be in the atlas to avoid incorrect 9-patch information being copied over.
  *
  * @author BenMcLean
  */
@@ -30,7 +31,7 @@ public class AtlasRepacker implements Disposable {
     }
 
     public AtlasRepacker pack(String category, Palette4 palette) {
-        pack(category, atlas, packer, palette);
+        pack(category, atlas, palette, packer);
         return this;
     }
 
@@ -87,29 +88,29 @@ public class AtlasRepacker implements Disposable {
      * This method does not copy 9-Patch info by itself!
      */
     public static void pack(TextureAtlas.AtlasRegion region, PixmapPacker packer) {
-        pack(region, packer, null);
+        pack(region, null, packer);
     }
 
     /**
      * This method does not copy 9-Patch info by itself!
      */
-    public static void pack(TextureAtlas raw, PixmapPacker packer, Palette4 palette) {
-        pack("", raw, packer, palette);
+    public static void pack(TextureAtlas raw, Palette4 palette, PixmapPacker packer) {
+        pack("", raw, palette, packer);
     }
 
     /**
      * This method does not copy 9-Patch info by itself!
      */
-    public static void pack(String category, TextureAtlas raw, PixmapPacker packer, Palette4 palette) {
+    public static void pack(String category, TextureAtlas raw, Palette4 palette, PixmapPacker packer) {
         for (TextureAtlas.AtlasRegion region : raw.getRegions())
             if (region.name.startsWith(category))
-                pack(region, packer, palette);
+                pack(region, palette, packer);
     }
 
     /**
      * This method does not copy 9-Patch info by itself!
      */
-    public static void pack(TextureAtlas.AtlasRegion region, PixmapPacker packer, Palette4 palette) {
+    public static void pack(TextureAtlas.AtlasRegion region, Palette4 palette, PixmapPacker packer) {
         Texture texture = region.getTexture();
         if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
         Pixmap pixmap = texture.getTextureData().consumePixmap();
@@ -126,7 +127,45 @@ public class AtlasRepacker implements Disposable {
                     result.drawPixel(x, y, transparent);
             }
         packer.pack(region.toString(), result);
-        texture.dispose();
+        pixmap.dispose();
+    }
+
+    /**
+     * This method does not copy 9-Patch info by itself!
+     */
+    public AtlasRepacker pack(String name, Texture texture, Palette4 palette) {
+        pack(name, texture, palette, packer);
+        return this;
+    }
+
+    public AtlasRepacker pack(String name, Pixmap pixmap, Palette4 palette) {
+        pack(name, pixmap, palette, packer);
+        return this;
+    }
+
+    public static void pack(String name, Pixmap pixmap, Palette4 palette, PixmapPacker packer) {
+        packer.pack(name, recolor(pixmap, palette));
+    }
+
+    public static void pack(String name, Texture texture, Palette4 palette, PixmapPacker packer) {
+        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
+        packer.pack(name, recolor(texture.getTextureData().consumePixmap(), palette));
+    }
+
+    public static Pixmap recolor(Pixmap pixmap, Palette4 palette) {
+        Pixmap result = new Pixmap(pixmap.getWidth(), pixmap.getHeight(), Pixmap.Format.RGBA8888);
+        Color color = new Color();
+        for (int x = 0; x < pixmap.getWidth(); x++)
+            for (int y = 0; y < pixmap.getHeight(); y++) {
+                color.set(pixmap.getPixel(x, y));
+                if (palette == null)
+                    result.drawPixel(x, y, pixmap.getPixel(x, y));
+                else if (color.a > .05)
+                    result.drawPixel(x, y, Color.rgba8888(palette.get((int) (color.r * 3.9999))));
+                else
+                    result.drawPixel(x, y, transparent);
+            }
+        return result;
     }
 
     /**

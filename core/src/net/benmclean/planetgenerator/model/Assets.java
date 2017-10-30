@@ -20,6 +20,7 @@ public class Assets {
     //    public ShaderProgram shader;
     public Texture one;
     public TextureAtlas atlas;
+    public TextureAtlas playerAtlas;
     public Skin skin;
 
     public Assets() {
@@ -46,8 +47,17 @@ public class Assets {
         atlas = new TextureAtlas("art.atlas");
     }
 
-    public Pixmap ship(long SEED) {
-        return new GenSprite(
+    public Assets randomAvatar() {
+        AtlasRepacker repacker = new AtlasRepacker(atlas)
+                .pack("utils")
+                .pack("characters/" + "Boy");
+        TextureAtlas playerAtlas = repacker.generateTextureAtlas();
+        repacker.dispose();
+        return this;
+    }
+
+    public static Pixmap ship(long SEED) {
+        return GenSprite.generatePixmap(
                 new GenSprite.Mask(new int[]{
                         0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 1, 1,
@@ -62,8 +72,7 @@ public class Assets {
                         0, 0, 0, 1, 1, 1,
                         0, 0, 0, 0, 0, 0
                 }, 6, 12, true, false),
-                true, 0.3, 0.2, 0.3, 0.5, SEED)
-                .generatePixmap();
+                true, 0.3, 0.2, 0.3, 0.5, SEED);
     }
 
     public void dispose() {

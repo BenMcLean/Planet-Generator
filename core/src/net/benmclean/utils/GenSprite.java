@@ -439,4 +439,16 @@ public class GenSprite {
             }
         return pixmap;
     }
+
+    public static Pixmap generatePixmap (
+            Mask mask,
+            boolean colored, //=true,
+            double edgeBrightness, //=0.3,
+            double colorVariations, //=0.2,
+            double brightnessNoise, //=0.3,
+            double saturation, //=0.5,
+            long SEED) //=0
+    {
+        return new GenSprite(mask, colored, edgeBrightness, colorVariations, brightnessNoise, saturation, SEED).generatePixmap();
+    }
 }
