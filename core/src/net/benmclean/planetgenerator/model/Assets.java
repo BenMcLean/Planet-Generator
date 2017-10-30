@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import net.benmclean.utils.AtlasRepacker;
+import net.benmclean.utils.GenSprite;
 import net.benmclean.utils.Palette4;
 
 /**
