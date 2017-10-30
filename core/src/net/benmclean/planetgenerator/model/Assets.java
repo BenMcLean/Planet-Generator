@@ -45,6 +45,26 @@ public class Assets {
         atlas = new TextureAtlas("art.atlas");
     }
 
+    public Pixmap ship(long SEED) {
+        return new GenSprite(
+                new GenSprite.Mask(new int[]{
+                        0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 1, 1,
+                        0, 0, 0, 0, 1, -1,
+                        0, 0, 0, 1, 1, -1,
+                        0, 0, 0, 1, 1, -1,
+                        0, 0, 1, 1, 1, -1,
+                        0, 1, 1, 1, 2, 2,
+                        0, 1, 1, 1, 2, 2,
+                        0, 1, 1, 1, 2, 2,
+                        0, 1, 1, 1, 1, -1,
+                        0, 0, 0, 1, 1, 1,
+                        0, 0, 0, 0, 0, 0
+                }, 6, 12, true, false),
+                true, 0.3, 0.2, 0.3, 0.5, SEED)
+                .generatePixmap();
+    }
+
     public void dispose() {
         one.dispose();
         atlas.dispose();

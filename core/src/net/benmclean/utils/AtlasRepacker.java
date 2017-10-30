@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
  * AtlasRepacker makes it possible to palette-swap the game's art assets at runtime.
  * Using the instance versions of the methods will also preserve 9-patch info, as will repackAtlas.
  * Static versions of the pack method are also available for use with PixmapPacker, but these will not preserve 9-patch info because while AtlasRegion has 9-patch support, PixmapPacker sadly does not as of this writing.
+ *
  * @author BenMcLean
  */
 public class AtlasRepacker implements Disposable {
@@ -42,13 +43,15 @@ public class AtlasRepacker implements Disposable {
         // Copying 9-patch info from the old atlas into the new atlas
         for (TextureAtlas.AtlasRegion region : textureAtlas.getRegions()) {
             TextureAtlas.AtlasRegion raw = atlas.findRegion(region.name);
-            if (raw.pads != null) {
-                region.pads = new int[raw.pads.length];
-                System.arraycopy(raw.pads, 0, region.pads, 0, raw.pads.length);
-            }
-            if (raw.splits != null) {
-                region.splits = new int[raw.splits.length];
-                System.arraycopy(raw.splits, 0, region.splits, 0, raw.splits.length);
+            if (raw != null) {
+                if (raw.pads != null) {
+                    region.pads = new int[raw.pads.length];
+                    System.arraycopy(raw.pads, 0, region.pads, 0, raw.pads.length);
+                }
+                if (raw.splits != null) {
+                    region.splits = new int[raw.splits.length];
+                    System.arraycopy(raw.splits, 0, region.splits, 0, raw.splits.length);
+                }
             }
         }
         return textureAtlas;
