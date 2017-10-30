@@ -79,13 +79,7 @@ public class Planet implements Disposable {
                 landColor
         );
 
-        Color biome = SColor.randomColorWheel(rng, 2, 2);
-        biomePalette = new Palette4(
-                Color.BLACK,
-                new Color(biome.r / 2f, biome.g / 2f, biome.b / 2f, 1f),
-                biome,
-                new Color(biome.r * 1.5f, biome.g * 1.5f, biome.b * 1.5f, 1f)
-        );
+        biomePalette = Palette4.fade(SColor.randomColorWheel(rng, 2, 2));
 
         atlas = packTextureAtlas();
 

@@ -176,4 +176,13 @@ public class Palette4 implements Disposable {
                 0, 255, 0, 255
         );
     }
+
+    public static Palette4 fade(Color color) {
+        return new Palette4(
+                Color.BLACK,
+                new Color(color.r / 2f, color.g / 2f, color.b / 2f, 1f),
+                color,
+                new Color(color.r * 1.5f, color.g * 1.5f, color.b * 1.5f, 1f)
+        );
+    }
 }
