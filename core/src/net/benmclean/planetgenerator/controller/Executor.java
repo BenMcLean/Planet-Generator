@@ -1,4 +1,4 @@
-package net.benmclean.planetgenerator.view;
+package net.benmclean.planetgenerator.controller;
 
 import com.strongjoshua.console.CommandExecutor;
 import net.benmclean.planetgenerator.model.Universe;

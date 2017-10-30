@@ -6,11 +6,12 @@ import squidpony.squidmath.RNG;
 import squidpony.squidmath.ThrustRNG;
 
 public class Universe implements Disposable {
-    private Assets assets;
-    private long SEED;
-    private RNG rng;
+    protected Assets assets;
+    protected long SEED;
+    protected RNG rng;
     protected Coord playerCoord;
-    private Planet planet;
+    protected Planet planet;
+    protected Player player;
 
     public Universe (long SEED) {
         this(SEED, new Assets());
@@ -20,6 +21,7 @@ public class Universe implements Disposable {
         this.SEED = SEED;
         this.assets = assets;
         planet = new Planet(SEED, assets);
+        player = new Player(SEED, assets);
         rng = new RNG(new ThrustRNG(SEED));
         setPlayer(0, 0);
     }
@@ -45,6 +47,10 @@ public class Universe implements Disposable {
 
     public Planet getPlanet () {
         return planet;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public Assets getAssets () {

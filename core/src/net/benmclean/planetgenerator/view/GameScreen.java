@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.strongjoshua.console.GUIConsole;
+import net.benmclean.planetgenerator.controller.Executor;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.Assets;
 import net.benmclean.planetgenerator.model.Universe;
@@ -41,7 +42,7 @@ public class GameScreen implements Screen, Disposable {
     public Universe universe;
     public GameInputProcessor input;
     protected GUIConsole console;
-    public Executor executor;
+    public net.benmclean.planetgenerator.controller.Executor executor;
 
     @Override
     public void show() {
@@ -106,7 +107,7 @@ public class GameScreen implements Screen, Disposable {
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
         batch.draw(
-                universe.getAssets().atlas.findRegion("characters/AstronautS0"),
+                universe.getPlayer().findRegion("S0"),
                 universe.getPlayerX() * Assets.TILE_WIDTH,
                 universe.getPlayerY() * Assets.TILE_HEIGHT
         );

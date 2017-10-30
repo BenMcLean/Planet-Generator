@@ -66,68 +66,8 @@ public class Planet implements Disposable {
         this.assets = assets;
         rng = new StatefulRNG(new ThrustRNG(SEED));
 
-        switch (rng.nextInt(3)) {
-            case 1:
-                terrainName = "Sand";
-                break;
-            case 2:
-                terrainName = "Snow";
-                break;
-            default:
-                terrainName = "Grass";
-                break;
-        }
-
-        switch (rng.nextInt(16)) {
-            case 1:
-                biomeName = "Bump1";
-                break;
-            case 2:
-                biomeName = "Dune0";
-                break;
-            case 3:
-                biomeName = "Dune1";
-                break;
-            case 4:
-                biomeName = "Hill0";
-                break;
-            case 5:
-                biomeName = "Hill1";
-                break;
-            case 6:
-                biomeName = "Oak0";
-                break;
-            case 7:
-                biomeName = "Oak1";
-                break;
-            case 8:
-                biomeName = "Oval0";
-                break;
-            case 9:
-                biomeName = "Oval1";
-                break;
-            case 10:
-                biomeName = "Palm0";
-                break;
-            case 11:
-                biomeName = "Palm1";
-                break;
-            case 12:
-                biomeName = "Pine0";
-                break;
-            case 13:
-                biomeName = "Pine1";
-                break;
-            case 14:
-                biomeName = "Tri0";
-                break;
-            case 15:
-                biomeName = "Tri1";
-                break;
-            default:
-                biomeName = "Bump0";
-                break;
-        }
+        terrainName = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)].toString();
+        biomeName = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)].toString();
 
 //        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
         backgroundColor = SColor.randomColorWheel(rng, 2, 2);

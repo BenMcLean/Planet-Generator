@@ -17,19 +17,11 @@ public class Assets {
     public static final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
     public static final int TILE_WIDTH = 16;
     public static final int TILE_HEIGHT = 16;
-    //    public ShaderProgram shader;
     public Texture one;
     public TextureAtlas atlas;
-    public TextureAtlas playerAtlas;
     public Skin skin;
 
     public Assets() {
-        // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
-        // fragmentShader is where the magic happens
-//        shader = new ShaderProgram(PaletteShader.vertexShader, PaletteShader.fragmentShaderYieldTransparency);
-//        if (!shader.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader: " + shader.getLog());
-//        shader.begin();
-
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.drawPixel(0, 0, -1);
         one = new Texture(pixmap);
@@ -45,15 +37,6 @@ public class Assets {
         );
 
         atlas = new TextureAtlas("art.atlas");
-    }
-
-    public Assets randomAvatar() {
-        AtlasRepacker repacker = new AtlasRepacker(atlas)
-                .pack("utils")
-                .pack("characters/" + "Boy");
-        TextureAtlas playerAtlas = repacker.generateTextureAtlas();
-        repacker.dispose();
-        return this;
     }
 
     public static Pixmap ship(long SEED) {
@@ -78,5 +61,43 @@ public class Assets {
     public void dispose() {
         one.dispose();
         atlas.dispose();
+    }
+
+    public enum Terrain {
+        Sand("Sand"),
+        Snow("Snow"),
+        Grass("Grass");
+        private String string;
+        Terrain(String string) {
+            this.string = string;
+        }
+        public String toString() {
+            return string;
+        }
+    }
+    public enum Biome {
+        Bump0("Bump0"),
+        Bump1("Bump1"),
+        Dune0("Dune0"),
+        Dune1("Dune1"),
+        Hill0("Hill0"),
+        Hill1("Hill1"),
+        Oak0("Oak0"),
+        Oak1("Oak1"),
+        Oval0("Oval0"),
+        Oval1("Oval1"),
+        Palm0("Palm0"),
+        Palm1("Palm1"),
+        Pine0("Pine0"),
+        Pine1("Pine1"),
+        Tri0("Tri0"),
+        Tri1("Tri1");
+        private String string;
+        Biome(String string) {
+            this.string = string;
+        }
+        public String toString() {
+            return string;
+        }
     }
 }
