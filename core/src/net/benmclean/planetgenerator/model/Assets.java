@@ -100,4 +100,24 @@ public class Assets {
             return string;
         }
     }
+    public enum Character {
+        Astronaut("Astronaut"),
+        Blob("Blob"),
+        Boy("Boy"),
+        Chinese("Chinese"),
+        Girl("Girl"),
+        Knight("Knight"),
+        Man("Man"),
+        Skeleton("Skeleton"),
+        Snake("Snake"),
+        Spectre("Spectre"),
+        Woman("Woman");
+        private String string;
+        Character(String string) {
+            this.string = string;
+        }
+        public String toString() {
+            return string;
+        }
+    }
 }
