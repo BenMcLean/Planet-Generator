@@ -2,13 +2,14 @@ package net.benmclean.planetgenerator.model;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import net.benmclean.utils.AtlasRepacker;
 import net.benmclean.utils.Palette4;
 import squidpony.squidgrid.gui.gdx.SColor;
 import squidpony.squidmath.LightRNG;
 import squidpony.squidmath.RNG;
 
-public class Character {
+public class Character implements Disposable {
     protected Assets assets;
     public TextureAtlas atlas = new TextureAtlas();
     public Assets.Character character;
@@ -49,5 +50,10 @@ public class Character {
 
     public TextureRegion findRegion(String suffix) {
         return atlas.findRegion(characterPrefix() + suffix);
+    }
+
+    @Override
+    public void dispose() {
+        atlas.dispose();
     }
 }

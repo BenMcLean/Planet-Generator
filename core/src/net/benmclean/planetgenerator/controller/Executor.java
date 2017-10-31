@@ -23,7 +23,19 @@ public class Executor extends CommandExecutor {
 
     public void planet (long SEED) {
         console.log("Loading Planet " + SEED + "...");
-        universe.nextPlanet(SEED);
+        universe.setPlanet(SEED);
         console.log("Planet " + SEED + " loaded.");
+    }
+
+    public void character () {
+        console.log("Loading new character...");
+        universe.nextPlanet();
+        console.log("Character " + universe.getPlanet().getSEED()  + " loaded.");
+    }
+
+    public void character (long SEED) {
+        console.log("Loading Character " + SEED + "...");
+        universe.setCharacter(SEED);
+        console.log("Character " + SEED + " loaded.");
     }
 }

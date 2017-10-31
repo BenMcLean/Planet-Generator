@@ -33,7 +33,8 @@ public class GameInputProcessor implements InputProcessor {
             Input.Keys.ENTER,
             Input.Keys.ALT_LEFT,
             Input.Keys.ALT_RIGHT,
-            Input.Keys.X
+            Input.Keys.X,
+            Input.Keys.Z
     ));
     public final static Set<Integer> TRACKED_KEYS = Collections.unmodifiableSet(
             new HashSet<Integer>(TRACKED_KEYS_ARRAY));
@@ -123,6 +124,9 @@ public class GameInputProcessor implements InputProcessor {
                 break;
             case Input.Keys.X:
                 universe.nextPlanet();
+                break;
+            case Input.Keys.Z:
+                universe.nextCharacter();
                 break;
             default:
                 //moved=false;

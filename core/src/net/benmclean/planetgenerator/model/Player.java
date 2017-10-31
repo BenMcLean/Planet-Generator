@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Player extends Character {
     public Texture ship;
 
-    public Player (long SEED, Assets assets) {
+    public Player(long SEED, Assets assets) {
         super(SEED, assets);
         setShip(SEED);
     }
@@ -17,5 +17,11 @@ public class Player extends Character {
         ship = new Texture(pixmap);
         pixmap.dispose();
         return this;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        ship.dispose();
     }
 }

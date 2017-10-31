@@ -20,20 +20,33 @@ public class Universe implements Disposable {
     public Universe(long SEED, Assets assets) {
         this.SEED = SEED;
         this.assets = assets;
-        planet = new Planet(SEED, assets);
-        player = new Player(SEED, assets);
+//        planet = new Planet(SEED, assets);
+//        player = new Player(SEED, assets);
+        setPlanet(SEED);
+        setCharacter(SEED);
         rng = new RNG(new ThrustRNG(SEED));
         setPlayer(0, 0);
     }
 
     public Universe nextPlanet() {
-        return nextPlanet(rng.nextLong());
+        return setPlanet(rng.nextLong());
     }
 
-    public Universe nextPlanet(long SEED) {
-        planet.dispose();
+    public Universe setPlanet(long SEED) {
+        if (planet != null) planet.dispose();
         this.SEED = SEED;
         planet = new Planet(SEED, assets);
+        return this;
+    }
+
+    public Universe nextCharacter() {
+        return setCharacter(rng.nextLong());
+    }
+
+    public Universe setCharacter(long SEED) {
+        if (player != null) player.dispose();
+        this.SEED = SEED;
+        player = new Player(SEED, assets);
         return this;
     }
 
