@@ -15,6 +15,7 @@ public class Player extends Character {
         if (ship != null) ship.dispose();
         Pixmap pixmap = Assets.ship(SEED);
         ship = new Texture(pixmap);
+        ship.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         pixmap.dispose();
         return this;
     }

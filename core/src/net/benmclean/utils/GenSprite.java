@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import java.util.Random;
 
 /**
- * The GenSprite class makes use of a Mask instance to generate a 2D sprite.
+ * The Sprite class makes use of a Mask instance to generate a 2D sprite on a
+ * HTML canvas.
  * <p>
  * var options = {
  * colored         : true,   // boolean
@@ -22,6 +23,7 @@ import java.util.Random;
  * @constructor
  */
 public class GenSprite {
+
     public int width;
     public int height;
     public Mask mask;
@@ -42,10 +44,10 @@ public class GenSprite {
                      double saturation, //=0.5,
                      long SEED) //=0
     {
-        this.width = mask.width * (mask.mirrorX ? 2 : 1);
-        this.height = mask.height * (mask.mirrorY ? 2 : 1);
+        width = mask.width * (mask.mirrorX ? 2 : 1);
+        height = mask.height * (mask.mirrorY ? 2 : 1);
         this.mask = mask;
-        this.data = new int[this.width * this.height];
+        this.data = new int[width * height];
         this.colored = colored;
         this.edgeBrightness = edgeBrightness;
         this.colorVariations = colorVariations;
@@ -53,40 +55,6 @@ public class GenSprite {
         this.saturation = saturation;
         this.SEED = SEED;
         this.init();
-    }
-
-    /**
-     * The Mask class defines a 2D template form which sprites can be generated.
-     *
-     * @param {data}    Integer array describing which parts of the sprite should be
-     *                  empty, body, and border. The mask only defines a semi-ridgid stucture
-     *                  which might not strictly be followed based on randomly generated numbers.
-     *                  <p>
-     *                  -1 = Always border (black)
-     *                  0 = Empty
-     *                  1 = Randomly chosen Empty/Body
-     *                  2 = Randomly chosen Border/Body
-     * @param {width}   Width of the mask data array
-     * @param {height}  Height of the mask data array
-     * @param {mirrorX} A boolean describing whether the mask should be mirrored on the x axis
-     * @param {mirrorY} A boolean describing whether the mask should be mirrored on the y axis
-     * @class Mask
-     * @constructor
-     */
-    public static class Mask {
-        public int width;
-        public int height;
-        public int[] data;
-        public boolean mirrorX;
-        public boolean mirrorY;
-
-        public Mask(int[] data, int width, int height, boolean mirrorX, boolean mirrorY) {
-            this.width = width;
-            this.height = height;
-            this.data = data;
-            this.mirrorX = mirrorX;
-            this.mirrorY = mirrorY;
-        }
     }
 
     /**
@@ -161,10 +129,8 @@ public class GenSprite {
      * @returns {undefined}
      */
     public void initData() {
-        int h = this.height;
-        int w = this.width;
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 this.setData(x, y, -1);
             }
         }
@@ -177,11 +143,11 @@ public class GenSprite {
      * @returns {undefined}
      */
     public void mirrorX() {
-        int h = this.height;
-        int w = (int) Math.floor(this.width / (double) 2);
+        int h = height;
+        int w = (int) Math.floor(width / (double) 2);
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                this.setData(this.width - x - 1, y, this.getData(x, y));
+                setData(width - x - 1, y, getData(x, y));
             }
         }
     }
@@ -193,11 +159,11 @@ public class GenSprite {
      * @returns {undefined}
      */
     public void mirrorY() {
-        int h = (int) Math.floor(this.height / (double) 2);
-        int w = this.width;
+        int h = (int) Math.floor(height / (double) 2);
+        int w = width;
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                this.setData(x, this.height - y - 1, this.getData(x, y));
+                setData(x, height - y - 1, getData(x, y));
             }
         }
     }
@@ -236,11 +202,8 @@ public class GenSprite {
      */
     public void generateRandomSample() {
         random = new Random(SEED);
-        int h = this.height;
-        int w = this.width;
-
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int val = this.getData(x, y);
                 if (val == 1) {
                     val = random.nextInt(2);
@@ -264,22 +227,20 @@ public class GenSprite {
      * @returns {undefined}
      */
     public void generateEdges() {
-        int h = this.height;
-        int w = this.width;
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 if (this.getData(x, y) > 0) {
-                    if (y - 1 >= 0 && this.getData(x, y - 1) == 0) {
-                        this.setData(x, y - 1, -1);
+                    if (y - 1 >= 0 && getData(x, y - 1) == 0) {
+                        setData(x, y - 1, -1);
                     }
-                    if (y + 1 < this.height && this.getData(x, y + 1) == 0) {
-                        this.setData(x, y + 1, -1);
+                    if (y + 1 < height && getData(x, y + 1) == 0) {
+                        setData(x, y + 1, -1);
                     }
-                    if (x - 1 >= 0 && this.getData(x - 1, y) == 0) {
-                        this.setData(x - 1, y, -1);
+                    if (x - 1 >= 0 && getData(x - 1, y) == 0) {
+                        setData(x - 1, y, -1);
                     }
-                    if (x + 1 < this.width && this.getData(x + 1, y) == 0) {
-                        this.setData(x + 1, y, -1);
+                    if (x + 1 < width && getData(x + 1, y) == 0) {
+                        setData(x + 1, y, -1);
                     }
                 }
             }
@@ -339,11 +300,11 @@ public class GenSprite {
 
         int ulen, vlen;
         if (isVerticalGradient) {
-            ulen = this.height;
-            vlen = this.width;
+            ulen = height;
+            vlen = width;
         } else {
-            ulen = this.width;
-            vlen = this.height;
+            ulen = width;
+            vlen = height;
         }
 
         for (int u = 0; u < ulen; u++) {
@@ -409,11 +370,9 @@ public class GenSprite {
     }
 
     public String toString() {
-        int h = this.height;
-        int w = this.width;
         String output = "";
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 double val = this.getData(x, y);
                 output += val >= 0 ? " " + val : "" + val;
             }
@@ -422,12 +381,43 @@ public class GenSprite {
         return output;
     }
 
-    public Pixmap generatePixmap() {
-        int[] spritePixels = renderPixelData();
-        int height = getHeight();
-        int width = getWidth();
-        Pixmap pixmap = new Pixmap(height, width, Pixmap.Format.RGBA8888);
+    /**
+     * The Mask class defines a 2D template form which sprites can be generated.
+     *
+     * @param {data}    Integer array describing which parts of the sprite should be
+     *                  empty, body, and border. The mask only defines a semi-ridgid stucture
+     *                  which might not strictly be followed based on randomly generated numbers.
+     *                  <p>
+     *                  -1 = Always border (black)
+     *                  0 = Empty
+     *                  1 = Randomly chosen Empty/Body
+     *                  2 = Randomly chosen Border/Body
+     * @param {width}   Width of the mask data array
+     * @param {height}  Height of the mask data array
+     * @param {mirrorX} A boolean describing whether the mask should be mirrored on the x axis
+     * @param {mirrorY} A boolean describing whether the mask should be mirrored on the y axis
+     * @class Mask
+     * @constructor
+     */
+    public static class Mask {
+        public int width;
+        public int height;
+        public int[] data;
+        public boolean mirrorX;
+        public boolean mirrorY;
 
+        public Mask(int[] data, int width, int height, boolean mirrorX, boolean mirrorY) {
+            this.width = width;
+            this.height = height;
+            this.data = data;
+            this.mirrorX = mirrorX;
+            this.mirrorY = mirrorY;
+        }
+    }
+
+    public Pixmap generatePixmap() {
+        Pixmap pixmap = new Pixmap(getHeight(), getWidth(), Pixmap.Format.RGBA8888);
+        int[] spritePixels = renderPixelData();
         for (int x = 0; x < height; x++)
             for (int y = 0; y < width; y++) {
                 int i = (width * y + x) * 4;
@@ -440,14 +430,13 @@ public class GenSprite {
         return pixmap;
     }
 
-    public static Pixmap generatePixmap (
-            Mask mask,
-            boolean colored, //=true,
-            double edgeBrightness, //=0.3,
-            double colorVariations, //=0.2,
-            double brightnessNoise, //=0.3,
-            double saturation, //=0.5,
-            long SEED) //=0
+    public static Pixmap generatePixmap(Mask mask,
+                                        boolean colored, //=true,
+                                        double edgeBrightness, //=0.3,
+                                        double colorVariations, //=0.2,
+                                        double brightnessNoise, //=0.3,
+                                        double saturation, //=0.5,
+                                        long SEED) //=0
     {
         return new GenSprite(mask, colored, edgeBrightness, colorVariations, brightnessNoise, saturation, SEED).generatePixmap();
     }

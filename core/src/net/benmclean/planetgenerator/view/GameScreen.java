@@ -107,9 +107,10 @@ public class GameScreen implements Screen, Disposable {
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
         batch.draw(
-                universe.getPlayer().findRegion("S0"),
-                universe.getPlayerX() * Assets.TILE_WIDTH,
-                universe.getPlayerY() * Assets.TILE_HEIGHT
+//                universe.getPlayer().findRegion("S0"),
+                universe.getPlayer().ship,
+                universe.getPlayerX() * Assets.TILE_WIDTH + 2,
+                universe.getPlayerY() * Assets.TILE_HEIGHT + 2
         );
         batch.end();
         frameBuffer.end();
