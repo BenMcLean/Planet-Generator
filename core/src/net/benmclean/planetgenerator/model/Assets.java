@@ -40,22 +40,20 @@ public class Assets {
     }
 
     public static Pixmap ship(long SEED) {
-        return GenSprite.generatePixmap(
-                new GenSprite.Mask(new int[]{
-                        0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 1, 1,
-                        0, 0, 0, 0, 1, -1,
-                        0, 0, 0, 1, 1, -1,
-                        0, 0, 0, 1, 1, -1,
-                        0, 0, 1, 1, 1, -1,
-                        0, 1, 1, 1, 2, 2,
-                        0, 1, 1, 1, 2, 2,
-                        0, 1, 1, 1, 2, 2,
-                        0, 1, 1, 1, 1, -1,
-                        0, 0, 0, 1, 1, 1,
-                        0, 0, 0, 0, 0, 0
-                }, 6, 12, true, false),
-                true, 0.3, 0.2, 0.3, 0.5, SEED);
+        return GenSprite.generatePixmap(new GenSprite.Mask(new int[]{
+                0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 1, 1,
+                0, 0, 0, 0, 1, -1,
+                0, 0, 0, 1, 1, -1,
+                0, 0, 0, 1, 1, -1,
+                0, 0, 1, 1, 1, -1,
+                0, 1, 1, 1, 2, 2,
+                0, 1, 1, 1, 2, 2,
+                0, 1, 1, 1, 2, 2,
+                0, 1, 1, 1, 1, -1,
+                0, 0, 0, 1, 1, 1,
+                0, 0, 0, 0, 0, 0
+        }, 6, 12, true, false), true, 0.3, 0.2, 0.3, 0.5, SEED);
     }
 
     public void dispose() {
@@ -68,13 +66,16 @@ public class Assets {
         Snow("Snow"),
         Grass("Grass");
         private String string;
+
         Terrain(String string) {
             this.string = string;
         }
+
         public String toString() {
             return string;
         }
     }
+
     public enum Biome {
         Bump0("Bump0"),
         Bump1("Bump1"),
@@ -93,13 +94,16 @@ public class Assets {
         Tri0("Tri0"),
         Tri1("Tri1");
         private String string;
+
         Biome(String string) {
             this.string = string;
         }
+
         public String toString() {
             return string;
         }
     }
+
     public enum Character {
         Astronaut("Astronaut"),
         Blob("Blob"),
@@ -113,9 +117,11 @@ public class Assets {
         Spectre("Spectre"),
         Woman("Woman");
         private String string;
+
         Character(String string) {
             this.string = string;
         }
+
         public String toString() {
             return string;
         }
