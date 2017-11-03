@@ -111,8 +111,8 @@ public class GameScreen implements Screen, Disposable {
         if (universe.inShip)
             batch.draw(
                     universe.getPlayer().ship,
-                    universe.getPlayerX() * Assets.TILE_WIDTH + 6,
-                    universe.getPlayerY() * Assets.TILE_HEIGHT + 6,
+                    universe.getPlayerX() * Assets.TILE_WIDTH,
+                    universe.getPlayerY() * Assets.TILE_HEIGHT,
                     universe.getPlayer().ship.getWidth() / 2,
                     universe.getPlayer().ship.getHeight() / 2,
                     universe.getPlayer().ship.getWidth(),

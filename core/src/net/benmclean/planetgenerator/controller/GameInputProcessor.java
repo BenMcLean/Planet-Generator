@@ -55,6 +55,8 @@ public class GameInputProcessor implements InputProcessor {
         if (keycode == Input.Keys.ENTER && (keyPressed[keyInt(Input.Keys.ALT_LEFT)] || keyPressed[keyInt(Input.Keys.ALT_RIGHT)]))
             screen.toggleFullscreen();
         if (keycode == Input.Keys.S) universe.inShip = !universe.inShip;
+        if (keycode == Input.Keys.X) universe.nextPlanet();
+        if (keycode == Input.Keys.Z) universe.nextCharacter();
         timeSinceRepeat = 0;
         moveFromInput(keycode);
         return true;
@@ -141,12 +143,6 @@ public class GameInputProcessor implements InputProcessor {
                 break;
             case Input.Keys.LEFT:
                 universe.movePlayer(Direction.WEST);
-                break;
-            case Input.Keys.X:
-                universe.nextPlanet();
-                break;
-            case Input.Keys.Z:
-                universe.nextCharacter();
                 break;
             default:
                 //moved=false;
