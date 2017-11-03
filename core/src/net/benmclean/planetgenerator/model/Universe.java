@@ -12,6 +12,7 @@ public class Universe implements Disposable {
     protected Coord playerCoord;
     protected Planet planet;
     protected Player player;
+    public Direction direction = Direction.NONE;
 
     public Universe (long SEED) {
         this(SEED, new Assets());

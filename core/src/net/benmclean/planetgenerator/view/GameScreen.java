@@ -16,6 +16,7 @@ import com.strongjoshua.console.GUIConsole;
 import net.benmclean.planetgenerator.controller.Executor;
 import net.benmclean.planetgenerator.controller.GameInputProcessor;
 import net.benmclean.planetgenerator.model.Assets;
+import net.benmclean.planetgenerator.model.Direction;
 import net.benmclean.planetgenerator.model.Universe;
 
 public class GameScreen implements Screen, Disposable {
@@ -109,8 +110,21 @@ public class GameScreen implements Screen, Disposable {
         batch.draw(
 //                universe.getPlayer().findRegion("S0"),
                 universe.getPlayer().ship,
-                universe.getPlayerX() * Assets.TILE_WIDTH + 2,
-                universe.getPlayerY() * Assets.TILE_HEIGHT + 2
+                universe.getPlayerX() * Assets.TILE_WIDTH + 6,
+                universe.getPlayerY() * Assets.TILE_HEIGHT + 6,
+                universe.getPlayer().ship.getWidth() / 2,
+                universe.getPlayer().ship.getHeight() / 2,
+                universe.getPlayer().ship.getWidth(),
+                universe.getPlayer().ship.getHeight(),
+                3,
+                3,
+                Direction.degrees(universe.direction),
+                0,
+                0,
+                universe.getPlayer().ship.getWidth(),
+                universe.getPlayer().ship.getHeight(),
+                false,
+                false
         );
         batch.end();
         frameBuffer.end();

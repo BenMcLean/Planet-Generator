@@ -102,6 +102,24 @@ public class GameInputProcessor implements InputProcessor {
                 if (keyPressed[keyInt(key)])
                     moveFromInput(key);
         }
+        if (keyPressed[keyInt(Input.Keys.DOWN)]) {
+            if (keyPressed[keyInt(Input.Keys.RIGHT)])
+                universe.direction = Direction.SOUTHEAST;
+            else if (keyPressed[keyInt(Input.Keys.LEFT)])
+                universe.direction = Direction.SOUTHWEST;
+            else
+                universe.direction = Direction.SOUTH;
+        } else if (keyPressed[keyInt(Input.Keys.UP)]) {
+            if (keyPressed[keyInt(Input.Keys.RIGHT)])
+                universe.direction = Direction.NORTHEAST;
+            else if (keyPressed[keyInt(Input.Keys.LEFT)])
+                universe.direction = Direction.NORTHWEST;
+            else
+                universe.direction = Direction.NORTH;
+        } else if (keyPressed[keyInt(Input.Keys.RIGHT)])
+            universe.direction = Direction.EAST;
+        else if (keyPressed[keyInt(Input.Keys.LEFT)])
+            universe.direction = Direction.WEST;
     }
 
     public void moveFromInput(int keycode) {
