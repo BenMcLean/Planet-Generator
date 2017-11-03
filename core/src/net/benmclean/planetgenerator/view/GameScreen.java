@@ -62,7 +62,7 @@ public class GameScreen implements Screen, Disposable {
 
         console = new GUIConsole(universe.getAssets().skin);
         console.setLoggingToSystem(true);
-        console.setSizePercent(100f,100f);
+        console.setSizePercent(100f, 100f);
 
         executor = new Executor().setUniverse(universe);
         console.setCommandExecutor(executor);
@@ -107,25 +107,37 @@ public class GameScreen implements Screen, Disposable {
         worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         batch.setProjectionMatrix(worldView.getCamera().combined);
         batch.begin();
-        batch.draw(
-//                universe.getPlayer().findRegion("S0"),
-                universe.getPlayer().ship,
-                universe.getPlayerX() * Assets.TILE_WIDTH + 6,
-                universe.getPlayerY() * Assets.TILE_HEIGHT + 6,
-                universe.getPlayer().ship.getWidth() / 2,
-                universe.getPlayer().ship.getHeight() / 2,
-                universe.getPlayer().ship.getWidth(),
-                universe.getPlayer().ship.getHeight(),
-                3,
-                3,
-                Direction.degrees(universe.direction),
-                0,
-                0,
-                universe.getPlayer().ship.getWidth(),
-                universe.getPlayer().ship.getHeight(),
-                false,
-                false
-        );
+
+        if (universe.inShip)
+            batch.draw(
+                    universe.getPlayer().ship,
+                    universe.getPlayerX() * Assets.TILE_WIDTH + 6,
+                    universe.getPlayerY() * Assets.TILE_HEIGHT + 6,
+                    universe.getPlayer().ship.getWidth() / 2,
+                    universe.getPlayer().ship.getHeight() / 2,
+                    universe.getPlayer().ship.getWidth(),
+                    universe.getPlayer().ship.getHeight(),
+                    3,
+                    3,
+                    Direction.degrees(universe.direction),
+                    0,
+                    0,
+                    universe.getPlayer().ship.getWidth(),
+                    universe.getPlayer().ship.getHeight(),
+                    false,
+                    false
+            );
+        else {
+            String direction = Direction.toString(Direction.simplify(universe.direction, false));
+            TextureRegion playerSprite = universe.getPlayer().findRegion(
+                    (direction.equals("") ? "S" : direction) + "0"
+            );
+            batch.draw(
+                    playerSprite != null ? playerSprite : universe.getPlayer().atlas.findRegion("utils/test"),
+                    universe.getPlayerX() * Assets.TILE_WIDTH,
+                    universe.getPlayerY() * Assets.TILE_HEIGHT
+            );
+        }
         batch.end();
         frameBuffer.end();
 

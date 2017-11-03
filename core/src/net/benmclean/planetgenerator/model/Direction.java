@@ -50,6 +50,25 @@ public enum Direction {
         }
     }
 
+    public Direction simplify(boolean preferVertical) {
+        return simplify(this, preferVertical);
+    }
+
+    public static Direction simplify(Direction value, boolean preferVertical) {
+        switch (value) {
+            case NORTHEAST:
+                return preferVertical ? NORTH : EAST;
+            case SOUTHEAST:
+                return preferVertical ? SOUTH : EAST;
+            case SOUTHWEST:
+                return preferVertical ? SOUTH : WEST;
+            case NORTHWEST:
+                return preferVertical ? NORTH : WEST;
+            default:
+                return value;
+        }
+    }
+
     public String toString() {
         return toString(this);
     }
@@ -73,7 +92,7 @@ public enum Direction {
             case NORTHWEST:
                 return "NW";
             default:
-                return null;
+                return "";
         }
     }
 

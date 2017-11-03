@@ -13,6 +13,7 @@ public class Universe implements Disposable {
     protected Planet planet;
     protected Player player;
     public Direction direction = Direction.NONE;
+    public boolean inShip = true;
 
     public Universe (long SEED) {
         this(SEED, new Assets());
