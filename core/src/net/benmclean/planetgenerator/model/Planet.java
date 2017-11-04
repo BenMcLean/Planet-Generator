@@ -37,8 +37,8 @@ public class Planet implements Disposable {
     private TextureAtlas atlas;
     private Palette4 terrainPalette;
     private Palette4 biomePalette;
-    public String terrainName;
-    public String biomeName;
+    public Assets.Terrain terrainType;
+    public Assets.Biome biomeType;
     public Color backgroundColor;
 
     public TextureAtlas getAtlas() {
@@ -66,8 +66,8 @@ public class Planet implements Disposable {
         this.assets = assets;
         rng = new StatefulRNG(new ThrustRNG(SEED));
 
-        terrainName = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)].toString();
-        biomeName = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)].toString();
+        terrainType = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)];
+        biomeType = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)];
 
 //        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
         backgroundColor = SColor.randomColorWheel(rng, 2, 2);
@@ -146,8 +146,8 @@ public class Planet implements Disposable {
     protected void makeTiledMap() {
         HashMap<String, TiledMapTileLayer.Cell> cells = new HashMap<String, TiledMapTileLayer.Cell>();
         packInCells(cells, atlas, "utils");
-        packInCells(cells, atlas, "terrain/" + terrainName);
-        packInCells(cells, atlas, "biomes/" + biomeName);
+        packInCells(cells, atlas, "terrain/" + terrainType);
+        packInCells(cells, atlas, "biomes/" + biomeType);
 
         if (map != null) map.dispose();
         map = new TiledMap();
@@ -170,7 +170,7 @@ public class Planet implements Disposable {
         for (int x = 0; x < SIZE_X; x++)
             for (int y = 0; y < SIZE_Y; y++) {
                 if (isLand(x, y))
-                    layers[0].setCell(x, y, cells.get("terrain/" + terrainName));
+                    layers[0].setCell(x, y, cells.get("terrain/" + terrainType));
                 else if (landChecker.isEdge(x, y))
                     layers[0].setCell(x, y, cells.get(terrainName(x, y, landChecker)));
 
@@ -209,8 +209,8 @@ public class Planet implements Disposable {
     private TextureAtlas packTextureAtlas() {
         AtlasRepacker repacker = new AtlasRepacker(assets.atlas)
                 .pack("utils")
-                .pack("terrain/" + terrainName, terrainPalette)
-                .pack("biomes/" + biomeName, biomePalette);
+                .pack("terrain/" + terrainType, terrainPalette)
+                .pack("biomes/" + biomeType, biomePalette);
         TextureAtlas textureAtlas = repacker.generateTextureAtlas();
         repacker.dispose();
         return textureAtlas;
@@ -238,7 +238,7 @@ public class Planet implements Disposable {
     }
 
     public String terrainName(int x, int y, CoordCheckerInterface where) {
-        return terrainName("terrain/" + terrainName + "Shore", x, y, where);
+        return terrainName("terrain/" + terrainType + "Shore", x, y, where);
     }
 
     public String terrainName(String name, int x, int y, CoordCheckerInterface where) {
@@ -255,7 +255,7 @@ public class Planet implements Disposable {
     }
 
     public String biomeName(int x, int y, CoordCheckerInterface where) {
-        return biomeName("biomes/" + biomeName, x, y, where);
+        return biomeName("biomes/" + biomeType, x, y, where);
     }
 
     public String biomeName(String name, int x, int y, CoordCheckerInterface where) {
