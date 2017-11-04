@@ -19,7 +19,6 @@ import com.sudoplay.joise.module.ModuleTranslateDomain;
 import net.benmclean.utils.AtlasRepacker;
 import net.benmclean.utils.Palette4;
 import squidpony.squidgrid.gui.gdx.SColor;
-import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 import squidpony.squidmath.StatefulRNG;
 import squidpony.squidmath.ThrustRNG;
@@ -32,7 +31,6 @@ public class Planet implements Disposable {
     private long SEED;
     private RNG rng;
     private Assets assets;
-    protected Coord playerCoord = Coord.get(SIZE_X / 2, SIZE_Y / 2);
     protected boolean[][] land;
     protected boolean[][] biome;
     private TiledMap map;
@@ -240,6 +238,8 @@ public class Planet implements Disposable {
     public void dispose() {
         atlas.dispose();
         terrainPalette.dispose();
+        biomePalette.dispose();
+        map.dispose();
     }
 
     public static abstract class CoordCheckerInterface {
