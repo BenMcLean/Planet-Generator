@@ -68,7 +68,7 @@ public class Planet implements Disposable {
 
         terrainType = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)];
         biomeType = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)];
-        backgroundColor = SColor.randomColorWheel(rng, 2, 2);
+        backgroundColor = SColor.randomColorWheel(rng, 1, 2);
         Color landColor = SColor.randomColorWheel(rng, 2, 2);
         terrainPalette = new Palette4(
                 Color.BLACK,
