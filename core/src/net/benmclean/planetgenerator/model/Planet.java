@@ -2,7 +2,6 @@ package net.benmclean.planetgenerator.model;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -214,16 +213,15 @@ public class Planet implements Disposable {
         Pixmap minimap = new Pixmap(SIZE_X, SIZE_Y, Pixmap.Format.RGBA8888);
         for (int y = 0; y < SIZE_Y; y++)
             for (int x = 0; x < SIZE_X; x++)
-                if (biome[x][y])
-                    minimap.drawPixel(x, y, Color.rgba8888(biomePalette.get(1)));
-                else if (land[x][y])
+                if (isBiome(x, y))
+                    minimap.drawPixel(x, y, Color.rgba8888(biomePalette.get(
+                            biomeType == Assets.Biome.Hill0 ? 2 : 3
+                    )));
+                else if (isLand(x, y))
                     minimap.drawPixel(x, y, Color.rgba8888(terrainPalette.get(3)));
                 else
                     minimap.drawPixel(x, y, Color.rgba8888(backgroundColor));
-        Texture minimapT = new Texture(minimap);
-        minimapT.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        repacker.pack("procgen/minimap", minimapT);
-        minimapT.dispose();
+        repacker.pack("procgen/minimap", minimap);
         minimap.dispose();
 
         TextureAtlas textureAtlas = repacker.generateTextureAtlas();

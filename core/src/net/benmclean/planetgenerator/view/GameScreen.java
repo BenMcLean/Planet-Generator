@@ -44,6 +44,7 @@ public class GameScreen implements Screen, Disposable {
     public GameInputProcessor input;
     protected GUIConsole console;
     public net.benmclean.planetgenerator.controller.Executor executor;
+    boolean flash = false;
 
     @Override
     public void show() {
@@ -102,8 +103,8 @@ public class GameScreen implements Screen, Disposable {
             if (universe.inShip)
                 batch.draw(
                         universe.getPlayer().ship,
-                        universe.getPlayerX(),
-                        universe.getPlayerY(),
+                        universe.getPlayerX() - universe.getPlayer().ship.getWidth() / 2,
+                        universe.getPlayerY() - universe.getPlayer().ship.getHeight() / 2,
                         universe.getPlayer().ship.getWidth() / 2,
                         universe.getPlayer().ship.getHeight() / 2,
                         universe.getPlayer().ship.getWidth(),
@@ -118,6 +119,12 @@ public class GameScreen implements Screen, Disposable {
                         false,
                         false
                 );
+            else {
+                flash = !flash;
+                if (flash) batch.setColor(universe.getPlayer().palette.get(3));
+                batch.draw(universe.getAssets().one, universe.getPlayerX(), universe.getPlayerY());
+                batch.setColor(Color.WHITE);
+            }
             batch.end();
         } else {
             // Redner like normal

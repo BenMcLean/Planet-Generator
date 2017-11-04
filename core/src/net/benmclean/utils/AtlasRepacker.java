@@ -145,6 +145,11 @@ public class AtlasRepacker implements Disposable {
         return this;
     }
 
+    public AtlasRepacker pack(String name, Pixmap pixmap) {
+        packer.pack(name, pixmap);
+        return this;
+    }
+
     public AtlasRepacker pack(String name, Pixmap pixmap, Palette4 palette) {
         pack(name, pixmap, palette, packer);
         return this;
