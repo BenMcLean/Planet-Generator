@@ -214,13 +214,13 @@ public class Planet implements Disposable {
         for (int y = 0; y < SIZE_Y; y++)
             for (int x = 0; x < SIZE_X; x++)
                 if (isBiome(x, y))
-                    minimap.drawPixel(x, y, Color.rgba8888(biomePalette.get(
+                    minimap.drawPixel(x, SIZE_Y - y - 1, Color.rgba8888(biomePalette.get(
                             biomeType == Assets.Biome.Hill0 ? 2 : 3
                     )));
                 else if (isLand(x, y))
-                    minimap.drawPixel(x, y, Color.rgba8888(terrainPalette.get(3)));
+                    minimap.drawPixel(x, SIZE_Y - y - 1, Color.rgba8888(terrainPalette.get(3)));
                 else
-                    minimap.drawPixel(x, y, Color.rgba8888(backgroundColor));
+                    minimap.drawPixel(x, SIZE_Y - y - 1, Color.rgba8888(backgroundColor));
         repacker.pack("procgen/minimap", minimap);
         minimap.dispose();
 
