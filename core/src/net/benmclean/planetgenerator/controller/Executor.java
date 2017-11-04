@@ -11,29 +11,29 @@ public class Executor extends CommandExecutor {
         return this;
     }
 
-    public void say (String stuff) {
+    public void say(String stuff) {
         console.log("Saying: " + stuff);
     }
 
-    public void planet () {
+    public void planet() {
         console.log("Loading new planet...");
         universe.nextPlanet();
-        console.log("Planet " + universe.getPlanet().getSEED()  + " loaded.");
+        console.log("Planet " + universe.planetSEED + " loaded.");
     }
 
-    public void planet (long SEED) {
+    public void planet(long SEED) {
         console.log("Loading Planet " + SEED + "...");
         universe.setPlanet(SEED);
         console.log("Planet " + SEED + " loaded.");
     }
 
-    public void character () {
+    public void character() {
         console.log("Loading new character...");
-        universe.nextPlanet();
-        console.log("Character " + universe.getPlanet().getSEED()  + " loaded.");
+        universe.nextCharacter();
+        console.log("Character " + universe.playerSEED + " loaded.");
     }
 
-    public void character (long SEED) {
+    public void character(long SEED) {
         console.log("Loading Character " + SEED + "...");
         universe.setCharacter(SEED);
         console.log("Character " + SEED + " loaded.");

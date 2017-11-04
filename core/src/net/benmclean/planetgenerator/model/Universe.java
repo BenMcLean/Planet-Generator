@@ -15,6 +15,8 @@ public class Universe implements Disposable {
     public Direction direction = Direction.NONE;
     public boolean inShip = true;
     public boolean showMap = false;
+    public long planetSEED;
+    public long playerSEED;
 
     public Universe(long SEED) {
         this(SEED, new Assets());
@@ -37,8 +39,8 @@ public class Universe implements Disposable {
 
     public Universe setPlanet(long SEED) {
         if (planet != null) planet.dispose();
-        this.SEED = SEED;
-        planet = new Planet(SEED, assets);
+        planetSEED = SEED;
+        planet = Planet.randomPlanet(planetSEED, assets);
         return this;
     }
 
@@ -48,8 +50,8 @@ public class Universe implements Disposable {
 
     public Universe setCharacter(long SEED) {
         if (player != null) player.dispose();
-        this.SEED = SEED;
-        player = new Player(SEED, assets);
+        playerSEED = SEED;
+        player = new Player(playerSEED, assets);
         return this;
     }
 

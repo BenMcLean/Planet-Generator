@@ -25,10 +25,8 @@ import squidpony.squidmath.ThrustRNG;
 import java.util.HashMap;
 
 public class Planet implements Disposable {
-    public final int SIZE_X = 256;
-    public final int SIZE_Y = 256;
-    private long SEED;
-    private RNG rng;
+    public static final int SIZE_X = 256;
+    public static final int SIZE_Y = 256;
     private Assets assets;
     protected boolean[][] land;
     protected boolean[][] biome;
@@ -44,62 +42,65 @@ public class Planet implements Disposable {
         return atlas;
     }
 
-    public long getSEED() {
-        return SEED;
-    }
-
-    public RNG getRNG() {
-        return rng;
-    }
-
     public Palette4 getTerrainPalette() {
         return terrainPalette;
     }
 
-    public Planet(Planet planet) {
-        this(planet.SEED, planet.assets);
-    }
+    public static Planet randomPlanet(long SEED, Assets assets) {
+        RNG rng = new StatefulRNG(new ThrustRNG(SEED));
 
-    public Planet(long SEED, Assets assets) {
-        this.SEED = SEED;
-        this.assets = assets;
-        rng = new StatefulRNG(new ThrustRNG(SEED));
-
-        terrainType = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)];
-        biomeType = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)];
-        backgroundColor = SColor.randomColorWheel(rng, 1, 2);
+        Assets.Terrain terrainType = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)];
+        Assets.Biome biomeType = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)];
+        Color backgroundColor = SColor.randomColorWheel(rng, 1, 2);
         Color landColor = SColor.randomColorWheel(rng, 2, 2);
-        terrainPalette = new Palette4(
+        Palette4 terrainPalette = new Palette4(
                 Color.BLACK,
                 new Color(backgroundColor.r / 2f, backgroundColor.g / 2f, backgroundColor.b / 2f, 1f),
                 new Color(landColor.r / 2f, landColor.g / 2f, landColor.b / 2f, 1f),
                 landColor
         );
 
-        if (biomeType == Assets.Biome.Hill0)
-            biomePalette = terrainPalette;
-        else
-            biomePalette = Palette4.fade(SColor.randomColorWheel(rng, 2, 2));
+        Palette4 biomePalette = biomeType == Assets.Biome.Hill0 ?
+                terrainPalette
+                :
+                Palette4.fade(SColor.randomColorWheel(rng, 2, 2));
 
-        makeMap();
-        atlas = packTextureAtlas();
-        makeTiledMap();
+        double[][] noise = noise(SEED, SIZE_X, SIZE_Y);
+        boolean[][] terrain = new boolean[SIZE_X][];
+        boolean[][] biome = new boolean[terrain.length][];
+        for (int x = 0; x < terrain.length; x++) {
+            terrain[x] = new boolean[SIZE_Y];
+            biome[x] = new boolean[terrain[x].length];
+            for (int y = 0; y < terrain[x].length; y++) {
+                terrain[x][y] = noise[x][y] >= 0;
+                biome[x][y] = noise[x][y] >= 0.1;
+            }
+        }
+
+        return new Planet(assets, backgroundColor, terrainType, terrainPalette, terrain, biomeType, biomePalette, biome);
     }
 
-    private void makeMap() {
-        land = new boolean[SIZE_X][];
-        for (int x = 0; x < land.length; x++)
-            land[x] = new boolean[SIZE_Y];
-
-        biome = new boolean[SIZE_X][];
-        for (int x = 0; x < biome.length; x++)
-            biome[x] = new boolean[SIZE_Y];
-
+    public static double[][] noise(long SEED, int sizeX, int sizeY) {
         class joiseWriter implements com.sudoplay.joise.mapping.IMapping2DWriter {
+            private int sizeX, sizeY;
+            private double result[][];
+
+            public joiseWriter(int sizeX, int sizeY) {
+                super();
+                this.sizeX = sizeX;
+                this.sizeY = sizeY;
+                result = new double[sizeX][];
+                for (int x = 0; x < result.length; x++)
+                    result[x] = new double[sizeY];
+            }
+
             @Override
             public void write(int x, int y, double value) {
-                land[x][y] = value >= 0;
-                biome[x][y] = value >= 0.1;
+                result[x][y] = value;
+            }
+
+            public double[][] read() {
+                return result;
             }
         }
 
@@ -119,15 +120,32 @@ public class Planet implements Disposable {
         heightTranslateDomain.setSource(heightFractal);
         heightTranslateDomain.setAxisXSource(ridgedHeightFractal);
 
+        joiseWriter writer = new joiseWriter(sizeX, sizeY);
+
         Mapping.map2DNoZ(
                 MappingMode.SEAMLESS_XY,
-                SIZE_X,
-                SIZE_Y,
+                sizeX,
+                sizeY,
                 heightTranslateDomain,
                 MappingRange.DEFAULT,
-                new joiseWriter(),
+                writer,
                 null
         );
+
+        return writer.read();
+    }
+
+    public Planet(Assets assets, Color backgroundColor, Assets.Terrain terrainType, Palette4 terrainPalette, boolean[][] terrain, Assets.Biome biomeType, Palette4 biomePalette, boolean[][] biome) {
+        this.assets = assets;
+        this.backgroundColor = backgroundColor;
+        this.terrainType = terrainType;
+        this.terrainPalette = terrainPalette;
+        this.land = terrain;
+        this.biomeType = biomeType;
+        this.biomePalette = biomePalette;
+        this.biome = biome;
+        atlas = packTextureAtlas();
+        makeTiledMap();
     }
 
     protected static void packInCells(HashMap<String, TiledMapTileLayer.Cell> cells, TextureAtlas raw, String category) {
