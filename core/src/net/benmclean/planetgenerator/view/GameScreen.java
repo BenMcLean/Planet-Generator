@@ -81,64 +81,104 @@ public class GameScreen implements Screen, Disposable {
         );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         worldView.apply();
-        for (MapLayer layer : universe.getPlanet().getMap().getLayers()) {
-            tiledMapRenderer.getBatch().begin();
+
+        if (universe.showMap) {
+            batch.begin();
+            worldView.getCamera().position.set(
+                    universe.getPlayerX(),
+                    universe.getPlayerY(),
+                    0
+            );
+            worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+            batch.setProjectionMatrix(worldView.getCamera().combined);
+            TextureRegion map = universe.getPlanet().getAtlas().findRegion("procgen/minimap");
             for (int dx = -1; dx <= 1; dx++)
-                for (int dy = -1; dy <= 1; dy++) {
-                    worldView.getCamera().position.set(
-                            // player position + center of tile + over the edge for wrapping
-                            universe.getPlayerX() * Assets.TILE_WIDTH + Assets.TILE_WIDTH / 2 + universe.getPlanet().SIZE_X * Assets.TILE_WIDTH * dx,
-                            universe.getPlayerY() * Assets.TILE_HEIGHT + Assets.TILE_HEIGHT / 2 + universe.getPlanet().SIZE_Y * Assets.TILE_HEIGHT * dy,
-                            0
+                for (int dy = -1; dy <= 1; dy++)
+                    batch.draw(
+                            map,
+                            universe.getPlanet().SIZE_X * dx,
+                            universe.getPlanet().SIZE_Y * dy
                     );
-                    worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-                    tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
-                    tiledMapRenderer.renderTileLayer((TiledMapTileLayer) layer);
-                }
+            if (universe.inShip)
+                batch.draw(
+                        universe.getPlayer().ship,
+                        universe.getPlayerX(),
+                        universe.getPlayerY(),
+                        universe.getPlayer().ship.getWidth() / 2,
+                        universe.getPlayer().ship.getHeight() / 2,
+                        universe.getPlayer().ship.getWidth(),
+                        universe.getPlayer().ship.getHeight(),
+                        1,
+                        1,
+                        Direction.degrees(universe.direction),
+                        0,
+                        0,
+                        universe.getPlayer().ship.getWidth(),
+                        universe.getPlayer().ship.getHeight(),
+                        false,
+                        false
+                );
+            batch.end();
+        } else {
+            // Redner like normal
+            tiledMapRenderer.getBatch().begin();
+            for (MapLayer layer : universe.getPlanet().getMap().getLayers())
+                for (int dx = -1; dx <= 1; dx++)
+                    for (int dy = -1; dy <= 1; dy++) {
+                        worldView.getCamera().position.set(
+                                // player position + center of tile + over the edge for wrapping
+                                universe.getPlayerX() * Assets.TILE_WIDTH + Assets.TILE_WIDTH / 2 + universe.getPlanet().SIZE_X * Assets.TILE_WIDTH * dx,
+                                universe.getPlayerY() * Assets.TILE_HEIGHT + Assets.TILE_HEIGHT / 2 + universe.getPlanet().SIZE_Y * Assets.TILE_HEIGHT * dy,
+                                0
+                        );
+                        worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+                        tiledMapRenderer.setView((OrthographicCamera) worldView.getCamera());
+                        tiledMapRenderer.renderTileLayer((TiledMapTileLayer) layer);
+                    }
             tiledMapRenderer.getBatch().end();
-        }
 
-        worldView.getCamera().position.set(
-                // player position + center of tile
-                universe.getPlayerX() * Assets.TILE_WIDTH + Assets.TILE_WIDTH / 2,
-                universe.getPlayerY() * Assets.TILE_HEIGHT + Assets.TILE_HEIGHT / 2,
-                0
-        );
-        worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-        batch.setProjectionMatrix(worldView.getCamera().combined);
-        batch.begin();
+            worldView.getCamera().position.set(
+                    // player position + center of tile
+                    universe.getPlayerX() * Assets.TILE_WIDTH + Assets.TILE_WIDTH / 2,
+                    universe.getPlayerY() * Assets.TILE_HEIGHT + Assets.TILE_HEIGHT / 2,
+                    0
+            );
+            worldView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+            batch.setProjectionMatrix(worldView.getCamera().combined);
+            batch.begin();
 
-        if (universe.inShip)
-            batch.draw(
-                    universe.getPlayer().ship,
-                    universe.getPlayerX() * Assets.TILE_WIDTH,
-                    universe.getPlayerY() * Assets.TILE_HEIGHT,
-                    universe.getPlayer().ship.getWidth() / 2,
-                    universe.getPlayer().ship.getHeight() / 2,
-                    universe.getPlayer().ship.getWidth(),
-                    universe.getPlayer().ship.getHeight(),
-                    3,
-                    3,
-                    Direction.degrees(universe.direction),
-                    0,
-                    0,
-                    universe.getPlayer().ship.getWidth(),
-                    universe.getPlayer().ship.getHeight(),
-                    false,
-                    false
-            );
-        else {
-            String direction = Direction.toString(Direction.simplify(universe.direction, false));
-            TextureRegion playerSprite = universe.getPlayer().findRegion(
-                    (direction.equals("") ? "S" : direction) + "0"
-            );
-            batch.draw(
-                    playerSprite != null ? playerSprite : universe.getPlayer().atlas.findRegion("utils/test"),
-                    universe.getPlayerX() * Assets.TILE_WIDTH,
-                    universe.getPlayerY() * Assets.TILE_HEIGHT
-            );
+            if (universe.inShip)
+                batch.draw(
+                        universe.getPlayer().ship,
+                        universe.getPlayerX() * Assets.TILE_WIDTH,
+                        universe.getPlayerY() * Assets.TILE_HEIGHT,
+                        universe.getPlayer().ship.getWidth() / 2,
+                        universe.getPlayer().ship.getHeight() / 2,
+                        universe.getPlayer().ship.getWidth(),
+                        universe.getPlayer().ship.getHeight(),
+                        3,
+                        3,
+                        Direction.degrees(universe.direction),
+                        0,
+                        0,
+                        universe.getPlayer().ship.getWidth(),
+                        universe.getPlayer().ship.getHeight(),
+                        false,
+                        false
+                );
+            else {
+                String direction = Direction.toString(Direction.simplify(universe.direction, false));
+                TextureRegion playerSprite = universe.getPlayer().findRegion(
+                        (direction.equals("") ? "S" : direction) + "0"
+                );
+                batch.draw(
+                        playerSprite != null ? playerSprite : universe.getPlayer().atlas.findRegion("utils/test"),
+                        universe.getPlayerX() * Assets.TILE_WIDTH,
+                        universe.getPlayerY() * Assets.TILE_HEIGHT
+                );
+            }
+            batch.end();
         }
-        batch.end();
         frameBuffer.end();
 
         Gdx.gl.glClearColor(screenBackgroundColor.r, screenBackgroundColor.g, screenBackgroundColor.b, 1);

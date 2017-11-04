@@ -35,7 +35,8 @@ public class GameInputProcessor implements InputProcessor {
             Input.Keys.ALT_RIGHT,
             Input.Keys.X,
             Input.Keys.Z,
-            Input.Keys.S
+            Input.Keys.S,
+            Input.Keys.A
     ));
     public final static Set<Integer> TRACKED_KEYS = Collections.unmodifiableSet(
             new HashSet<Integer>(TRACKED_KEYS_ARRAY));
@@ -55,6 +56,7 @@ public class GameInputProcessor implements InputProcessor {
         if (keycode == Input.Keys.ENTER && (keyPressed[keyInt(Input.Keys.ALT_LEFT)] || keyPressed[keyInt(Input.Keys.ALT_RIGHT)]))
             screen.toggleFullscreen();
         if (keycode == Input.Keys.S) universe.inShip = !universe.inShip;
+        if (keycode == Input.Keys.A) universe.showMap = !universe.showMap;
         if (keycode == Input.Keys.X) universe.nextPlanet();
         if (keycode == Input.Keys.Z) universe.nextCharacter();
         timeSinceRepeat = 0;

@@ -130,9 +130,16 @@ public class AtlasRepacker implements Disposable {
         pixmap.dispose();
     }
 
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
+    public AtlasRepacker pack(String name, Texture texture) {
+        pack(name, texture, packer);
+        return this;
+    }
+
+    public static void pack(String name, Texture texture, PixmapPacker packer) {
+        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
+        packer.pack(name, texture.getTextureData().consumePixmap());
+    }
+
     public AtlasRepacker pack(String name, Texture texture, Palette4 palette) {
         pack(name, texture, palette, packer);
         return this;

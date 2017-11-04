@@ -14,8 +14,9 @@ public class Universe implements Disposable {
     protected Player player;
     public Direction direction = Direction.NONE;
     public boolean inShip = true;
+    public boolean showMap = false;
 
-    public Universe (long SEED) {
+    public Universe(long SEED) {
         this(SEED, new Assets());
     }
 
@@ -60,7 +61,7 @@ public class Universe implements Disposable {
         return rng;
     }
 
-    public Planet getPlanet () {
+    public Planet getPlanet() {
         return planet;
     }
 
@@ -68,7 +69,7 @@ public class Universe implements Disposable {
         return player;
     }
 
-    public Assets getAssets () {
+    public Assets getAssets() {
         return assets;
     }
 
