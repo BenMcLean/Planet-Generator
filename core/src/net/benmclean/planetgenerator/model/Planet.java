@@ -68,8 +68,6 @@ public class Planet implements Disposable {
 
         terrainType = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)];
         biomeType = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)];
-
-//        backgroundColor = new Color(15f / 255f, 215f / 255f, 1f, 1f);
         backgroundColor = SColor.randomColorWheel(rng, 2, 2);
         Color landColor = SColor.randomColorWheel(rng, 2, 2);
         terrainPalette = new Palette4(
@@ -79,7 +77,10 @@ public class Planet implements Disposable {
                 landColor
         );
 
-        biomePalette = Palette4.fade(SColor.randomColorWheel(rng, 2, 2));
+        if (biomeType == Assets.Biome.Hill0)
+            biomePalette = terrainPalette;
+        else
+            biomePalette = Palette4.fade(SColor.randomColorWheel(rng, 2, 2));
 
         atlas = packTextureAtlas();
 
