@@ -2,8 +2,7 @@ package net.benmclean.utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-
-import java.util.Random;
+import squidpony.squidmath.RNG;
 
 
 /**
@@ -34,7 +33,7 @@ public class GenSprite {
     public float colorVariations;
     public float brightnessNoise;
     public float saturation;
-    public Random random;
+    public RNG random;
     public long SEED;
 
     public GenSprite(Mask mask,
@@ -55,6 +54,7 @@ public class GenSprite {
         this.brightnessNoise = brightnessNoise;
         this.saturation = saturation;
         this.SEED = SEED;
+        random = new RNG(SEED);
         this.init();
     }
 
@@ -180,7 +180,6 @@ public class GenSprite {
      * @returns {undefined}
      */
     public void generateRandomSample() {
-        random = new Random(SEED);
         for (int y = 0; y < mask.height; y++)
             for (int x = 0; x < mask.width; x++)
                 switch (getData(x, y)) {
@@ -299,7 +298,6 @@ public class GenSprite {
 
     public Pixmap generatePixmap() {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        random = new Random(SEED);
         int[] pixels = new int[width * height * 4];
         float saturation = Math.max(Math.min(random.nextFloat() * this.saturation, 1), 0);
         float hue = random.nextFloat();
