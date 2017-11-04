@@ -222,9 +222,9 @@ public class Planet implements Disposable {
                     minimap.drawPixel(x, y, Color.rgba8888(backgroundColor));
         Texture minimapT = new Texture(minimap);
         minimapT.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        minimap.dispose();
         repacker.pack("procgen/minimap", minimapT);
         minimapT.dispose();
+        minimap.dispose();
 
         TextureAtlas textureAtlas = repacker.generateTextureAtlas();
         repacker.dispose();
@@ -236,10 +236,10 @@ public class Planet implements Disposable {
      */
     @Override
     public void dispose() {
-        atlas.dispose();
         terrainPalette.dispose();
         biomePalette.dispose();
         map.dispose();
+        atlas.dispose();
     }
 
     public static abstract class CoordCheckerInterface {
