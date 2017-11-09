@@ -49,8 +49,8 @@ public class Planet implements Disposable {
     public static Planet randomPlanet(long SEED, Assets assets) {
         RNG rng = new StatefulRNG(new ThrustRNG(SEED));
 
-        Assets.Terrain terrainType = Assets.Terrain.values()[rng.nextInt(Assets.Terrain.values().length)];
-        Assets.Biome biomeType = Assets.Biome.values()[rng.nextInt(Assets.Biome.values().length)];
+        Assets.Terrain terrainType = rng.getRandomElement(Assets.Terrain.values());
+        Assets.Biome biomeType = rng.getRandomElement(Assets.Biome.values());
         Color backgroundColor = SColor.randomColorWheel(rng, 1, 2);
         Color landColor = SColor.randomColorWheel(rng, 2, 2);
         Palette4 terrainPalette = new Palette4(
