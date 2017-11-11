@@ -122,17 +122,23 @@ public class PaletteShader implements Disposable {
     @Override
     public void dispose() {
         if (texture != null) texture.dispose();
+        if (batch != null) batch.dispose();
+        if (buffer != null) buffer.dispose();
     }
+
+    protected FrameBuffer buffer;
+    protected SpriteBatch batch;
+    protected Viewport view;
 
     public Pixmap recolor(TextureRegion region) {
-        return recolor(region, this);
-    }
-
-    public static Pixmap recolor(TextureRegion region, PaletteShader shader) {
         region.flip(false, true);
-        FrameBuffer buffer = new FrameBuffer(Pixmap.Format.RGBA8888, region.getRegionWidth(), region.getRegionHeight(), false, false);
-        SpriteBatch batch = new SpriteBatch();
-        Viewport view = new FitViewport(region.getRegionWidth(), region.getRegionHeight());
+        if (batch == null) batch = new SpriteBatch();
+        if (buffer == null || buffer.getWidth() != region.getRegionWidth() || buffer.getHeight() != region.getRegionHeight()) {
+            if (buffer != null) buffer.dispose();
+            buffer = new FrameBuffer(Pixmap.Format.RGBA8888, region.getRegionWidth(), region.getRegionHeight(), false, false);
+        }
+        if (view == null || view.getScreenWidth() != region.getRegionWidth() || view.getScreenHeight() != region.getRegionHeight())
+            view = new FitViewport(region.getRegionWidth(), region.getRegionHeight());
         view.getCamera().position.set(region.getRegionWidth() / 2, region.getRegionWidth() / 2, 0);
         view.update(region.getRegionWidth(), region.getRegionHeight());
         buffer.begin();
@@ -141,8 +147,8 @@ public class PaletteShader implements Disposable {
         batch.setProjectionMatrix(view.getCamera().combined);
         batch.begin();
         if (shader != null) {
-            batch.setShader(shader.getShader());
-            shader.bind();
+            batch.setShader(shader);
+            bind();
         }
         batch.draw(region, 0, 0);
         batch.end();

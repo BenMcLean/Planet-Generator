@@ -111,7 +111,7 @@ public class AtlasRepacker implements Disposable {
      * This method does not copy 9-Patch info by itself!
      */
     public static void pack(TextureAtlas.AtlasRegion region, PaletteShader palette, PixmapPacker packer) {
-        packer.pack(region.toString(), PaletteShader.recolor(region, palette));
+        packer.pack(region.toString(), palette.recolor(region));
     }
 
     public AtlasRepacker pack(String name, Texture texture) {
