@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 import net.benmclean.utils.AtlasRepacker;
 import net.benmclean.utils.Palette4;
+import net.benmclean.utils.PaletteShader;
 import squidpony.squidgrid.gui.gdx.SColor;
 import squidpony.squidmath.LightRNG;
 import squidpony.squidmath.RNG;
@@ -37,9 +38,11 @@ public class Character implements Disposable {
         this.assets = assets;
         this.character = character;
         this.palette = palette;
+        PaletteShader shader = new PaletteShader(palette);
         AtlasRepacker repacker = new AtlasRepacker(assets.atlas)
                 .pack("utils")
-                .pack(characterPrefix(), palette);
+                .pack(characterPrefix(), shader);
+        shader.dispose();
         atlas = repacker.generateTextureAtlas();
         repacker.dispose();
     }

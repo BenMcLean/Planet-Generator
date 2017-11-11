@@ -17,6 +17,7 @@ import com.sudoplay.joise.module.ModuleFractal;
 import com.sudoplay.joise.module.ModuleTranslateDomain;
 import net.benmclean.utils.AtlasRepacker;
 import net.benmclean.utils.Palette4;
+import net.benmclean.utils.PaletteShader;
 import squidpony.squidgrid.gui.gdx.SColor;
 import squidpony.squidmath.RNG;
 import squidpony.squidmath.StatefulRNG;
@@ -223,10 +224,14 @@ public class Planet implements Disposable {
     }
 
     private TextureAtlas packTextureAtlas() {
+        PaletteShader terrainShader = new PaletteShader(terrainPalette);
+        PaletteShader biomeShader = new PaletteShader(biomePalette);
         AtlasRepacker repacker = new AtlasRepacker(assets.atlas)
                 .pack("utils")
-                .pack("terrain/" + terrainType, terrainPalette)
-                .pack("biomes/" + biomeType, biomePalette);
+                .pack("terrain/" + terrainType, terrainShader)
+                .pack("biomes/" + biomeType, biomeShader);
+        terrainShader.dispose();
+        biomeShader.dispose();
 
         Pixmap minimap = new Pixmap(SIZE_X, SIZE_Y, Pixmap.Format.RGBA8888);
         for (int y = 0; y < SIZE_Y; y++)

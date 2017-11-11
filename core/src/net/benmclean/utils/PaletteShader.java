@@ -2,10 +2,17 @@ package net.benmclean.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PaletteShader implements Disposable {
     // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
@@ -56,18 +63,28 @@ public class PaletteShader implements Disposable {
             "       color.y * v_color.a\n" +
             "   );\n" +
             "}";
-
-    protected Palette4 palette;
     protected Texture texture;
     protected ShaderProgram shader;
 
     public PaletteShader(Palette4 palette) {
-        this.palette = palette;
-        texture = palette.makeTexture();
+        this(palette, makeShader());
     }
 
-    public Palette4 getPalette() {
-        return palette;
+    public PaletteShader(Palette4 palette, ShaderProgram shader) {
+        this(palette.texture(), shader);
+    }
+
+    public PaletteShader(Texture texture) {
+        this(texture, makeShader());
+    }
+
+    public PaletteShader(Texture texture, ShaderProgram shader) {
+        this.texture = texture;
+        this.shader = shader;
+    }
+
+    public PaletteShader bind() {
+        return bind(this, shader);
     }
 
     public PaletteShader bind(ShaderProgram shader) {
@@ -103,10 +120,43 @@ public class PaletteShader implements Disposable {
         return shader;
     }
 
+    public ShaderProgram getShader() {
+        return shader;
+    }
+
     @Override
     public void dispose() {
-        if (palette != null) palette.dispose();
         if (shader != null) shader.dispose();
         if (texture != null) texture.dispose();
+    }
+
+    public Pixmap recolor(TextureRegion region) {
+        return recolor(region, this);
+    }
+
+    public static Pixmap recolor(TextureRegion region, PaletteShader shader) {
+        region.flip(false, true);
+        FrameBuffer buffer = new FrameBuffer(Pixmap.Format.RGBA8888, region.getRegionWidth(), region.getRegionHeight(), false, false);
+        SpriteBatch batch = new SpriteBatch();
+        Viewport view = new FitViewport(region.getRegionWidth(), region.getRegionHeight());
+        view.getCamera().position.set(region.getRegionWidth() / 2, region.getRegionWidth() / 2, 0);
+        view.update(region.getRegionWidth(), region.getRegionHeight());
+        buffer.begin();
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.setProjectionMatrix(view.getCamera().combined);
+        batch.begin();
+        if (shader != null) {
+            batch.setShader(shader.getShader());
+            shader.bind();
+        }
+        batch.draw(region, 0, 0);
+        batch.end();
+        Pixmap result = ScreenUtils.getFrameBufferPixmap(0, 0, region.getRegionWidth(), region.getRegionHeight());
+        buffer.end();
+        batch.dispose();
+        buffer.dispose();
+        region.flip(false, true);
+        return result;
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Disposable;
  * Created by Benjamin on 12/26/2016.
  */
 public class Palette4 implements Disposable {
+    public static final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
     public final int size = 4;
     protected Color[] palette;
 
@@ -86,7 +87,7 @@ public class Palette4 implements Disposable {
                 new Color(r3, g3, b3, a3));
     }
 
-    public Palette4 set (Color zero, Color one, Color two, Color three) {
+    public Palette4 set(Color zero, Color one, Color two, Color three) {
         palette = new Color[4];
         palette[0] = zero;
         palette[1] = one;
@@ -111,17 +112,17 @@ public class Palette4 implements Disposable {
         return palette[x];
     }
 
-    public Pixmap makePixmap() {
+    public Pixmap pixmap() {
         Pixmap pixmap = new Pixmap(size, 1, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
-        for (int x=0; x < size; x++) {
+        for (int x = 0; x < size; x++) {
             pixmap.drawPixel(x, 0, Color.rgba8888(palette[x]));
         }
         return pixmap;
     }
 
-    public Texture makeTexture() {
-        Pixmap pixmap = makePixmap();
+    public Texture texture() {
+        Pixmap pixmap = pixmap();
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
         return texture;
@@ -184,5 +185,25 @@ public class Palette4 implements Disposable {
                 color,
                 new Color(color.r * 1.5f, color.g * 1.5f, color.b * 1.5f, 1f)
         );
+    }
+
+    public Pixmap recolor(Pixmap pixmap) {
+        return recolor(pixmap, this);
+    }
+
+    public static Pixmap recolor(Pixmap pixmap, Palette4 palette) {
+        Pixmap result = new Pixmap(pixmap.getWidth(), pixmap.getHeight(), Pixmap.Format.RGBA8888);
+        Color color = new Color();
+        for (int x = 0; x < pixmap.getWidth(); x++)
+            for (int y = 0; y < pixmap.getHeight(); y++) {
+                color.set(pixmap.getPixel(x, y));
+                if (palette == null)
+                    result.drawPixel(x, y, pixmap.getPixel(x, y));
+                else if (color.a > .05)
+                    result.drawPixel(x, y, Color.rgba8888(palette.get((int) (color.r * 3.9999))));
+                else
+                    result.drawPixel(x, y, transparent);
+            }
+        return result;
     }
 }
