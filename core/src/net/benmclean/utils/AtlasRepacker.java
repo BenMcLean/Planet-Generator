@@ -86,6 +86,29 @@ public class AtlasRepacker implements Disposable {
         packer.pack(region.toString(), palette.recolor(region));
     }
 
+    /**
+     * This method does not copy 9-Patch info by itself!
+     */
+    public static void pack(TextureAtlas raw, Color[] palette, PixmapPacker packer) {
+        pack("", raw, palette, packer);
+    }
+
+    /**
+     * This method does not copy 9-Patch info by itself!
+     */
+    public static void pack(String category, TextureAtlas raw, Color[] palette, PixmapPacker packer) {
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
+                pack(region, palette, packer);
+    }
+
+    /**
+     * This method does not copy 9-Patch info by itself!
+     */
+    public static void pack(TextureAtlas.AtlasRegion region, Color[] palette, PixmapPacker packer) {
+        packer.pack(region.toString(), PaletteShader.recolor(region, palette));
+    }
+
     public AtlasRepacker pack(String name, Texture texture) {
         pack(name, texture, packer);
         return this;
@@ -96,7 +119,7 @@ public class AtlasRepacker implements Disposable {
         packer.pack(name, texture.getTextureData().consumePixmap());
     }
 
-    public AtlasRepacker pack(String name, Texture texture, Palette4 palette) {
+    public AtlasRepacker pack(String name, Texture texture, Color[] palette) {
         pack(name, texture, palette, packer);
         return this;
     }
@@ -106,18 +129,18 @@ public class AtlasRepacker implements Disposable {
         return this;
     }
 
-    public AtlasRepacker pack(String name, Pixmap pixmap, Palette4 palette) {
+    public AtlasRepacker pack(String name, Pixmap pixmap, Color[] palette) {
         pack(name, pixmap, palette, packer);
         return this;
     }
 
-    public static void pack(String name, Pixmap pixmap, Palette4 palette, PixmapPacker packer) {
-        packer.pack(name, palette.recolor(pixmap));
+    public static void pack(String name, Pixmap pixmap, Color[] palette, PixmapPacker packer) {
+        packer.pack(name, PaletteShader.recolor(pixmap, palette));
     }
 
-    public static void pack(String name, Texture texture, Palette4 palette, PixmapPacker packer) {
+    public static void pack(String name, Texture texture, Color[] palette, PixmapPacker packer) {
         if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
-        packer.pack(name, palette.recolor(texture.getTextureData().consumePixmap()));
+        packer.pack(name, PaletteShader.recolor(texture.getTextureData().consumePixmap(), palette));
     }
 
     /**

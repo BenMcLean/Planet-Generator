@@ -1,8 +1,12 @@
 package net.benmclean.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -168,6 +172,29 @@ public class PaletteShader implements Disposable {
         for (int x = 0; x < pixmap.getWidth(); x++)
             for (int y = 0; y < pixmap.getHeight(); y++) {
                 color.set(pixmap.getPixel(x, y));
+                result.drawPixel(x, y,
+                        color.a > .05f ?
+                                Color.rgba8888(palette[(int) (color.r * length)])
+                                :
+                                transparent
+                );
+            }
+        return result;
+    }
+
+    /**
+     * This is the old and (possibly slower) way to recolor without using a shader
+     */
+    public static Pixmap recolor(TextureAtlas.AtlasRegion region, Color[] palette) {
+        Texture texture = region.getTexture();
+        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
+        Pixmap pixmap = texture.getTextureData().consumePixmap();
+        Pixmap result = new Pixmap(region.getRegionWidth(), region.getRegionHeight(), Pixmap.Format.RGBA8888);
+        Color color = new Color();
+        float length = palette.length - .0001f;
+        for (int x = 0; x < region.getRegionWidth(); x++)
+            for (int y = 0; y < region.getRegionHeight(); y++) {
+                color.set(pixmap.getPixel(region.getRegionX() + x, region.getRegionY() + y));
                 result.drawPixel(x, y,
                         color.a > .05f ?
                                 Color.rgba8888(palette[(int) (color.r * length)])
