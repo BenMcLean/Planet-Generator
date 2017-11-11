@@ -35,13 +35,17 @@ public class Assets {
         shader = PaletteShader.makeShader();
         grey = new PaletteShader(Palette4.grey().get(), shader);
 
+        TextureAtlas dosAtlas = new TextureAtlas(Gdx.files.internal("DOS/uiskin.atlas"));
+        PaletteShader dosShader = new PaletteShader(Palette4.greenUI().get(), shader);
         skin = new Skin(
                 Gdx.files.internal("DOS/uiskin.json"),
                 AtlasRepacker.repackAtlas(
-                        new TextureAtlas(Gdx.files.internal("DOS/uiskin.atlas")),
-                        new PaletteShader(Palette4.greenUI().get(), shader)
+                        dosAtlas,
+                        dosShader
                 )
         );
+        dosAtlas.dispose();
+        dosShader.dispose();
 
         atlas = new TextureAtlas("art.atlas");
     }
