@@ -61,10 +61,8 @@ public class AtlasRepacker implements Disposable {
     /**
      * This method should preserve 9-patch info.
      */
-    public static TextureAtlas repackAtlas(TextureAtlas atlas, Palette4 palette) {
-        PaletteShader shader = new PaletteShader(palette);
-        AtlasRepacker repacker = new AtlasRepacker(atlas).pack("", shader);
-        shader.dispose();
+    public static TextureAtlas repackAtlas(TextureAtlas atlas, PaletteShader palette) {
+        AtlasRepacker repacker = new AtlasRepacker(atlas).pack("", palette);
         TextureAtlas result = repacker.generateTextureAtlas();
         repacker.dispose();
         return result;

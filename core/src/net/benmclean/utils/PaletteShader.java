@@ -66,16 +66,8 @@ public class PaletteShader implements Disposable {
     protected Texture texture;
     protected ShaderProgram shader;
 
-    public PaletteShader(Palette4 palette) {
-        this(palette, makeShader());
-    }
-
     public PaletteShader(Palette4 palette, ShaderProgram shader) {
         this(palette.texture(), shader);
-    }
-
-    public PaletteShader(Texture texture) {
-        this(texture, makeShader());
     }
 
     public PaletteShader(Texture texture, ShaderProgram shader) {
@@ -124,9 +116,11 @@ public class PaletteShader implements Disposable {
         return shader;
     }
 
+    /**
+     * Does not dispose shader!
+     */
     @Override
     public void dispose() {
-        if (shader != null) shader.dispose();
         if (texture != null) texture.dispose();
     }
 

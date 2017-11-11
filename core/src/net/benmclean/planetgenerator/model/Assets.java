@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import net.benmclean.utils.AtlasRepacker;
 import net.benmclean.utils.GenSprite;
 import net.benmclean.utils.Palette4;
+import net.benmclean.utils.PaletteShader;
 
 /**
  * Created by Benjamin on 11/19/2016.
@@ -20,6 +22,7 @@ public class Assets {
     public Texture one;
     public TextureAtlas atlas;
     public Skin skin;
+    public ShaderProgram shader;
 
     public Assets() {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -28,11 +31,13 @@ public class Assets {
         one.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         pixmap.dispose();
 
+        shader = PaletteShader.makeShader();
+
         skin = new Skin(
                 Gdx.files.internal("DOS/uiskin.json"),
                 AtlasRepacker.repackAtlas(
                         new TextureAtlas(Gdx.files.internal("DOS/uiskin.atlas")),
-                        Palette4.greenUI()
+                        new PaletteShader(Palette4.greenUI(), shader)
                 )
         );
 
