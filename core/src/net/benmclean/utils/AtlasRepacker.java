@@ -25,11 +25,6 @@ public class AtlasRepacker implements Disposable {
         this.atlas = atlas;
     }
 
-    public AtlasRepacker pack(String category) {
-        pack(category, atlas, packer);
-        return this;
-    }
-
     public AtlasRepacker pack(String category, PaletteShader palette) {
         pack(category, atlas, palette, packer);
         return this;
@@ -66,29 +61,6 @@ public class AtlasRepacker implements Disposable {
         TextureAtlas result = repacker.generateTextureAtlas();
         repacker.dispose();
         return result;
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(TextureAtlas raw, PixmapPacker packer) {
-        pack("", raw, packer);
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(String category, TextureAtlas raw, PixmapPacker packer) {
-        for (TextureAtlas.AtlasRegion region : raw.getRegions())
-            if (region.name.startsWith(category))
-                pack(region, packer);
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(TextureAtlas.AtlasRegion region, PixmapPacker packer) {
-        pack(region, null, packer);
     }
 
     /**

@@ -154,8 +154,6 @@ public class PaletteShader implements Disposable {
         batch.end();
         Pixmap result = ScreenUtils.getFrameBufferPixmap(0, 0, region.getRegionWidth(), region.getRegionHeight());
         buffer.end();
-        batch.dispose();
-        buffer.dispose();
         region.flip(false, true);
         return result;
     }

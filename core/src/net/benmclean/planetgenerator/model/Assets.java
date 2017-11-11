@@ -23,6 +23,7 @@ public class Assets {
     public TextureAtlas atlas;
     public Skin skin;
     public ShaderProgram shader;
+    public PaletteShader grey;
 
     public Assets() {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -32,6 +33,7 @@ public class Assets {
         pixmap.dispose();
 
         shader = PaletteShader.makeShader();
+        grey = new PaletteShader(Palette4.grey(), shader);
 
         skin = new Skin(
                 Gdx.files.internal("DOS/uiskin.json"),
@@ -63,6 +65,8 @@ public class Assets {
 
     public void dispose() {
         one.dispose();
+        grey.dispose();
+        shader.dispose();
         atlas.dispose();
     }
 
