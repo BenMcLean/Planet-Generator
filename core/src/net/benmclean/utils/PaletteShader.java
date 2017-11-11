@@ -1,9 +1,7 @@
 package net.benmclean.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -15,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PaletteShader implements Disposable {
+    public static final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
+
     // vertexShader copied from https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java#L132
     public static final String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
             + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" //
@@ -66,8 +66,8 @@ public class PaletteShader implements Disposable {
     protected Texture texture;
     protected ShaderProgram shader;
 
-    public PaletteShader(Palette4 palette, ShaderProgram shader) {
-        this(palette.texture(), shader);
+    public PaletteShader(Color[] colors, ShaderProgram shader) {
+        this(texture(colors), shader);
     }
 
     public PaletteShader(Texture texture, ShaderProgram shader) {
@@ -156,5 +156,41 @@ public class PaletteShader implements Disposable {
         buffer.end();
         region.flip(false, true);
         return result;
+    }
+
+    /**
+     * This is the old and (possibly slower) way to recolor without using a shader
+     */
+    public static Pixmap recolor(Pixmap pixmap, Color[] palette) {
+        Pixmap result = new Pixmap(pixmap.getWidth(), pixmap.getHeight(), Pixmap.Format.RGBA8888);
+        Color color = new Color();
+        float length = palette.length - .0001f;
+        for (int x = 0; x < pixmap.getWidth(); x++)
+            for (int y = 0; y < pixmap.getHeight(); y++) {
+                color.set(pixmap.getPixel(x, y));
+                result.drawPixel(x, y,
+                        color.a > .05f ?
+                                Color.rgba8888(palette[(int) (color.r * length)])
+                                :
+                                transparent
+                );
+            }
+        return result;
+    }
+
+    public static Pixmap pixmap(Color[] colors) {
+        Pixmap pixmap = new Pixmap(colors.length, 1, Pixmap.Format.RGBA8888);
+        pixmap.setBlending(Pixmap.Blending.None);
+        for (int x = 0; x < colors.length; x++) {
+            pixmap.drawPixel(x, 0, Color.rgba8888(colors[x]));
+        }
+        return pixmap;
+    }
+
+    public static Texture texture(Color[] colors) {
+        Pixmap pixmap = pixmap(colors);
+        Texture texture = new Texture(pixmap);
+        pixmap.dispose();
+        return texture;
     }
 }
