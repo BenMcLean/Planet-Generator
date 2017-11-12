@@ -33,7 +33,7 @@ public class Assets {
         pixmap.dispose();
 
         shader = PaletteShader.makeShader();
-        grey = new PaletteShader(Palette4.grey().get(), shader);
+        grey = new PaletteShader(new Color[]{Color.BLACK, Color.DARK_GRAY, Color.LIGHT_GRAY, Color.WHITE}, shader);
 
         TextureAtlas dosAtlas = new TextureAtlas(Gdx.files.internal("DOS/uiskin.atlas"));
         PaletteShader dosShader = new PaletteShader(Palette4.greenUI().get(), shader);

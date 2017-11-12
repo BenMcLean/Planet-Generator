@@ -208,9 +208,8 @@ public class PaletteShader implements Disposable {
     public static Pixmap pixmap(Color[] colors) {
         Pixmap pixmap = new Pixmap(colors.length, 1, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
-        for (int x = 0; x < colors.length; x++) {
+        for (int x = 0; x < colors.length; x++)
             pixmap.drawPixel(x, 0, Color.rgba8888(colors[x]));
-        }
         return pixmap;
     }
 
