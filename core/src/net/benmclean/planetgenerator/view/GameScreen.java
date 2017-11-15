@@ -56,7 +56,7 @@ public class GameScreen implements Screen, Disposable {
         screenRegion = new TextureRegion();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(universe.getPlanet().getMap());
         screenView.getCamera().position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
-        screenView.update(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        screenView.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.enableBlending();
         input = new GameInputProcessor(universe, this);
         Gdx.input.setInputProcessor(input);
