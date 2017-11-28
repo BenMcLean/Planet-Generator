@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -218,5 +219,71 @@ public class PaletteShader implements Disposable {
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
         return texture;
+    }
+
+    public void pack(PixmapPacker packer, TextureAtlas raw) {
+        pack(packer, "", raw, this);
+    }
+
+    public static void pack(PixmapPacker packer, TextureAtlas raw, PaletteShader palette) {
+        pack(packer, "", raw, palette);
+    }
+
+    public void pack(PixmapPacker packer, String category, TextureAtlas raw) {
+        pack(packer, category, raw, this);
+    }
+
+    public static void pack(PixmapPacker packer, String category, TextureAtlas raw, PaletteShader palette) {
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
+                pack(packer, region, palette);
+    }
+
+    public void pack(PixmapPacker packer, TextureAtlas.AtlasRegion region) {
+        pack(packer, region, this);
+    }
+
+    public static void pack(PixmapPacker packer, TextureAtlas.AtlasRegion region, PaletteShader palette) {
+        pack(packer, region.name, region, palette);
+    }
+
+    public void pack(PixmapPacker packer, String newName, TextureAtlas.AtlasRegion region) {
+        pack(packer, newName, region, this);
+    }
+
+    public static void pack(PixmapPacker packer, String newName, TextureAtlas.AtlasRegion region, PaletteShader palette) {
+        packer.pack(newName, palette.recolor(region));
+    }
+
+    public static void pack(PixmapPacker packer, TextureAtlas raw, Color[] palette) {
+        pack(packer, "", raw, palette);
+    }
+
+    public static void pack(PixmapPacker packer, String category, TextureAtlas raw, Color[] palette) {
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
+                pack(packer, region, palette);
+    }
+
+    public static void pack(PixmapPacker packer, TextureAtlas.AtlasRegion region, Color[] palette) {
+        pack(packer, region.toString(), region, palette);
+    }
+
+    public static void pack(PixmapPacker packer, String newName, TextureAtlas.AtlasRegion region, Color[] palette) {
+        packer.pack(newName, PaletteShader.recolor(region, palette));
+    }
+
+    public static void pack(PixmapPacker packer, String name, Pixmap pixmap, Color[] palette) {
+        packer.pack(name, PaletteShader.recolor(pixmap, palette));
+    }
+
+    public static void pack(PixmapPacker packer, String name, Texture texture, Color[] palette) {
+        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
+        packer.pack(name, PaletteShader.recolor(texture.getTextureData().consumePixmap(), palette));
+    }
+
+    public static void pack(PixmapPacker packer, String name, Texture texture) {
+        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
+        packer.pack(name, texture.getTextureData().consumePixmap());
     }
 }

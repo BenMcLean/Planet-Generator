@@ -7,120 +7,131 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * AtlasRepacker makes it possible to palette-swap the game's art assets at runtime.
- * Using the instance versions of the methods will also preserve 9-patch info, as will repackAtlas.
- * Static versions of the pack method are also available for use with PixmapPacker, but these will not preserve 9-patch info because while AtlasRegion has 9-patch support, PixmapPacker sadly does not as of this writing.
- * It is recommended that when mixing procedurally generated images with recolored images from a TextureAtlas, the procedurally generated images coming in as pixmaps should have their names prefixed as "procgen/" or get some other name which is guaranteed to not be in the atlas to avoid incorrect 9-patch information being copied over.
+ * This works together with the static pack methods in PaletteShader. The advantage of using this class as a wrapper for those methods are twofold:
+ * 1. Cleaner syntax.
+ * 2. When repacking a TextureAtlas.AtlasRegion, this class ensures that 9-patch data  (pads and splits) is preserved.
  *
  * @author BenMcLean
  */
 public class AtlasRepacker implements Disposable {
-    public static final int transparent = Color.rgba8888(0f, 0f, 0f, 0f);
     protected PixmapPacker packer;
-    protected TextureAtlas atlas;
+    public Map<String, int[]> pads = new HashMap<String, int[]>();
+    public Map<String, int[]> splits = new HashMap<String, int[]>();
 
-    public AtlasRepacker(TextureAtlas atlas) {
-        packer = new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false);
-        this.atlas = atlas;
-    }
-
-    public AtlasRepacker pack(String category, PaletteShader palette) {
-        pack(category, atlas, palette, packer);
-        return this;
+    public AtlasRepacker() {
+        this(new PixmapPacker(1024, 1024, Pixmap.Format.RGBA8888, 0, false));
     }
 
     /**
-     * This method should preserve 9-patch info.
+     * @param packer For custom PixmapPacker settings.
      */
+    public AtlasRepacker(PixmapPacker packer) {
+        this.packer = packer;
+    }
+
     public TextureAtlas generateTextureAtlas() {
         TextureAtlas textureAtlas = packer.generateTextureAtlas(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
 
         // Copying 9-patch info from the old atlas into the new atlas
         for (TextureAtlas.AtlasRegion region : textureAtlas.getRegions()) {
-            TextureAtlas.AtlasRegion raw = atlas.findRegion(region.name);
-            if (raw != null) {
-                if (raw.pads != null) {
-                    region.pads = new int[raw.pads.length];
-                    System.arraycopy(raw.pads, 0, region.pads, 0, raw.pads.length);
-                }
-                if (raw.splits != null) {
-                    region.splits = new int[raw.splits.length];
-                    System.arraycopy(raw.splits, 0, region.splits, 0, raw.splits.length);
-                }
-            }
+            if (pads.containsKey(region.name)) region.pads = pads.get(region.name);
+            if (splits.containsKey(region.name)) region.splits = splits.get(region.name);
         }
         return textureAtlas;
     }
 
-    /**
-     * This method should preserve 9-patch info.
-     */
     public static TextureAtlas repackAtlas(TextureAtlas atlas, PaletteShader palette) {
-        AtlasRepacker repacker = new AtlasRepacker(atlas).pack("", palette);
+        AtlasRepacker repacker = new AtlasRepacker().pack(atlas, palette);
         TextureAtlas result = repacker.generateTextureAtlas();
         repacker.dispose();
         return result;
     }
 
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(TextureAtlas raw, PaletteShader palette, PixmapPacker packer) {
-        pack("", raw, palette, packer);
+    public static TextureAtlas repackAtlas(TextureAtlas atlas, Color[] palette) {
+        AtlasRepacker repacker = new AtlasRepacker().pack(atlas, palette);
+        TextureAtlas result = repacker.generateTextureAtlas();
+        repacker.dispose();
+        return result;
     }
 
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(String category, TextureAtlas raw, PaletteShader palette, PixmapPacker packer) {
+    public AtlasRepacker pack(TextureAtlas atlas, PaletteShader palette) {
+        return pack("", atlas, palette);
+    }
+
+    public AtlasRepacker pack(TextureAtlas atlas, Color[] palette) {
+        return pack("", atlas, palette);
+    }
+
+    public AtlasRepacker pack(String category, TextureAtlas raw, PaletteShader palette) {
         for (TextureAtlas.AtlasRegion region : raw.getRegions())
             if (region.name.startsWith(category))
-                pack(region, palette, packer);
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(TextureAtlas.AtlasRegion region, PaletteShader palette, PixmapPacker packer) {
-        packer.pack(region.toString(), palette.recolor(region));
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(TextureAtlas raw, Color[] palette, PixmapPacker packer) {
-        pack("", raw, palette, packer);
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(String category, TextureAtlas raw, Color[] palette, PixmapPacker packer) {
-        for (TextureAtlas.AtlasRegion region : raw.getRegions())
-            if (region.name.startsWith(category))
-                pack(region, palette, packer);
-    }
-
-    /**
-     * This method does not copy 9-Patch info by itself!
-     */
-    public static void pack(TextureAtlas.AtlasRegion region, Color[] palette, PixmapPacker packer) {
-        packer.pack(region.toString(), PaletteShader.recolor(region, palette));
-    }
-
-    public AtlasRepacker pack(String name, Texture texture) {
-        pack(name, texture, packer);
+                pack(region, palette);
         return this;
     }
 
-    public static void pack(String name, Texture texture, PixmapPacker packer) {
-        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
-        packer.pack(name, texture.getTextureData().consumePixmap());
+    public AtlasRepacker pack(String category, TextureAtlas raw, Color[] palette) {
+        for (TextureAtlas.AtlasRegion region : raw.getRegions())
+            if (region.name.startsWith(category))
+                pack(region, palette);
+        return this;
+    }
+
+    public AtlasRepacker pack(TextureAtlas.AtlasRegion region, Color[] palette) {
+        return pack(region.name, region, palette, region.pads, region.splits);
+    }
+
+    public AtlasRepacker pack(TextureAtlas.AtlasRegion region, PaletteShader palette) {
+        return pack(region.name, region, palette, region.pads, region.splits);
+    }
+
+    public AtlasRepacker pack(TextureAtlas.AtlasRegion region, Color[] palette, int[] pads, int[] splits) {
+        return pack(region.name, region, palette, pads, splits);
+    }
+
+    public AtlasRepacker pack(TextureAtlas.AtlasRegion region, PaletteShader palette, int[] pads, int[] splits) {
+        return pack(region.name, region, palette, pads, splits);
+    }
+
+    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, Color[] palette) {
+        return pack(newName, region, palette, region.pads, region.splits);
+    }
+
+    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, PaletteShader palette) {
+        return pack(newName, region, palette, region.pads, region.splits);
+    }
+
+    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, Color[] palette, int[] pads, int[] splits) {
+        PaletteShader.pack(packer, newName, region, palette);
+        if (pads != null) this.pads.put(newName, region.pads);
+        if (splits != null) this.splits.put(newName, region.splits);
+        return this;
+    }
+
+    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, PaletteShader palette, int[] pads, int[] splits) {
+        palette.pack(packer, newName, region);
+        if (pads != null) this.pads.put(newName, region.pads);
+        if (splits != null) this.splits.put(newName, region.splits);
+        return this;
+    }
+
+    public AtlasRepacker pack(String name, Texture texture) {
+        PaletteShader.pack(packer, name, texture);
+        return this;
+    }
+
+    public AtlasRepacker pack(String name, Texture texture, int[] pads, int[] splits) {
+        if (pads != null) this.pads.put(name, pads);
+        if (splits != null) this.splits.put(name, splits);
+        return pack(name, texture);
     }
 
     public AtlasRepacker pack(String name, Texture texture, Color[] palette) {
-        pack(name, texture, palette, packer);
+        PaletteShader.pack(packer, name, texture, palette);
         return this;
     }
 
@@ -129,23 +140,23 @@ public class AtlasRepacker implements Disposable {
         return this;
     }
 
+    public AtlasRepacker pack(String name, Pixmap pixmap, int[] pads, int[] splits) {
+        if (pads != null) this.pads.put(name, pads);
+        if (splits != null) this.splits.put(name, splits);
+        return pack(name, pixmap);
+    }
+
     public AtlasRepacker pack(String name, Pixmap pixmap, Color[] palette) {
-        pack(name, pixmap, palette, packer);
+        return pack(name, pixmap, palette, null, null);
+    }
+
+    public AtlasRepacker pack(String name, Pixmap pixmap, Color[] palette, int[] pads, int[] splits) {
+        PaletteShader.pack(packer, name, pixmap, palette);
+        if (pads != null) this.pads.put(name, pads);
+        if (splits != null) this.splits.put(name, splits);
         return this;
     }
 
-    public static void pack(String name, Pixmap pixmap, Color[] palette, PixmapPacker packer) {
-        packer.pack(name, PaletteShader.recolor(pixmap, palette));
-    }
-
-    public static void pack(String name, Texture texture, Color[] palette, PixmapPacker packer) {
-        if (!texture.getTextureData().isPrepared()) texture.getTextureData().prepare();
-        packer.pack(name, PaletteShader.recolor(texture.getTextureData().consumePixmap(), palette));
-    }
-
-    /**
-     * Does not dispose atlas!
-     */
     @Override
     public void dispose() {
         packer.dispose();

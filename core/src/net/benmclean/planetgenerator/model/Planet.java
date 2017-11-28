@@ -226,10 +226,10 @@ public class Planet implements Disposable {
     private TextureAtlas packTextureAtlas() {
         PaletteShader terrainShader = new PaletteShader(terrainPalette.get(), assets.shader);
         PaletteShader biomeShader = new PaletteShader(biomePalette.get(), assets.shader);
-        AtlasRepacker repacker = new AtlasRepacker(assets.atlas)
-                .pack("utils", assets.grey)
-                .pack("terrain/" + terrainType, terrainShader)
-                .pack("biomes/" + biomeType, biomeShader);
+        AtlasRepacker repacker = new AtlasRepacker()
+                .pack("utils", assets.atlas, assets.grey)
+                .pack("terrain/" + terrainType, assets.atlas, terrainShader)
+                .pack("biomes/" + biomeType, assets.atlas, biomeShader);
         terrainShader.dispose();
         biomeShader.dispose();
 

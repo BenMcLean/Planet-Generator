@@ -39,9 +39,9 @@ public class Character implements Disposable {
         this.character = character;
         this.palette = palette;
         PaletteShader shader = new PaletteShader(palette.get(), assets.shader);
-        AtlasRepacker repacker = new AtlasRepacker(assets.atlas)
-                .pack("utils", assets.grey)
-                .pack(characterPrefix(), shader);
+        AtlasRepacker repacker = new AtlasRepacker()
+                .pack("utils", assets.atlas, assets.grey)
+                .pack(characterPrefix(), assets.atlas, shader);
         shader.dispose();
         atlas = repacker.generateTextureAtlas();
         repacker.dispose();
