@@ -97,25 +97,23 @@ public class AtlasRepacker implements Disposable {
         return pack(region.name, region, palette, pads, splits);
     }
 
-    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, Color[] palette) {
-        return pack(newName, region, palette, region.pads, region.splits);
+    public AtlasRepacker pack(String name, TextureAtlas.AtlasRegion region, Color[] palette) {
+        return pack(name, region, palette, region.pads, region.splits);
     }
 
-    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, PaletteShader palette) {
-        return pack(newName, region, palette, region.pads, region.splits);
+    public AtlasRepacker pack(String name, TextureAtlas.AtlasRegion region, PaletteShader palette) {
+        return pack(name, region, palette, region.pads, region.splits);
     }
 
-    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, Color[] palette, int[] pads, int[] splits) {
-        PaletteShader.pack(packer, newName, region, palette);
-        if (pads != null) this.pads.put(newName, region.pads);
-        if (splits != null) this.splits.put(newName, region.splits);
+    public AtlasRepacker pack(String name, TextureAtlas.AtlasRegion region, Color[] palette, int[] pads, int[] splits) {
+        PaletteShader.pack(packer, name, region, palette);
+        copyNinePatch(name, pads, splits);
         return this;
     }
 
-    public AtlasRepacker pack(String newName, TextureAtlas.AtlasRegion region, PaletteShader palette, int[] pads, int[] splits) {
-        palette.pack(packer, newName, region);
-        if (pads != null) this.pads.put(newName, region.pads);
-        if (splits != null) this.splits.put(newName, region.splits);
+    public AtlasRepacker pack(String name, TextureAtlas.AtlasRegion region, PaletteShader palette, int[] pads, int[] splits) {
+        palette.pack(packer, name, region);
+        copyNinePatch(name, pads, splits);
         return this;
     }
 
@@ -125,8 +123,7 @@ public class AtlasRepacker implements Disposable {
     }
 
     public AtlasRepacker pack(String name, Texture texture, int[] pads, int[] splits) {
-        if (pads != null) this.pads.put(name, pads);
-        if (splits != null) this.splits.put(name, splits);
+        copyNinePatch(name, pads, splits);
         return pack(name, texture);
     }
 
@@ -141,8 +138,7 @@ public class AtlasRepacker implements Disposable {
     }
 
     public AtlasRepacker pack(String name, Pixmap pixmap, int[] pads, int[] splits) {
-        if (pads != null) this.pads.put(name, pads);
-        if (splits != null) this.splits.put(name, splits);
+        copyNinePatch(name, pads, splits);
         return pack(name, pixmap);
     }
 
@@ -152,9 +148,24 @@ public class AtlasRepacker implements Disposable {
 
     public AtlasRepacker pack(String name, Pixmap pixmap, Color[] palette, int[] pads, int[] splits) {
         PaletteShader.pack(packer, name, pixmap, palette);
-        if (pads != null) this.pads.put(name, pads);
-        if (splits != null) this.splits.put(name, splits);
+        copyNinePatch(name, pads, splits);
         return this;
+    }
+
+    /**
+     * A copy of the 9-patch data is made to ensure the new atlas doesn't change in response to changes in the old atlas.
+     */
+    public void copyNinePatch(String name, int[] pads, int[] splits) {
+        if (pads != null) {
+            int[] newPads = new int[pads.length];
+            System.arraycopy(pads, 0, newPads, 0, pads.length);
+            this.pads.put(name, newPads);
+        }
+        if (splits != null) {
+            int[] newSplits = new int[splits.length];
+            System.arraycopy(splits, 0, newSplits, 0, splits.length);
+            this.splits.put(name, newSplits);
+        }
     }
 
     @Override
